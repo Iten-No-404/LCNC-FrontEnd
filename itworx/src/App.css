@@ -1,12 +1,6 @@
-.App {
-  text-align: center;
-}
+@import url(https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css);
+@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
 
-.App {
-  text-align: center;
-  width: 100vw;
-  height: 100vh;
-}
 
 .blockTab  {
   margin: 10px;
@@ -25,4 +19,13 @@
 
 .Selsectedblock {
   border: 4px dotted rgb(54, 54, 198);
+}
+
+
+.code {
+  font-family: -apple-system, Roboto, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.demo {
+  font-family: "Fira Code", monospace;
 }
