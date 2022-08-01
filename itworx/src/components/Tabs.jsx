@@ -15,8 +15,8 @@ function Ctabs({board, setBoard }) {
       justify
     >
       <Tab eventKey="profile" title="Blocks" className='Blocks'>
-        <Header classN="blockTab" text="Header" id={1} />
-        <Section classN="blockTab" text="Section" id={2} />
+        <Header classN="blockTab" text="Header" id={1} logo={true} />
+        <Section classN="blockTab" text="Section" id={2} logo={true} />
       </Tab>
       <Tab eventKey="home" title="Layers">
       <Layers board={board} setBoard={setBoard} />
