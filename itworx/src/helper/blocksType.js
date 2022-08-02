@@ -1,6 +1,6 @@
-const blocksTybe={
+const blocksType={
     header:"header",
     section:"section",
 }
 
-export default blocksTybe;
+export default blocksType;

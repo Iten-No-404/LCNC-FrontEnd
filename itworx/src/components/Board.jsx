@@ -3,16 +3,12 @@ import { useDrop } from "react-dnd";
 import { useDispatch } from 'react-redux';
 import "../App.css";
 import Header from "./blocks/Header";
-import blocksTybe from "../helper/blocksTybe"
+import blocksType from "../helper/blocksType"
 import Section from "./blocks/Section";
 import BlocksList from "../helper/BlocksList";
 import GenerateId from "../helper/GenerateId";
 import { defaultFont } from "../helper/InitialFont";
 import { setWidget } from "../states/WidgetCSSSlice/WidgetCSSSlice";
-// generate random id
-// function getRandomInt(max) {
-//   return Math.floor(Math.random() * Math.floor(max));
-// }
 
 function Board({ board, setBoard, fontChange=false }) {
   const dispatch = useDispatch();
@@ -27,7 +23,6 @@ function Board({ board, setBoard, fontChange=false }) {
   const addBlockToBoard = (id) => {   
     if (!board.find((block) => block.id === id)) {
       const newId = GenerateId();
-      // console.log(newId);
       const block = BlocksList.find((block) => id === block.id);
       setBoard((board) => [...board, { ...block, id :newId, onBoard: true, font: defaultFont }]);
       dispatch(setWidget({
@@ -40,17 +35,16 @@ function Board({ board, setBoard, fontChange=false }) {
     <>
       <div className="Board" ref={drop}>
         {board.map((block) => {
-          if (block.type === blocksTybe.header) {
-            return (<div key={block.id} className={block.selected ? "Selsectedblock" : ""}>
+          if (block.type === blocksType.header) {
+            return (<div key={block.id} className={block.selected ? "SelectedBlock" : ""}>
               <Header classN="Block" text={block.text} id={block.id} font={block.font} />
             </div>);
           }
-          if (block.type === blocksTybe.section) {
-            return (<div key={block.id} className={block.selected ? "Selsectedblock" : ""}>
+          if (block.type === blocksType.section) {
+            return (<div key={block.id} className={block.selected ? "SelectedBlock" : ""}>
               <Section classN="Block" text={block.text} id={block.id} font={block.font} />
             </div>);
           }
-          // return null;
         })}
       </div>
     </>

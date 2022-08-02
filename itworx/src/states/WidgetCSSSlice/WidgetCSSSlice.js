@@ -40,9 +40,6 @@ const widgetCSS = createSlice({
       const s = state;
       s.widgetsList.empty = false;
       s.widgetsList[action.payload.id] = action.payload.font;
-      //   // text: action.payload.text,
-      //   font: action.payload.font,
-      // };
     },
   }
 })

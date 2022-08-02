@@ -4,7 +4,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Board from './Board';
 import Ctabs from './Tabs';
-import Codeblock from './code/Codeblock';
 import Navigationbar from './Navbar';
 import ModalCard from './code/Modal';
 
@@ -31,9 +30,8 @@ function WorkSpace() {
    </body>
   </html>
   `)
-console.log(codeText);
+  console.log(codeText);
 
-  // const codeText=board.map((block)=>)
   console.log(codeText);
   const handleClose = () => setModalShow(false)
   const handleOpen = () => setModalShow(true)

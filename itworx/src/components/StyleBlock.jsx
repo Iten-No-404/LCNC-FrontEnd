@@ -9,14 +9,11 @@ function StyledBlock({board,setBoard}) {
   const widgetList = useSelector(selectWidgetsList);
   const dispatch = useDispatch();
   useEffect(() => {
-    // Update the document title using the browser API
+    // Update the selected widget's properties
     changeFont();
   }, [font]);
-  // console.log("Before changing the board ",font);
-    const handelSelect = (e) => {
-        // console.log(e.target.value);
+    const handleSelect = (e) => {
         const newState = board.map((block) => {
-            // 👇️ if id equals 2, update country property
             if (block.selected===true) {
               dispatch(setFont(widgetList[block.id]));
               return {...block, text: e.target.value, font: widgetList[block.id] };
@@ -28,17 +25,13 @@ function StyledBlock({board,setBoard}) {
     };  
     const changeFont = () => {
       const newState = board.map((block) => {
-        // 👇️ if id equals 2, update country property
         if (block.selected===true) {
           dispatch(setWidget({
             id: block.id,
             font: font
           }));
           return {...block, font: font};
-          // block.fontChange = true;
-          // return {...block};
         }else{
-          // block.fontChange = false;
             return {...block, font: widgetList[block.id]}
         }
       });
@@ -46,12 +39,11 @@ function StyledBlock({board,setBoard}) {
     };  
   return (
     <Form>
-      <Form.Group controlId="typographyStyles">
-        {/* <FontPickerTool onChange={()=>changeFont()}/> */}
-        <FontPickerTool />
+      <Form.Group className="mb-3" controlId="textEditor">
+        <Form.Control onChange={(e)=>handleSelect(e)} type="text" placeholder="Enter Your Text" />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Control onChange={()=>handelSelect()} type="text" placeholder="Enter Your Text" />
+      <Form.Group controlId="typographyStyles">
+        <FontPickerTool />
       </Form.Group>
     </Form>
   );

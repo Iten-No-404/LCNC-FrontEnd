@@ -3,7 +3,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 function Layers({board, setBoard}) {
   const handelSelect = (selindex) => {
     const newState = board.map((block,index) => {
-        // 👇️ if id equals 2, update country property
         if (selindex===index) {
           return {...block, selected: true};
         }else{

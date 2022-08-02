@@ -1,8 +1,8 @@
-import blocksTybe from "./blocksTybe";
+import blocksType from "./blocksType";
 const BlocksList = [
     {
         id: 1,
-        type: blocksTybe.header,
+        type: blocksType.header,
         text: "Header",
         selected: false,
         code1: `
@@ -16,7 +16,7 @@ const BlocksList = [
     },
     {
         id: 2,
-        type: blocksTybe.section,
+        type: blocksType.section,
         text: "Section",
         selected: false,
         code1: `
