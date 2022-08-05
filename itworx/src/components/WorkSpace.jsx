@@ -30,9 +30,9 @@ function WorkSpace() {
    </body>
   </html>
   `)
-  console.log(codeText);
+  // console.log(codeText);
 
-  console.log(codeText);
+  // console.log(codeText);
   const handleClose = () => setModalShow(false)
   const handleOpen = () => setModalShow(true)
   return (

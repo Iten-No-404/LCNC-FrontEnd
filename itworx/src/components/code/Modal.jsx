@@ -2,8 +2,8 @@ import Modal from 'react-bootstrap/Modal';
 import Codeblock from './Codeblock';
 
 function ModalCard(props) {
-    console.log(props.language);
-    console.log(props.code);
+    // console.log(props.language);
+    // console.log(props.code);
   return (
     <Modal
       show={props.show}

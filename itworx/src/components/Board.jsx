@@ -7,10 +7,10 @@ import blocksType from "../helper/blocksType"
 import Section from "./blocks/Section";
 import BlocksList from "../helper/BlocksList";
 import GenerateId from "../helper/GenerateId";
-import { defaultFont } from "../helper/InitialFont";
+import { defaultFont, defaultCSS } from "../helper/InitialCSS";
 import { setWidget } from "../states/WidgetCSSSlice/WidgetCSSSlice";
 
-function Board({ board, setBoard, fontChange=false }) {
+function Board({ board, setBoard }) {
   const dispatch = useDispatch();
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "block",
@@ -24,10 +24,11 @@ function Board({ board, setBoard, fontChange=false }) {
     if (!board.find((block) => block.id === id)) {
       const newId = GenerateId();
       const block = BlocksList.find((block) => id === block.id);
-      setBoard((board) => [...board, { ...block, id :newId, onBoard: true, font: defaultFont }]);
+      setBoard((board) => [...board, { ...block, id :newId, onBoard: true, font: defaultFont, CSS: defaultCSS }]);
       dispatch(setWidget({
         id: newId,
-        font: defaultFont
+        font: defaultFont,
+        text: defaultCSS.text,
       }));
     }
   };
@@ -37,12 +38,12 @@ function Board({ board, setBoard, fontChange=false }) {
         {board.map((block) => {
           if (block.type === blocksType.header) {
             return (<div key={block.id} className={block.selected ? "SelectedBlock" : ""}>
-              <Header classN="Block" text={block.text} id={block.id} font={block.font} />
+              <Header classN="Block" text={block.text} id={block.id} font={block.font} CSS={block.CSS} />
             </div>);
           }
           if (block.type === blocksType.section) {
             return (<div key={block.id} className={block.selected ? "SelectedBlock" : ""}>
-              <Section classN="Block" text={block.text} id={block.id} font={block.font} />
+              <Section classN="Block" text={block.text} id={block.id} font={block.font} CSS={block.CSS} />
             </div>);
           }
         })}
