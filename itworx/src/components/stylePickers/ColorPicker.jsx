@@ -7,7 +7,6 @@ import { setTextColor } from "../../states/WidgetCSSSlice/WidgetCSSSlice";
 export default function ColorPickerTool(colorType) {
         const dispatch = useDispatch();
         const [activeColor, setActiveColor] = useState("#000");
-        // console.log(activeColor);
         return (
             <div
             style={{ marginTop: "55px"}}

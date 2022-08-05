@@ -15,9 +15,9 @@ function StyledBlock({board,setBoard}) {
   const handleSelect = (e) => {
     const newState = board.map((block) => {
             if (block.selected===true) {
-              return {...block, text: e.target.value, font: widgetList[block.id].font, CSS: widgetList[block.id] };
+              return {...block, text: e.target.value, CSS: widgetList[block.id] };
             }else{
-                return {...block, font: widgetList[block.id].font, CSS: widgetList[block.id] };
+                return {...block, CSS: widgetList[block.id] };
             }
           });
         setBoard(newState);
@@ -25,25 +25,18 @@ function StyledBlock({board,setBoard}) {
     const changeFont = () => {
       const newState = board.map((block) => {
         if (block.selected===true) {
-          console.log({
-            id: block.id,
-            font: font, 
-            text: CSS.text,
-            CSS: CSS
-          });
           // dispatch(setWidget({
           //   id: block.id,
           //   ...CSS
           // }));
           dispatch(setWidget({
             id: block.id,
-            font: font, 
             text: CSS.text,
             CSS: CSS
           }));
-          return {...block, font: font, CSS: CSS};
+          return {...block, CSS: CSS};
         }else{
-            return {...block, font: widgetList[block.id].font, CSS: widgetList[block.id]}
+            return {...block, CSS: widgetList[block.id]}
         }
       });
       setBoard(newState);
