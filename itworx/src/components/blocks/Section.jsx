@@ -23,7 +23,7 @@ export default function Section({text, id, classN, CSS, logo=false}) {
     }}
     >
       <div className='p-5 text-center bg-light'>
-        {text}
+        {(logo || CSS.text.content==="")?text:CSS.text.content}
       </div>
     </section>
   );

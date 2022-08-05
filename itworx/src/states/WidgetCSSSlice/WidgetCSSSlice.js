@@ -6,13 +6,13 @@ const widgetCSS = createSlice({
     color: "black",
     font: {
       family: "Open Sans",
-      size: "medium",
-      sizeUnit: "px",
-      style: "normal",
-      weight: "normal"
+      // size: "medium",
+      // sizeUnit: "px",
+      // style: "normal",
+      // weight: "normal"
     }, 
     text: {
-      content: " "
+      content: ""
     }
     },
   reducers: {
@@ -37,6 +37,16 @@ const widgetCSS = createSlice({
       s.font = action.payload;
     },
       /**
+     * This function sets the values of the text's content value
+     * @method
+     * @param {object} state The object that stores the current Widget's text content value
+     * @param {object} action The object containing the new Widget's text content value
+     */
+    setTextContent: (state, action) => {
+      const s = state;
+      s.text.content = action.payload;
+    },
+      /**
      * This function sets the values of the text's color
      * @method
      * @param {object} state The object that stores the current Widget's text's color value
@@ -51,5 +61,5 @@ const widgetCSS = createSlice({
 
 export const selectWidgetCSS = (state) => state.widgetCSS;
 export const selectWidgetCSSFont = (state) => state.widgetCSS.font;
-export const { setFontFamily, setFont, setTextColor} = widgetCSS.actions;
+export const { setFontFamily, setFont, setTextColor, setTextContent} = widgetCSS.actions;
 export default widgetCSS.reducer;

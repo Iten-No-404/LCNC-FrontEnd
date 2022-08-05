@@ -75,8 +75,12 @@ export const defaultCSS = {
     kerning: "normal",
     // font-size:medium|xx-small|x-small|small|large|x-large|xx-large|smaller|larger|initial|inherit|length in px/mm/em/rem/%
     size: "medium",
-    // Will be used concatenated to the size to form font-size. For now, let's use only these: px/mm/em/rem/%
-    sizeUnit: "px",
+    // The following is its structure if a custom value exists. Check using typeof === "object", then decide what to do.
+    // {
+    //   value: 0,
+    // Will be used concatenated to the value to form font-size. For now, let's use only these: px/mm/em/rem/%
+    //   unit: "px"
+    // }
     // font-style: normal|italic|oblique|initial|inherit
     style: "normal",
     // font-weight: normal[400]|bold[700]|bolder|lighter|number(100 - 900)|initial|inherit
@@ -150,13 +154,13 @@ export const defaultCSS = {
   //   unit: "px"
   // }
   text: {
-      // It's not a CSS property, it's the value of the text. Not sure if it's best put here.
-      content: " ",
-      // text-align: left|right|center|justify|initial|inherit
-      align: "left",
-      // text-align-last: auto|left|right|center|justify|start|end|initial|inherit
-      alignLast: "auto",
-      // text-decoration: text-decoration-line text-decoration-color text-decoration-style text-decoration-thickness|initial|inherit;
+    // It's not a CSS property, it's the value of the text. Not sure if it's best put here.
+    content: "",
+    // text-align: left|right|center|justify|initial|inherit
+    align: "left",
+    // text-align-last: auto|left|right|center|justify|start|end|initial|inherit
+    alignLast: "auto",
+    // text-decoration: text-decoration-line text-decoration-color text-decoration-style text-decoration-thickness|initial|inherit;
     decoration: {
       // text-decoration-color: color|initial|inherit
       color: "black",
@@ -166,8 +170,12 @@ export const defaultCSS = {
       style: "solid",
       // text-decoration-thickness: auto|from-font|length(px/%)|initial|inherit
       thickness: "auto",
-      // Will be used concatenated to the size to form text-decoration-thickness. For now, let's use only these: px/mm/em/rem/%
-      unit: "px"
+      // The following is its structure if a custom value exists. Check using typeof === "object", then decide what to do.
+      // {
+      //   value: 0,
+      // Will be used concatenated to the value to form text-decoration-thickness. For now, let's use only these: px/mm/em/rem/%
+      //   unit: "px"
+      // }
     },
     // text-emphasis: none|filled|open|dot|circle|double-circle|triangle|sesame|char(a,b,...,!,@,...) + color
     emphasis: {
@@ -176,10 +184,12 @@ export const defaultCSS = {
       color: 'black'
     },
     // text-indent: length in px/mm/em/rem/% |initial|inherit
-    indent: {
-      length: 0,
-      unit: "px"
-    },
+    indent: "initial",
+    // The following is its structure if a custom value exists. Check using typeof === "object", then decide what to do.
+    // {
+    //   length: 0,
+    //   unit: "px"
+    // },
     // text-justify: auto|inter-word|inter-character|none|initial|inherit
     justify: "none",
     // text-overflow: clip|ellipsis|string|initial|inherit

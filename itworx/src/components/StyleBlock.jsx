@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FontPickerTool from './stylePickers/FontPicker';
 import ColorPickerTool from './stylePickers/ColorPicker';
-import { selectWidgetCSSFont,selectWidgetCSS, setFont, setTextColor } from '../states/WidgetCSSSlice/WidgetCSSSlice';
+import { selectWidgetCSSFont,selectWidgetCSS, setFont, setTextColor, setTextContent } from '../states/WidgetCSSSlice/WidgetCSSSlice';
 import { selectWidgetsList, setWidget } from '../states/WidgetListSlice/WidgetListSlice';
 
 function StyledBlock({board,setBoard}) {
@@ -11,11 +11,12 @@ function StyledBlock({board,setBoard}) {
   const font = useSelector(selectWidgetCSSFont);
   const widgetList = useSelector(selectWidgetsList);
   console.log(widgetList);
+  console.log(board);
   const dispatch = useDispatch();
   const handleSelect = (e) => {
     const newState = board.map((block) => {
             if (block.selected===true) {
-              return {...block, text: e.target.value, CSS: widgetList[block.id] };
+              return {...block, CSS: widgetList[block.id] };
             }else{
                 return {...block, CSS: widgetList[block.id] };
             }
@@ -44,11 +45,11 @@ function StyledBlock({board,setBoard}) {
     useEffect(() => {
       // Update the selected widget's properties
       changeFont();
-      }, [font, CSS.color]);
+      }, [font, CSS.color, CSS.text]);
     return (
     <Form>
       <Form.Group className="mb-3" controlId="textEditor">
-        <Form.Control onChange={(e)=>handleSelect(e)} type="text" placeholder="Enter Your Text" />
+        <Form.Control onChange={(e)=> { dispatch(setTextContent(e.target.value)); handleSelect(e); }} type="text" placeholder="Enter Your Text" />
       </Form.Group>
       <Form.Group controlId="typographyStyles">
         <FontPickerTool />
