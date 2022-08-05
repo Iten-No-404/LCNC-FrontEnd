@@ -1,60 +1,77 @@
 import Col from 'react-bootstrap/Col';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Board from './Board';
 import Ctabs from './Tabs';
 import Navigationbar from './Navbar';
 import ModalCard from './code/Modal';
-
-
+import BlocksList from "../helper/BlocksList";
+import GenerateId from "../helper/GenerateId";
+import { defaultFont } from "../helper/InitialFont";
+import { setWidget } from "../states/WidgetCSSSlice/WidgetCSSSlice";
+import { useDispatch } from 'react-redux';
+import { generateCode } from "../helper/helpers";
 
 function WorkSpace() {
   const [board, setBoard] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
-  let codeText = `<!doctype html>
-  <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Bootstrap demo</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    </head>
-    <body>`;
+  const [initialMounting, setInitialMounting] = useState(true);
+  const [insertedBlockId, setInsertedBlockId] = useState(null);
+  const dispatch = useDispatch();
 
-  for (let i = 0; i < board.length; i++) {
-    codeText = codeText.concat(board[i].code1 + board[i].text + board[i].code2);
-  }
-  codeText = codeText.concat(`
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-   </body>
-  </html>
-  `)
-  console.log(codeText);
+  const codeText = generateCode(board);
 
-  console.log(codeText);
   const handleClose = () => setModalShow(false)
   const handleOpen = () => setModalShow(true)
+
+  // make this use effect soc that when ading the
+  // the block , we can check onthe updated board
+  useEffect(() => {
+    if (initialMounting) {
+      setInitialMounting(false);
+    } else {
+      addBlockToBoard()
+    }
+  }, [insertedBlockId]);
+
+  const addId = (id) => {
+    setInsertedBlockId(id);
+  };
+
+  const addBlockToBoard = () => {   
+    if (!board.find((block) => block.id === insertedBlockId)) {
+      const newId = GenerateId();
+      const block = BlocksList.find((block) => insertedBlockId === block.id);
+      const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont  }];
+      setBoard(newBoard);
+      dispatch(setWidget({
+        id: newId,
+        font: defaultFont
+      }));
+    }
+  };
+
   return (
-      <>
-       <Navigationbar handleOpen={handleOpen} />
-        <Container className="mt-4">
-          <Row>
-            <Col xs={9} >
-              <Board board={board} setBoard={setBoard}/>
-            </Col>
-            <Col xs={3} >
-              <Ctabs board={board} setBoard={setBoard}/>
-            </Col>
-          </Row>
+    <>
+      <Navigationbar handleOpen={handleOpen} />
+      <Container className="mt-4">
+        <Row>
+          <Col xs={9} >
+            <Board board={board} setBoard={setBoard} addId={addId} />
+          </Col>
+          <Col xs={3} >
+            <Ctabs board={board} setBoard={setBoard} />
+          </Col>
+        </Row>
 
         <ModalCard
-        show={modalShow}
-        handleClose={handleClose}
-        language="html" 
-        code={codeText} />
-        </Container>
-      </>  
+          show={modalShow}
+          handleClose={handleClose}
+          language="html"
+          code={codeText} />
+      </Container>
+    </>
   );
 }
 

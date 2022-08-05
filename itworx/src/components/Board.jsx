@@ -5,32 +5,18 @@ import "../App.css";
 import Header from "./blocks/Header";
 import blocksType from "../helper/blocksType"
 import Section from "./blocks/Section";
-import BlocksList from "../helper/BlocksList";
-import GenerateId from "../helper/GenerateId";
-import { defaultFont } from "../helper/InitialFont";
-import { setWidget } from "../states/WidgetCSSSlice/WidgetCSSSlice";
 
-function Board({ board, setBoard, fontChange=false }) {
+
+function Board({ board, setBoard, fontChange=false , addId }) {
   const dispatch = useDispatch();
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "block",
-    drop: (item) => addBlockToBoard(item.id),
+    drop: (item) => addId(item.id),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   }));
 
-  const addBlockToBoard = (id) => {   
-    if (!board.find((block) => block.id === id)) {
-      const newId = GenerateId();
-      const block = BlocksList.find((block) => id === block.id);
-      setBoard((board) => [...board, { ...block, id :newId, onBoard: true, font: defaultFont }]);
-      dispatch(setWidget({
-        id: newId,
-        font: defaultFont
-      }));
-    }
-  };
   return (
     <>
       <div className="Board" ref={drop}>
