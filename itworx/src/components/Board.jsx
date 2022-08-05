@@ -8,7 +8,7 @@ import Section from "./blocks/Section";
 import BlocksList from "../helper/BlocksList";
 import GenerateId from "../helper/GenerateId";
 import { defaultFont, defaultCSS } from "../helper/InitialCSS";
-import { setWidget } from "../states/WidgetCSSSlice/WidgetCSSSlice";
+import { setWidget } from "../states/WidgetListSlice/WidgetListSlice";
 
 function Board({ board, setBoard }) {
   const dispatch = useDispatch();
@@ -27,8 +27,9 @@ function Board({ board, setBoard }) {
       setBoard((board) => [...board, { ...block, id :newId, onBoard: true, font: defaultFont, CSS: defaultCSS }]);
       dispatch(setWidget({
         id: newId,
-        font: defaultFont,
+        font: defaultCSS.font,
         text: defaultCSS.text,
+        CSS: defaultCSS
       }));
     }
   };

@@ -22,7 +22,7 @@ export default function Section({text, id, classN, font, CSS, logo=false}) {
     ref={drag}
     style={{ border: isDragging ? "5px solid pink" : "0px",
     fontFamily: font.family,
-    color: CSS.text.color,
+    color: CSS.color,
     }}
     >
       <div className='p-5 text-center bg-light'>

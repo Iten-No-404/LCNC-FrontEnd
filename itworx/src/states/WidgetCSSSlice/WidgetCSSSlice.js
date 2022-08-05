@@ -3,21 +3,17 @@ import { createSlice } from '@reduxjs/toolkit'
 const widgetCSS = createSlice({
   name: 'widgetCSS',
   initialState: {
-      font: {
-        family: "Open Sans",
-        size: "medium",
-        sizeUnit: "px",
-        style: "normal",
-        weight: "normal"
-      }, 
-      text: {
-        content: " ",
-        color: "black"
-      },
-      //separate into another slice
-      widgetsList: { 
-        empty: true
-      }
+    color: "black",
+    font: {
+      family: "Open Sans",
+      size: "medium",
+      sizeUnit: "px",
+      style: "normal",
+      weight: "normal"
+    }, 
+    text: {
+      content: " "
+    }
     },
   reducers: {
       /**
@@ -48,21 +44,12 @@ const widgetCSS = createSlice({
      */
     setTextColor: (state, action) => {
       const s = state;
-      s.text.color = action.payload;
-    },
-    setWidget: (state, action) => {
-      const s = state;
-      s.widgetsList.empty = false;
-      s.widgetsList[action.payload.id] = {
-        font: action.payload.font,
-        text: action.payload.text
-      };
-    },
+      s.color = action.payload;
+    }
   }
 })
 
 export const selectWidgetCSS = (state) => state.widgetCSS;
 export const selectWidgetCSSFont = (state) => state.widgetCSS.font;
-export const selectWidgetsList = (state) => state.widgetCSS.widgetsList;
-export const { setFontFamily, setFont, setTextColor, setWidget } = widgetCSS.actions;
+export const { setFontFamily, setFont, setTextColor} = widgetCSS.actions;
 export default widgetCSS.reducer;
