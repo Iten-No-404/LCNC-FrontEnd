@@ -1,4 +1,4 @@
-import blocksType from "./blocksType";
+import blocksType from "./BlocksType";
 const BlocksList = [
     {
         id: 1,

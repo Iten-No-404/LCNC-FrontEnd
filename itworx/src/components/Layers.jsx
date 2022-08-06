@@ -17,7 +17,7 @@ function Layers({board, setBoard}) {
     <ListGroup variant="dark" defaultActiveKey="#link1">
         {board.map((block,index) => {
           return (
-          <ListGroup.Item  action onClick={()=>handelSelect(index)}>
+          <ListGroup.Item key={index}  action onClick={()=>handelSelect(index)}>
             {block.type}
           </ListGroup.Item>
           )
