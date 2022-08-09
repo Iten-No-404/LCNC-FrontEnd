@@ -4,12 +4,13 @@ import Header from './blocks/Header';
 import Section from './blocks/Section';
 import Layers from './Layers';
 import StyledBlock from './StyleBlock';
+import BlocksList from '../helper/BlocksList';
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 function Ctabs({ board, setBoard }) {
   return (
     <div>
-      <Droppable droppableId="tabs" type="t" >
+      <Droppable droppableId="selectWidgetTab" isDropDisabled={true}>
         {(provided, snapshot) => (
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={21}>
             <Tabs
@@ -19,14 +20,42 @@ function Ctabs({ board, setBoard }) {
               justify
             >
               <Tab eventKey="profile" title="Blocks" className='Blocks'>
+              {/* {BlocksList.map((item, index) => (
+                                <Draggable
+                                    key={item.id}
+                                    draggableId={item.id}
+                                    index={index}>
+                                    {(provided, snapshot) => (
+                                        <div>
+                                            <div
+                                                innerRef={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                isDragging={snapshot.isDragging}
+                                                style={
+                                                    provided.draggableProps
+                                                        .style
+                                                }>
+                                                {item.content}
+                                            </div>
+                                            <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
+                                              <Header isDragging={snapshot.isDragging} classN="blockTab" text="Header" logo={true} />
+                                            </div>
+                                            {snapshot.isDragging && (
+                                                <Header classN="blockTab" text="Header" id='{1}' logo={true} />
+                                            )}
+                                            </div>
+                                    )}
+                                </Draggable>
+                            ))} */}
                 <Draggable draggableId='1' key={1} index={1}>
                   {(provided, snapshot) => (
                     <>
                       <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
-                        <Header isDragging={snapshot.isDragging} classN="blockTab" text="Header" id={1} logo={true} />
+                        <Header isDragging={snapshot.isDragging} classN="blockTab" text="Header" logo={true} />
                       </div>
                       {snapshot.isDragging && (
-                          <Header classN="blockTab" text="Header" id={1} logo={true} />
+                          <Header classN="blockTab" text="Header" id='headerlogo' logo={true} />
                       )}
                     </>
                   )}

@@ -12,54 +12,14 @@ import { defaultFont } from "../helper/InitialFont";
 import { setWidget } from "../states/WidgetCSSSlice/WidgetCSSSlice";
 import { useDispatch } from 'react-redux';
 import { generateCode } from "../helper/helpers";
-import blocksType from "../helper/BlocksType"
+import blocksType from "../helper/blocksType"
 import { DragDropContext } from 'react-beautiful-dnd'
 
 function WorkSpace() {
 
-  const [board, setBoard] = useState([
-    {
-      id: "one",
-      type: blocksType.header,
-      text: "Header",
-      selected: false,
-      code1: `
-      <header>
-       <div class='p-5 text-center bg-light'>
-         <h1 class='mb-3'>`,
-      code2: `
-         </h1>
-       </div>
-      </header>`
-    },
-    {
-      id: "two",
-      type: blocksType.section,
-      text: "Section",
-      selected: false,
-      code1: `
-      <section>
-        <div className='p-5 text-center bg-light'>`,
-      code2: `
-        </div>
-      </section>`
-    },
-    {
-      id: "three",
-      type: blocksType.header,
-      text: "Header",
-      selected: false,
-      code1: `
-    <header>
-     <div class='p-5 text-center bg-light'>
-       <h1 class='mb-3'>`,
-      code2: `
-       </h1>
-     </div>
-    </header>`
-    }
-  ]);
+  const [board, setBoard] = useState([]);
 
+  console.log(board);
   const [modalShow, setModalShow] = React.useState(false);
   const [initialMounting, setInitialMounting] = useState(true);
   const [insertedBlockId, setInsertedBlockId] = useState(null);
@@ -76,7 +36,7 @@ function WorkSpace() {
     if (initialMounting) {
       setInitialMounting(false);
     } else {
-      addBlockToBoard()
+      // addBlockToBoard()
     }
   }, [insertedBlockId]);
 
@@ -85,6 +45,7 @@ function WorkSpace() {
   };
 
   const addBlockToBoard = () => {
+    // console.log(board);  
     if (!board.find((block) => block.id === insertedBlockId)) {
       const newId = GenerateId();
       const block = BlocksList.find((block) => insertedBlockId === block.id);
@@ -97,27 +58,135 @@ function WorkSpace() {
     }
   };
 
-  const handleOnDragEnd = (result) => {
-    const { destination, source, draggableId } = result;
-    console.log(result);
-    if (!destination || destination.draggableId === 'tabs') return;
-    if (destination.droppableId === source.droppableId) {
-      console.log('first')
+  const reorder = (result) => {
       const items = Array.from(board);
       const [reorderedItem] = items.splice(result.source.index, 1);
       items.splice(result.destination.index, 0, reorderedItem);
       setBoard(items);
-    } else {
-      console.log('second')
-      const newId = GenerateId();
-      const block = BlocksList.find((block) => insertedBlockId === block.id);
-      const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont }];
-      setBoard(newBoard);
-      dispatch(setWidget({
-        id: newId,
-        font: defaultFont
-      }));
+    return result;
+  };
+
+  const copy = (source, destination, droppableSource, droppableDestination) => {
+    console.log('==> dest', destination);
+    // const newId = GenerateId();
+    // const block = BlocksList.find((block) => insertedBlockId === block.id);
+    // const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont }];
+    // setBoard(newBoard);
+    // dispatch(setWidget({
+    //   id: newId,
+    //   font: defaultFont
+    // }));
+    console.log('droppableSource=',droppableSource);
+    console.log('droppableDestination=',droppableDestination);
+    const sourceClone = Array.from(source);
+    console.log('SourceClone=',sourceClone);
+    const destClone = Array.from(destination);
+    console.log('DestinationClone=',destClone);
+    const item = sourceClone[droppableSource.index-1];
+    console.log('item=',item);
+    
+    const newId = GenerateId();
+    dispatch(setWidget({
+      id: newId,
+      font: defaultFont
+    }));
+    // setInsertedBlockId(droppableSource.index);
+    // const block = BlocksList.find((block) => insertedBlockId === block.id);
+    // const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont }];
+    // setBoard(newBoard);
+    destClone.splice(droppableDestination.index, 0, { ...item, id: newId });
+    return destClone;
+};
+
+const move = (source, destination, droppableSource, droppableDestination) => {
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+
+    const result = {};
+    result[droppableSource.droppableId] = sourceClone;
+    result[droppableDestination.droppableId] = destClone;
+
+    return result;
+};
+
+  const handleOnDragEnd = (result) => {
+    const { destination, source } = result;
+    console.log('==> result', result);
+
+    // dropped outside the list
+    if (!destination) {
+      return;
     }
+
+    switch (source.droppableId) {
+        case destination.droppableId:
+          reorder(result);
+          // setBoard({
+          //       [destination.droppableId]: reorder(
+          //           board[source.droppableId],
+          //           source.index,
+          //           destination.index
+          //       )
+          //   });
+            break;
+        case 'selectWidgetTab':
+          console.log('Add Widget!!!');
+          // copy(BlocksList, board, source, destination);
+          setBoard( 
+                copy(
+                    BlocksList,
+                    board,
+                    source,
+                    destination
+                )
+            );
+            // console.log('second');
+            // const newId = GenerateId();
+            // const block = BlocksList.find((block) => insertedBlockId === block.id);
+            // const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont }];
+            // setBoard(newBoard);
+            // dispatch(setWidget({
+            //   id: newId,
+            //   font: defaultFont
+            // }));
+            break;
+        default:
+          setBoard(
+                move(
+                    board[source.droppableId],
+                    board[destination.droppableId],
+                    source,
+                    destination
+                )
+            );
+            break;
+    }
+
+    // // Add new widget first
+    // if (source.droppableId === 'tabs') 
+    // {
+    //   console.log('second');
+    //   const newId = GenerateId();
+    //   const block = BlocksList.find((block) => insertedBlockId === block.id);
+    //   const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont }];
+    //   setBoard(newBoard);
+    //   dispatch(setWidget({
+    //     id: newId,
+    //     font: defaultFont
+    //   }));
+
+    // }
+    // if (!destination || destination.draggableId === 'tabs') return;
+    // if (destination.droppableId === source.droppableId) {
+    //   console.log('first')
+    //   const items = Array.from(board);
+    //   const [reorderedItem] = items.splice(result.source.index, 1);
+    //   items.splice(result.destination.index, 0, reorderedItem);
+    //   setBoard(items);
+    // } 
   }
 
   return (

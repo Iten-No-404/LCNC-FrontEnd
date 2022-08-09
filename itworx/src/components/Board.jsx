@@ -3,16 +3,16 @@ import { useDrop } from "react-dnd";
 import { useDispatch } from 'react-redux';
 import "../App.css";
 import Header from "./blocks/Header";
-import blocksType from "../helper/BlocksType"
+import blocksType from "../helper/blocksType"
 import Section from "./blocks/Section";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 function Board({ board, setBoard, fontChange = false, addId }) {
   const dispatch = useDispatch();
-
+  console.log(board);
   return (
     <div>
-      <Droppable droppableId="board" type="b"  >
+      <Droppable droppableId="board">
         {(provided, snapshot) => (
           <div className="Board"  {...provided.droppableProps} ref={provided.innerRef}>
             {board.map((block, index) => {
