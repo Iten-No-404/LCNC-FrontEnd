@@ -7,9 +7,8 @@ import blocksType from "../helper/blocksType"
 import Section from "./blocks/Section";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
-function Board({ board, setBoard, fontChange = false, addId }) {
+function Board({ board, setBoard, fontChange = false }) {
   const dispatch = useDispatch();
-  console.log(board);
   return (
     <div>
       <Droppable droppableId="board">
