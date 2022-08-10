@@ -11,7 +11,7 @@ function Board({ board, setBoard, fontChange = false }) {
   const dispatch = useDispatch();
   return (
     <div>
-      <Droppable droppableId="board">
+      <Droppable droppableId="board" isCombineEnabled >
         {(provided, snapshot) => (
           <div className="Board"  {...provided.droppableProps} ref={provided.innerRef}>
             {board.map((block, index) => {
@@ -20,7 +20,27 @@ function Board({ board, setBoard, fontChange = false }) {
                   <Draggable draggableId={block.id} key={block.id} index={index}>
                     {(provided, snapshot) => (
                       <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={block.id} className={block.selected ? "SelectedBlock" : ""}>
-                        <Header isDragging={snapshot.isDragging} classN="Block" text={block.text} id={block.id} font={block.font} />
+                        <Droppable droppableId={'id_' + block.id} isCombineEnabled type="x" >
+                          {(provided, snapshot) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef}>
+                              <Draggable draggableId={block.id + 'a'} key={block.id} index={index}>
+                                {(provided, snapshot) => (
+                                  <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={block.id} className={block.selected ? "SelectedBlock" : ""}>
+                                    <Header isDragging={snapshot.isDragging} classN="Block" text={block.id + 'a'} id={'s'} font={block.font} />
+                                  </div>
+                                )}
+                              </Draggable>
+                              <Draggable draggableId={block.id + 'b'} key={block.id} index={index}>
+                                {(provided, snapshot) => (
+                                  <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={block.id} className={block.selected ? "SelectedBlock" : ""}>
+                                    <Header isDragging={snapshot.isDragging} classN="Block" text={block.id + 'b'} id={'b'} font={block.font} />
+                                  </div>
+                                )}
+                              </Draggable>
+                              {provided.placeholder}
+                            </div>
+                          )}
+                        </Droppable>
                       </div>
                     )}
                   </Draggable>

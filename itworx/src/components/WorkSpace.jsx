@@ -62,7 +62,12 @@ function WorkSpace() {
   };
 
   const handleOnDragEnd = (result) => {
-    const { destination, source } = result;
+    const { destination, source , draggableId } = result;
+    console.log(result);
+    if (result.combine){
+      console.log('source: ' + draggableId)
+      console.log('destination : ' + result.combine.draggableId)
+    }
     // dropped outside the list
     if (!destination) {
       return;
