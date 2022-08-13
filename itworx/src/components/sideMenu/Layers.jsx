@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { setCSS } from '../states/WidgetCSSSlice/WidgetCSSSlice';
-import { selectWidgetsList } from '../states/WidgetListSlice/WidgetListSlice';
+import { setCSS } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
+import { selectWidgetsList } from '../../states/WidgetListSlice/WidgetListSlice';
 
 function Layers({board, setBoard}) {
   const widgetList = useSelector(selectWidgetsList);

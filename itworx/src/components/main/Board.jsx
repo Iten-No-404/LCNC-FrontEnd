@@ -1,8 +1,8 @@
 import React from "react";
-import "../App.css";
-import Header from "./blocks/Header";
-import blocksType from "../helper/blocksType";
-import Section from "./blocks/Section";
+import "../../App.css";
+import Header from "../blocks/Header";
+import blocksType from "../../helper/blocksType";
+import Section from "../blocks/Section";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 function Board({ board, setBoard }) {
