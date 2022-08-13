@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const widgetCSS = createSlice({
   name: 'widgetCSS',
   initialState: {
+    id: null,
     color: "black",
     font: {
       family: "Open Sans",
@@ -16,6 +17,19 @@ const widgetCSS = createSlice({
     }
     },
   reducers: {
+      /**
+     * This function sets the values of all the Widget's CSS
+     * @method
+     * @param {object} state The object that stores the current values of all the Widget's CSS
+     * @param {object} action The object containing the new values of all the Widget's CSS
+     */
+    setCSS: (state, action) => {
+      const s = state;
+      s.color = action.payload.color;
+      s.font = action.payload.font;
+      s.text = action.payload.text;
+      s.id = action.payload.id;
+    },
       /**
      * This function sets the value of the Widget's Font Family
      * @method
@@ -61,5 +75,5 @@ const widgetCSS = createSlice({
 
 export const selectWidgetCSS = (state) => state.widgetCSS;
 export const selectWidgetCSSFont = (state) => state.widgetCSS.font;
-export const { setFontFamily, setFont, setTextColor, setTextContent} = widgetCSS.actions;
+export const { setCSS, setFontFamily, setFont, setTextColor, setTextContent} = widgetCSS.actions;
 export default widgetCSS.reducer;
