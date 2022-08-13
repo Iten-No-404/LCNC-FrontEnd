@@ -3,15 +3,15 @@ import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Board from './Board';
-import Ctabs from './Tabs';
+import Ctabs from '../sideMenu/Tabs';
 import Navigationbar from './Navbar';
-import ModalCard from './code/Modal';
-import BlocksList from "../helper/BlocksList";
-import GenerateId from "../helper/GenerateId";
-import { defaultCSS } from "../helper/InitialCSS";
-import { setWidget } from "../states/WidgetListSlice/WidgetListSlice";
+import ModalCard from '../code/Modal';
+import BlocksList from "../../helper/BlocksList";
+import GenerateId from "../../helper/GenerateId";
+import { defaultCSS } from "../../helper/InitialCSS";
+import { setWidget } from "../../states/WidgetListSlice/WidgetListSlice";
 import { useDispatch } from 'react-redux';
-import { generateCode } from "../helper/helpers";
+import { generateCode } from "../../helper/helpers";
 import { DragDropContext } from 'react-beautiful-dnd'
 
 function WorkSpace() {
