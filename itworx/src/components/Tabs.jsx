@@ -9,8 +9,8 @@ import { Droppable, Draggable } from "react-beautiful-dnd";
 function Ctabs({ board, setBoard }) {
   return (
     <div>
-      <Droppable droppableId="selectWidgetTab" isDropDisabled={true}>
-        {(provided, snapshot) => (
+      <Droppable droppableId="selectWidgetTab" isDropDisabled={true} >
+        {(provided) => (
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={21}>
             <Tabs
               defaultActiveKey="profile"
@@ -19,34 +19,6 @@ function Ctabs({ board, setBoard }) {
               justify
             >
               <Tab eventKey="profile" title="Blocks" className='Blocks'>
-              {/* {BlocksList.map((item, index) => (
-                                <Draggable
-                                    key={item.id}
-                                    draggableId={item.id}
-                                    index={index}>
-                                    {(provided, snapshot) => (
-                                        <div>
-                                            <div
-                                                innerRef={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                                isDragging={snapshot.isDragging}
-                                                style={
-                                                    provided.draggableProps
-                                                        .style
-                                                }>
-                                                {item.content}
-                                            </div>
-                                            <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
-                                              <Header isDragging={snapshot.isDragging} classN="blockTab" text="Header" logo={true} />
-                                            </div>
-                                            {snapshot.isDragging && (
-                                                <Header classN="blockTab" text="Header" id='{1}' logo={true} />
-                                            )}
-                                            </div>
-                                    )}
-                                </Draggable>
-                            ))} */}
                 <Draggable draggableId='1' key={1} index={1}>
                   {(provided, snapshot) => (
                     <>
@@ -54,7 +26,7 @@ function Ctabs({ board, setBoard }) {
                         <Header isDragging={snapshot.isDragging} classN="blockTab" text="Header" logo={true} />
                       </div>
                       {snapshot.isDragging && (
-                          <Header classN="blockTab" text="Header" id='headerlogo' logo={true} />
+                        <Header classN="blockTab" text="Header" id='headerlogo' logo={true} />
                       )}
                     </>
                   )}
@@ -66,7 +38,7 @@ function Ctabs({ board, setBoard }) {
                         <Section isDragging={snapshot.isDragging} classN="blockTab" text="Section" id={2} logo={true} />
                       </div>
                       {snapshot.isDragging && (
-                          <Section classN="blockTab" text="Section" id={2} logo={true} />
+                        <Section classN="blockTab" text="Section" id={2} logo={true} />
                       )}
                     </>
                   )}
