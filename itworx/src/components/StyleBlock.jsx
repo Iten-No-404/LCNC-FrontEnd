@@ -2,23 +2,23 @@ import Form from 'react-bootstrap/Form';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FontPickerTool from './stylePickers/FontPicker';
-import { selectWidgetCSSFont, selectWidgetsList, setFont, setWidget } from '../states/WidgetCSSSlice/WidgetCSSSlice';
+import ColorPickerTool from './stylePickers/ColorPicker';
+import { selectWidgetCSSFont,selectWidgetCSS, setFont, setTextColor, setTextContent } from '../states/WidgetCSSSlice/WidgetCSSSlice';
+import { selectWidgetsList, setWidget } from '../states/WidgetListSlice/WidgetListSlice';
 
 function StyledBlock({board,setBoard}) {
+  const CSS = useSelector(selectWidgetCSS);
   const font = useSelector(selectWidgetCSSFont);
   const widgetList = useSelector(selectWidgetsList);
+  console.log('widgetList=',widgetList);
+  console.log('Board=',board);
   const dispatch = useDispatch();
-  useEffect(() => {
-    // Update the selected widget's properties
-    changeFont();
-  }, [font]);
-    const handleSelect = (e) => {
-        const newState = board.map((block) => {
+  const handleSelect = (e) => {
+    const newState = board.map((block) => {
             if (block.selected===true) {
-              dispatch(setFont(widgetList[block.id]));
-              return {...block, text: e.target.value, font: widgetList[block.id] };
+              return {...block, CSS: widgetList[block.id] };
             }else{
-                return {...block, font: widgetList[block.id] };
+                return {...block, CSS: widgetList[block.id] };
             }
           });
         setBoard(newState);
@@ -26,24 +26,34 @@ function StyledBlock({board,setBoard}) {
     const changeFont = () => {
       const newState = board.map((block) => {
         if (block.selected===true) {
+          // dispatch(setWidget({
+          //   id: block.id,
+          //   ...CSS
+          // }));
           dispatch(setWidget({
             id: block.id,
-            font: font
+            text: CSS.text,
+            CSS: CSS
           }));
-          return {...block, font: font};
+          return {...block, CSS: CSS};
         }else{
-            return {...block, font: widgetList[block.id]}
+            return {...block, CSS: widgetList[block.id]}
         }
       });
-    setBoard(newState);
+      setBoard(newState);
     };  
-  return (
+    useEffect(() => {
+      // Update the selected widget's properties
+      changeFont();
+      }, [font, CSS.color, CSS.text]);
+    return (
     <Form>
       <Form.Group className="mb-3" controlId="textEditor">
-        <Form.Control onChange={(e)=>handleSelect(e)} type="text" placeholder="Enter Your Text" />
+        <Form.Control onChange={(e)=> { dispatch(setTextContent(e.target.value)); handleSelect(e); }} type="text" placeholder="Enter Your Text" />
       </Form.Group>
       <Form.Group controlId="typographyStyles">
         <FontPickerTool />
+        <ColorPickerTool colorType='textColor' />
       </Form.Group>
     </Form>
   );

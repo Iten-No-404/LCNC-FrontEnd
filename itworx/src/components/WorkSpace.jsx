@@ -8,18 +8,17 @@ import Navigationbar from './Navbar';
 import ModalCard from './code/Modal';
 import BlocksList from "../helper/BlocksList";
 import GenerateId from "../helper/GenerateId";
-import { defaultFont } from "../helper/InitialFont";
-import { setWidget } from "../states/WidgetCSSSlice/WidgetCSSSlice";
+import { defaultCSS } from "../helper/InitialCSS";
+import { setWidget } from "../states/WidgetListSlice/WidgetListSlice";
 import { useDispatch } from 'react-redux';
 import { generateCode } from "../helper/helpers";
-import blocksType from "../helper/blocksType"
 import { DragDropContext } from 'react-beautiful-dnd'
 
 function WorkSpace() {
 
   const [board, setBoard] = useState([]);
 
-  console.log(board);
+  // console.log(board);
   const [modalShow, setModalShow] = React.useState(false);
   const [initialMounting, setInitialMounting] = useState(true);
   const [insertedBlockId, setInsertedBlockId] = useState(null);
@@ -35,28 +34,27 @@ function WorkSpace() {
   useEffect(() => {
     if (initialMounting) {
       setInitialMounting(false);
-    } else {
-      // addBlockToBoard()
     }
-  }, [insertedBlockId]);
+  },[insertedBlockId]);
 
   const addId = (id) => {
     setInsertedBlockId(id);
   };
 
-  const addBlockToBoard = () => {
-    // console.log(board);  
-    if (!board.find((block) => block.id === insertedBlockId)) {
-      const newId = GenerateId();
-      const block = BlocksList.find((block) => insertedBlockId === block.id);
-      const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont }];
-      setBoard(newBoard);
-      dispatch(setWidget({
-        id: newId,
-        font: defaultFont
-      }));
-    }
-  };
+  // const addBlockToBoard = () => {
+  //   // console.log(board);  
+  //   if (!board.find((block) => block.id === insertedBlockId)) {
+  //     const newId = GenerateId();
+  //     const block = BlocksList.find((block) => insertedBlockId === block.id);
+  //     const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultCSS.font, CSS: defaultCSS }];
+  //     setBoard(newBoard);
+  //     dispatch(setWidget({
+  //       id: newId,
+  //       font: defaultCSS.font,
+  //       CSS: defaultCSS
+  //     }));
+  //   }
+  // };
 
   const reorder = (result) => {
       const items = Array.from(board);
@@ -68,33 +66,22 @@ function WorkSpace() {
 
   const copy = (source, destination, droppableSource, droppableDestination) => {
     console.log('==> dest', destination);
-    // const newId = GenerateId();
-    // const block = BlocksList.find((block) => insertedBlockId === block.id);
-    // const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont }];
-    // setBoard(newBoard);
-    // dispatch(setWidget({
-    //   id: newId,
-    //   font: defaultFont
-    // }));
-    console.log('droppableSource=',droppableSource);
-    console.log('droppableDestination=',droppableDestination);
+    // console.log('droppableSource=',droppableSource);
+    // console.log('droppableDestination=',droppableDestination);
     const sourceClone = Array.from(source);
-    console.log('SourceClone=',sourceClone);
+    // console.log('SourceClone=',sourceClone);
     const destClone = Array.from(destination);
-    console.log('DestinationClone=',destClone);
+    // console.log('DestinationClone=',destClone);
     const item = sourceClone[droppableSource.index-1];
-    console.log('item=',item);
+    // console.log('item=',item);
     
     const newId = GenerateId();
     dispatch(setWidget({
       id: newId,
-      font: defaultFont
+      font: defaultCSS.font,
+      CSS: defaultCSS
     }));
-    // setInsertedBlockId(droppableSource.index);
-    // const block = BlocksList.find((block) => insertedBlockId === block.id);
-    // const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont }];
-    // setBoard(newBoard);
-    destClone.splice(droppableDestination.index, 0, { ...item, id: newId });
+    destClone.splice(droppableDestination.index, 0, { ...item, id: newId, CSS: defaultCSS });
     return destClone;
 };
 
@@ -124,17 +111,9 @@ const move = (source, destination, droppableSource, droppableDestination) => {
     switch (source.droppableId) {
         case destination.droppableId:
           reorder(result);
-          // setBoard({
-          //       [destination.droppableId]: reorder(
-          //           board[source.droppableId],
-          //           source.index,
-          //           destination.index
-          //       )
-          //   });
             break;
         case 'selectWidgetTab':
           console.log('Add Widget!!!');
-          // copy(BlocksList, board, source, destination);
           setBoard( 
                 copy(
                     BlocksList,
@@ -143,50 +122,18 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                     destination
                 )
             );
-            // console.log('second');
-            // const newId = GenerateId();
-            // const block = BlocksList.find((block) => insertedBlockId === block.id);
-            // const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont }];
-            // setBoard(newBoard);
-            // dispatch(setWidget({
-            //   id: newId,
-            //   font: defaultFont
-            // }));
             break;
         default:
-          setBoard(
-                move(
-                    board[source.droppableId],
-                    board[destination.droppableId],
-                    source,
-                    destination
-                )
-            );
+          // setBoard(
+          //       move(
+          //           board[source.droppableId],
+          //           board[destination.droppableId],
+          //           source,
+          //           destination
+          //       )
+          //   );
             break;
     }
-
-    // // Add new widget first
-    // if (source.droppableId === 'tabs') 
-    // {
-    //   console.log('second');
-    //   const newId = GenerateId();
-    //   const block = BlocksList.find((block) => insertedBlockId === block.id);
-    //   const newBoard = [...board, { ...block, id: newId, onBoard: true, font: defaultFont }];
-    //   setBoard(newBoard);
-    //   dispatch(setWidget({
-    //     id: newId,
-    //     font: defaultFont
-    //   }));
-
-    // }
-    // if (!destination || destination.draggableId === 'tabs') return;
-    // if (destination.droppableId === source.droppableId) {
-    //   console.log('first')
-    //   const items = Array.from(board);
-    //   const [reorderedItem] = items.splice(result.source.index, 1);
-    //   items.splice(result.destination.index, 0, reorderedItem);
-    //   setBoard(items);
-    // } 
   }
 
   return (

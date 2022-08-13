@@ -1,15 +1,12 @@
 import React from "react";
-import { useDrop } from "react-dnd";
-import { useDispatch } from 'react-redux';
 import "../App.css";
 import Header from "./blocks/Header";
-import blocksType from "../helper/blocksType"
+import blocksType from "../helper/blocksType";
 import Section from "./blocks/Section";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
-function Board({ board, setBoard, fontChange = false, addId }) {
-  const dispatch = useDispatch();
-  console.log(board);
+function Board({ board, setBoard }) {
+  // console.log(board);
   return (
     <div>
       <Droppable droppableId="board">
@@ -21,7 +18,7 @@ function Board({ board, setBoard, fontChange = false, addId }) {
                   <Draggable draggableId={block.id} key={block.id} index={index}>
                     {(provided, snapshot) => (
                       <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={block.id} className={block.selected ? "SelectedBlock" : ""}>
-                        <Header isDragging={snapshot.isDragging} classN="Block" text={block.text} id={block.id} font={block.font} />
+                        <Header isDragging={snapshot.isDragging} classN="Block" text={block.text} id={block.id} font={block.font} CSS={block.CSS}/>
                       </div>
                     )}
                   </Draggable>
@@ -32,7 +29,7 @@ function Board({ board, setBoard, fontChange = false, addId }) {
                   <Draggable draggableId={block.id} key={block.id} index={index}>
                     {(provided, snapshot) => (
                       <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={block.id} className={block.selected ? "SelectedBlock" : ""}>
-                        <Section isDragging={snapshot.isDragging} classN="Block" text={block.text} id={block.id} font={block.font} />
+                        <Section isDragging={snapshot.isDragging} classN="Block" text={block.text} id={block.id} font={block.font} CSS={block.CSS}/>
                       </div>
                     )}
                   </Draggable>

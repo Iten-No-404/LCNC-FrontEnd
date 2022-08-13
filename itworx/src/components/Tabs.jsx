@@ -4,7 +4,6 @@ import Header from './blocks/Header';
 import Section from './blocks/Section';
 import Layers from './Layers';
 import StyledBlock from './StyleBlock';
-import BlocksList from '../helper/BlocksList';
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 function Ctabs({ board, setBoard }) {
