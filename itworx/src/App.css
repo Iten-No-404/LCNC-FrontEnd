@@ -1,38 +1,31 @@
-.App {
-  text-align: center;
+@import url(https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css);
+@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
+
+
+.blockTab  {
+  margin: 10px;
+  cursor: move;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Block {
+  margin: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Board {
+  width:100%;
+  min-height: 600px;
+  border: 2px solid black;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.SelectedBlock {
+  border: 4px dotted rgb(54, 54, 198);
 }
 
-.App-link {
-  color: #61dafb;
+
+.code {
+  font-family: -apple-system, Roboto, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.demo {
+  font-family: "Fira Code", monospace;
 }

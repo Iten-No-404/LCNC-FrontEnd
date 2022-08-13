@@ -1,15 +1,10 @@
 import './App.css';
-import Navigationbar from './components/Navbar';
-
+import WorkSpace from './components/WorkSpace';
 function App() {
   return (
-    <>
-      <Navigationbar/>
       <div className="App">
-        ItWorx Summer 2022
+          <WorkSpace />
       </div>
-    </>
   );
 }
-
 export default App;
