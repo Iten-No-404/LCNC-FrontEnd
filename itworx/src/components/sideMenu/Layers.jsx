@@ -20,6 +20,7 @@ function Layers({board, setBoard}) {
   const handelSelect = (selindex) => {
     const newState = board.map((block) => {
         if (selindex===block.id) {
+          resetChosenCSS(block.id);
           return {...block, selected: true};
         }else{
           return {...block, selected: false};
