@@ -25,6 +25,16 @@ const BlocksList = [
         code2:`
           </div>
         </section>`  
+    },
+    {
+      id: 3,
+      type: blocksType.image,
+      text: null,
+      selected: false,
+      code1: `
+      <img src="`,
+      code2:`
+      " class="rounded float-start" alt="..."`  
     }
 ];
 export default  BlocksList

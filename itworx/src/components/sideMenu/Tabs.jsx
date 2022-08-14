@@ -3,6 +3,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Header from '../blocks/Header';
 import Section from '../blocks/Section';
 import Layers from './Layers';
+import DisplayImage from '../blocks/Image'
 import StyledBlock from './StyleBlock';
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
@@ -43,11 +44,23 @@ function Ctabs({ board, setBoard }) {
                     </>
                   )}
                 </Draggable>
+                <Draggable draggableId='3' key={3} index={3}>
+                  {(provided, snapshot) => (
+                    <>
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
+                        <DisplayImage isDragging={snapshot.isDragging} classN="blockTab" id={3} />
+                      </div>
+                      {snapshot.isDragging && (
+                        <DisplayImage classN="blockTab" id={3}  />
+                      )}
+                    </>
+                  )}
+                </Draggable>
               </Tab>
-              <Tab eventKey="home" title="Layers">
+              <Tab eventKey="layers" title="Layers">
                 <Layers board={board} setBoard={setBoard} />
               </Tab>
-              <Tab eventKey="longer-tab" title="Style">
+              <Tab eventKey="style" title="Style">
                 <StyledBlock board={board} setBoard={setBoard} />
               </Tab>
             </Tabs>

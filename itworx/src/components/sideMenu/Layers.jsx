@@ -1,7 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
-import ListGroup from 'react-bootstrap/ListGroup';
 import { setCSS } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
 import { selectWidgetsList } from '../../states/WidgetListSlice/WidgetListSlice';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function Layers({board, setBoard}) {
   const widgetList = useSelector(selectWidgetsList);
@@ -15,9 +18,8 @@ function Layers({board, setBoard}) {
   }));
 }
   const handelSelect = (selindex) => {
-    const newState = board.map((block,index) => {
-        if (selindex===index) {
-          resetChosenCSS(block.id);
+    const newState = board.map((block) => {
+        if (selindex===block.id) {
           return {...block, selected: true};
         }else{
           return {...block, selected: false};
@@ -26,16 +28,32 @@ function Layers({board, setBoard}) {
       });
     setBoard(newState);
   };
+
+const handelDelete = (selindex) => {
+  const newState = board.filter((block) => {
+    return selindex!==block.id
+  });
+  setBoard(newState);
+  };
   
   return (
     <ListGroup variant="dark" defaultActiveKey="#link1">
+        <Container>
         {board.map((block,index) => {
-          return (
-          <ListGroup.Item key={index}  action onClick={()=>handelSelect(index)}>
-            {block.type}
-          </ListGroup.Item>
+          return (              
+             <Row key={block.id}>
+                <Col xs={10}>
+                 <ListGroup.Item  action onClick={()=>handelSelect(block.id)}>
+                   {block.type}
+                 </ListGroup.Item>
+                </Col>
+                <Col xs={2} className="m-0 p-0">
+                <button onClick={()=>handelDelete(block.id)} > <img  src="https://img.icons8.com/sf-black-filled/200/000000/trash.png"/></button>
+                </Col>
+              </Row>
           )
         })}
+         </Container>
     </ListGroup>
   );
 }

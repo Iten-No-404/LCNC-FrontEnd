@@ -29,3 +29,11 @@
 .demo {
   font-family: "Fira Code", monospace;
 }
+
+#wrapper{
+  width:100%;
+}
+
+img#uploadimg {
+  width: 300px;
+}
