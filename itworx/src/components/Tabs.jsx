@@ -9,7 +9,7 @@ import { Droppable, Draggable } from "react-beautiful-dnd";
 function Ctabs({ board, setBoard }) {
   return (
     <div>
-      <Droppable droppableId="selectWidgetTab" isDropDisabled={true} >
+      <Droppable droppableId="selectWidgetTab" isDropDisabled={true} type="board" >
         {(provided) => (
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={21}>
             <Tabs
