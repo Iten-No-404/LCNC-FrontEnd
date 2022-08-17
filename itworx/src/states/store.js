@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import widgetCSSReducer from './WidgetCSSSlice/WidgetCSSSlice';
-import widgetListReducer from './WidgetListSlice/WidgetListSlice';
+import widgetCSSReducer from './WidgetCSSSlice/WidgetCSSSlice'
 
 const store = configureStore({
     reducer: {
-        widgetCSS: widgetCSSReducer,
-        widgetList: widgetListReducer
+        widgetCSS: widgetCSSReducer
     },
 });
 

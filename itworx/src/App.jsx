@@ -1,5 +1,5 @@
 import './App.css';
-import WorkSpace from './components/main/WorkSpace';
+import WorkSpace from './components/WorkSpace';
 function App() {
   return (
       <div className="App">

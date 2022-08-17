@@ -1,7 +1,7 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Header from '../blocks/Header';
-import Section from '../blocks/Section';
+import Header from './blocks/Header';
+import Section from './blocks/Section';
 import Layers from './Layers';
 import StyledBlock from './StyleBlock';
 import { Droppable, Draggable } from "react-beautiful-dnd";

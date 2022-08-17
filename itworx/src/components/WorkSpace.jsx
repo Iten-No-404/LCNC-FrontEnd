@@ -3,17 +3,17 @@ import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Board from './Board';
-import Ctabs from '../sideMenu/Tabs';
+import Ctabs from './Tabs';
 import Navigationbar from './Navbar';
-import ModalCard from '../code/Modal';
-import BlocksList from "../../helper/BlocksList";
-import GenerateId from "../../helper/GenerateId";
-import { defaultCSS } from "../../helper/InitialCSS";
-import { setWidget } from "../../states/WidgetListSlice/WidgetListSlice";
+import ModalCard from './code/Modal';
+import BlocksList from "../helper/BlocksList";
+import GenerateId from "../helper/GenerateId";
+import { defaultFont } from "../helper/InitialFont";
+import { setWidget } from "../states/WidgetCSSSlice/WidgetCSSSlice";
 import { useDispatch } from 'react-redux';
-import { generateCode } from "../../helper/helpers";
+import { generateCode } from "../helper/helpers";
 import { DragDropContext } from 'react-beautiful-dnd'
-import Tree from '../Tree';
+import Tree from './Tree';
 
 function WorkSpace() {
 
@@ -62,14 +62,13 @@ function WorkSpace() {
   };
 
   const copy = (source, destination, droppableSource, droppableDestination) => {
-    console.log('==> dest', destination);
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const item = sourceClone[droppableSource.index - 1];
     const newId = GenerateId();
     dispatch(setWidget({
       id: newId,
-      font: 'Arial',
+      font: defaultFont
     }));
     destClone.splice(droppableDestination.index, 0, { ...item, id: newId, children: [] });
     return destClone;
@@ -83,8 +82,7 @@ function WorkSpace() {
     const newId = GenerateId();
     dispatch(setWidget({
       id: newId,
-      font: defaultCSS.font,
-      CSS: defaultCSS
+      font: defaultFont
     }));
     // find the element with destination id and add the new element to it's children
     const destIndex = destClone.findIndex(e => e.id === droppableDestination.draggableId);
