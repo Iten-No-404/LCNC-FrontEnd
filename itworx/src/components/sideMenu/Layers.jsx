@@ -8,6 +8,45 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 
+const recursiveSelect = (myBoard, id) => {
+  if (myBoard && myBoard.length > 0) {
+    let newBoard = [];
+    myBoard.forEach(block => {
+      if (block.id === id) {
+        const newBlock = { ...block, selected:true };
+        newBoard.push(newBlock);
+      } else {
+        const val = recursiveSelect(block.children, id);
+        if (val.length > 0) {
+          const newBlock = { ...block, selected:false ,children: val };
+          newBoard.push(newBlock);
+        } else {
+          newBoard.push({...block, selected: false});
+        }
+      }
+    }
+    );
+    return newBoard;
+  } else {
+    return [];
+  }
+}
+
+const recursiveRemoveChild = (myBoard, id) => {
+  if (myBoard && myBoard.length > 0) {
+    myBoard.forEach(e => {
+      if (e.id === id) {
+        myBoard.splice(myBoard.indexOf(e), 1);
+        return;
+      } else {
+        recursiveRemoveChild(e.children, id);
+      }
+    }
+    );
+  }
+}
+
+
 function Block({board, setBoard ,block ,parentid= null}) {
   console.log(board);
   const widgetList = useSelector(selectWidgetsList);
@@ -21,55 +60,19 @@ function Block({board, setBoard ,block ,parentid= null}) {
   }));
 }
   const handelSelect = (selindex) => {
-      console.log({selindex,parentid});
-      const newState =parentid? board.map((block) => {
-        if (block.id===parentid) {
-          const newchildrens= block.children.map((chiblock) => {
-              if (selindex===chiblock.id) {
-                return {...chiblock, selected: true};
-              }else{
-                return {...chiblock, selected: false};
-              }})
-          return {...block, children: newchildrens};
-        }else{
-          const newchildrens= block.children?.map((chiblock) => {
-              return {...chiblock, selected: false};
-          })
-
-          return {...block, selected: false, children: newchildrens};
-        }
-      }) : board.map((block) => {
-        if (selindex===block.id) {
-          //resetChosenCSS(block.id);
-          return {...block, selected: true};
-        }else{
-          const newchildrens= block.children?.map((chiblock) => {
-            return {...chiblock, selected: false};
-          })
-          return {...block, selected: false, children: newchildrens};
-        }
-  
-      });
-
-    setBoard(newState);
+      console.log({selindex});
+      setBoard((prevBoard) => {
+        return recursiveSelect(prevBoard,selindex);
+      })
   };
 
 const handelDelete = (selindex) => {
-  const newState =parentid? 
-  board.map((block) => {
-    if (block.id===parentid) {
-      const newchildrens= block.children.filter((chiblock) => {
-        return selindex!==chiblock.id
-      })
-      return {...block, children: newchildrens};
-    }else{
-      return block;
-    }
-  }) :
-   board.filter((block) => {
-    return selindex!==block.id
-  });
-  setBoard(newState);
+  console.log({selindex});
+  setBoard((prevBoard) => {
+    let newboard=[...prevBoard];
+    recursiveRemoveChild(newboard,selindex)
+    return newboard;
+  })
   };
   
   return (           
@@ -106,9 +109,9 @@ function Layers({board, setBoard}) {
               <Accordion.Header>{block.type}</Accordion.Header>
               <Accordion.Body>
               {
-              block.children.map((chiblock)=>{
-                return (<Block board={board} setBoard={setBoard} block={chiblock} parentid={block.id}/>)
-              })
+              //block.children.map((chiblock)=>{
+              <Layers board={block.children} setBoard={setBoard} />
+              //})
               }
               </Accordion.Body>
             </Accordion.Item>
