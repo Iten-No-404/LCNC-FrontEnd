@@ -7,31 +7,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-
-const recursiveSelect = (myBoard, id) => {
-  if (myBoard && myBoard.length > 0) {
-    let newBoard = [];
-    myBoard.forEach(block => {
-      if (block.id === id) {
-        const newBlock = { ...block, selected:true };
-        newBoard.push(newBlock);
-      } else {
-        const val = recursiveSelect(block.children, id);
-        if (val.length > 0) {
-          const newBlock = { ...block, selected:false ,children: val };
-          newBoard.push(newBlock);
-        } else {
-          newBoard.push({...block, selected: false});
-        }
-      }
-    }
-    );
-    return newBoard;
-  } else {
-    return [];
-  }
-}
-
 const recursiveRemoveChild = (myBoard, id) => {
   if (myBoard && myBoard.length > 0) {
     myBoard.forEach(e => {
@@ -46,19 +21,43 @@ const recursiveRemoveChild = (myBoard, id) => {
   }
 }
 
+  function Block({board, setBoard ,block ,parentid= null}) {
+    console.log(board);
+    const widgetList = useSelector(selectWidgetsList);
+    const dispatch = useDispatch();
+    function resetChosenCSS(id) {      
+      dispatch(setCSS({
+      color: widgetList[id].color,
+      font: widgetList[id].font,
+      text: widgetList[id].text,
+      id: id
+    }));
+  }
+  const recursiveSelect = (myBoard, id) => {
+    if (myBoard && myBoard.length > 0) {
+      let newBoard = [];
+      myBoard.forEach(block => {
+        if (block.id === id) {
+          resetChosenCSS(block.id);
+          const newBlock = { ...block, selected:true };
+          newBoard.push(newBlock);
+        } else {
+          const val = recursiveSelect(block.children, id);
+          if (val.length > 0) {
+            const newBlock = { ...block, selected:false ,children: val };
+            newBoard.push(newBlock);
+          } else {
+            newBoard.push({...block, selected: false});
+          }
+        }
+      }
+      );
+      return newBoard;
+    } else {
+      return [];
+    }
+  }
 
-function Block({board, setBoard ,block ,parentid= null}) {
-  console.log(board);
-  const widgetList = useSelector(selectWidgetsList);
-  const dispatch = useDispatch();
-  function resetChosenCSS(id) {      
-    dispatch(setCSS({
-    color: widgetList[id].color,
-    font: widgetList[id].font,
-    text: widgetList[id].text,
-    id: id
-  }));
-}
   const handelSelect = (selindex) => {
       console.log({selindex});
       setBoard((prevBoard) => {
