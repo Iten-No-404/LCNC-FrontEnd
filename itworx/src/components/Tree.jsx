@@ -2,10 +2,11 @@ import "../App.css";
 import React from 'react'
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import TreeNode from "./TreeNode";
+import { getBorderStyling } from "./TreeNode";
 
-function Tree({ data, droppableId = "board", droppableClass = "Board", type = "board", fontChange = false }) {
+function Tree({ data, droppableId = "board", droppableClass = "Board", type = "board", fontChange = false, parentId= "board" }) {
     return (
-        <div>
+        <div style={{ padding: '10px' }}>
             <Droppable droppableId={droppableId} type={type} isCombineEnabled>
                 {(provided) => (
                     <div className={droppableClass} {...provided.droppableProps} ref={provided.innerRef}>
