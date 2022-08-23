@@ -8,6 +8,33 @@ import blocksType from "../../helper/blocksType"
 import { selectWidgetCSSFont,selectWidgetCSS, setCSS, setFont, setTextColor, setTextContent } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
 import { selectWidgetsList, getCurrentWidgetID, setWidget } from '../../states/WidgetListSlice/WidgetListSlice';
 
+
+const recursiveAddimage = (myBoard,e) => {
+  if (myBoard && myBoard.length > 0) {
+    let newBoard = [];
+    myBoard.forEach(block => {
+      if (block.selected) {
+        const newBlock = { ...block, text: URL.createObjectURL(e.target.files[0]) };
+        newBoard.push(newBlock);
+      } else {
+        const val = recursiveAddimage(block.children, e);
+        if (val.length > 0) {
+          const newBlock = { ...block,children: val };
+          newBoard.push(newBlock);
+        } else {
+          newBoard.push(block);
+        }
+      }
+    }
+    );
+    return newBoard;
+  } else {
+    return [];
+  }
+}
+
+
+
 function StyledBlock({board,setBoard}) {
   const CSS = useSelector(selectWidgetCSS);
   const font = useSelector(selectWidgetCSSFont);
@@ -30,28 +57,12 @@ function StyledBlock({board,setBoard}) {
     });
   }, [board]);
   console.log(selectedblock);
-    const changeFont = () => {
-      const newState = board.map((block) => {
-        if (block.selected===true) {
-          // dispatch(setWidget({
-          //   id: block.id,
-          //   ...CSS
-          // }));
-          dispatch(setWidget({
-            id: block.id,
-            text: CSS.text,
-            CSS: CSS
-          }));
-          return {...block, CSS: CSS};
-        }else{
-            return {...block, CSS: widgetList[block.id]}
-        }
-      });
-      setBoard(newState);
-    };  
     useEffect(() => {
       // Update the selected widget's properties
-      changeFont();
+      setBoard((prevBoard) => {
+        return recursiveChangeCSS(prevBoard);
+      })
+
       }, [font, CSS.color, CSS.text]);
     useEffect(() => {
         if(CSS.id != null)
@@ -62,24 +73,40 @@ function StyledBlock({board,setBoard}) {
     }, [CSS.id]);
 
     const handleuploadImage = (e) => {
-      const newState = board.map((block) => {
-        if (block.selected===true) {
-          return {...block, text: URL.createObjectURL(e.target.files[0])};
-        }else if(block.children) {
-           const newchildrens= block.children.map((chiblock) => {
-            if (chiblock.selected===true) {
-              return {...chiblock, text: URL.createObjectURL(e.target.files[0])};
-            }else{
-              return chiblock;
-            }})
-            
-            return {...block, children: newchildrens};
-        }else{
-          return block;
-        }
-      });
-      setBoard(newState);
+      setBoard((prevBoard) => {
+        return recursiveAddimage(prevBoard,e);
+      })
     }; 
+
+    const recursiveChangeCSS = (myBoard) => {
+      if (myBoard && myBoard.length > 0) {
+        let newBoard = [];
+        myBoard.forEach(block => {
+          if (block.selected) {
+            dispatch(setWidget({
+              id: block.id,
+              text: CSS.text,
+              CSS: CSS
+            }));
+            const newBlock = { ...block, CSS:CSS };
+            newBoard.push(newBlock);
+          } else {
+            const val = recursiveChangeCSS(block.children);
+            if (val.length > 0) {
+              const newBlock = { ...block,children: val };
+              newBoard.push(newBlock);
+            } else {
+              newBoard.push(block);
+            }
+          }
+        }
+        );
+        return newBoard;
+      } else {
+        return [];
+      }
+    }
+    
     
     return (
     <>

@@ -20,7 +20,7 @@ function WorkSpace() {
   const [modalShow, setModalShow] = React.useState(false);
   const dispatch = useDispatch();
 
-  //const codeText = generateCode(board);
+  const codeText = generateCode(board);
 
   const handleClose = () => setModalShow(false)
   const handleOpen = () => setModalShow(true)
@@ -128,11 +128,11 @@ function WorkSpace() {
               <Ctabs board={board} setBoard={setBoard} />
             </Col>
           </Row>
-          {/* <ModalCard
+          <ModalCard
             show={modalShow}
             handleClose={handleClose}
             language="html"
-            code={codeText} /> */}
+            code={codeText} />
         </Container>
       </DragDropContext>
     </>
