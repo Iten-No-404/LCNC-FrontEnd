@@ -1,7 +1,9 @@
 const blocksType={
     header:"header",
     section:"section",
-    image:"image"
+    image:"image",
+    navbar:"navbar",
+    div:"div",
 }
 
 export default blocksType;

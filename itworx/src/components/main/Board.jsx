@@ -5,14 +5,16 @@ import blocksType from "../../helper/blocksType";
 import Section from "../blocks/Section";
 import DisplayImage from "../blocks/Image";
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import Nav from "../blocks/Nav";
+import Div from "../blocks/Div";
 
-function Board({ board, setBoard }) {
+function Board({ board, droppableId, ClassN=null}) {
   // console.log(board);
   return (
     <div>
-      <Droppable droppableId="board" isCombineEnabled >
+      <Droppable droppableId={droppableId} isCombineEnabled >
         {(provided, snapshot) => (
-          <div className="Board"  {...provided.droppableProps} ref={provided.innerRef}>
+          <div className={ClassN? ClassN :"d-flex flex-row"}  {...provided.droppableProps} ref={provided.innerRef}>
             {board.map((block, index) => {
               if (block.type === blocksType.header) {
                 return (
@@ -71,7 +73,29 @@ function Board({ board, setBoard }) {
                   <Draggable draggableId={block.id} key={block.id} index={index}>
                     {(provided, snapshot) => (
                       <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={block.id} className={block.selected ? "SelectedBlock" : ""}>
-                        <DisplayImage isDragging={snapshot.isDragging} classN="Block" id={block.id} selectedImage={block.text}/>
+                        <DisplayImage isDragging={snapshot.isDragging} classN="Block" id={block.id} selectedImage={block.text} width={ClassN? "300" : "30" }/>
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              }
+              if (block.type === blocksType.navbar) {
+                return (
+                  <Draggable draggableId={block.id} key={block.id} index={index}>
+                    {(provided, snapshot) => (
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={block.id} className={block.selected ? "SelectedBlock" : ""}>
+                        <Nav isDragging={snapshot.isDragging} classN="Block" id={block.id} children={block.children}/>
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              }
+              if (block.type === blocksType.div) {
+                return (
+                  <Draggable draggableId={block.id} key={block.id} index={index}>
+                    {(provided, snapshot) => (
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={block.id} className={block.selected ? "SelectedBlock" : ""}>
+                        <Div isDragging={snapshot.isDragging} classN="Block" text={block.text} id={block.id} font={block.font} CSS={block.CSS}/>
                       </div>
                     )}
                   </Draggable>

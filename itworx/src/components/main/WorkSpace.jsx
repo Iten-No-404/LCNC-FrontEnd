@@ -45,7 +45,20 @@ function WorkSpace() {
       font: defaultCSS.font,
       CSS: defaultCSS
     }));
-    destClone.splice(droppableDestination.index, 0, { ...item, id: newId, CSS: defaultCSS });
+    if(item.children){
+      const newchildren=item.children.map((child)=>{
+        const newId = GenerateId();
+         dispatch(setWidget({
+         id: newId,
+        font: defaultCSS.font,
+        CSS: defaultCSS
+        }));
+          return {...child, id: newId, CSS: defaultCSS }
+      })
+      destClone.splice(droppableDestination.index, 0, { ...item, id: newId, CSS: defaultCSS, children: newchildren });
+    }else{
+      destClone.splice(droppableDestination.index, 0, { ...item, id: newId, CSS: defaultCSS });
+    }
     return destClone;
   };
 
@@ -109,7 +122,7 @@ function WorkSpace() {
         <Container className="mt-4">
           <Row>
             <Col xs={9} >
-              <Board board={board} setBoard={setBoard} />
+              <Board board={board} droppableId="board" ClassN="Board" />
             </Col>
             <Col xs={3} >
               <Ctabs board={board} setBoard={setBoard} />

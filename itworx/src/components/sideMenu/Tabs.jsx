@@ -2,10 +2,12 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Header from '../blocks/Header';
 import Section from '../blocks/Section';
+import Nav from '../blocks/Nav';
 import Layers from './Layers';
 import DisplayImage from '../blocks/Image'
 import StyledBlock from './StyleBlock';
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import Div from '../blocks/Div';
 
 function Ctabs({ board, setBoard }) {
   return (
@@ -20,6 +22,18 @@ function Ctabs({ board, setBoard }) {
               justify
             >
               <Tab eventKey="profile" title="Blocks" className='Blocks'>
+              <Draggable draggableId='5' key={5} index={5}>
+                  {(provided, snapshot) => (
+                    <>
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
+                        <Div isDragging={snapshot.isDragging} classN="blockTab" id={5} text="Bootstrap" logo={true}/>
+                      </div>
+                      {snapshot.isDragging && (
+                        <Div classN="blockTab" id={5} text="Bootstrap" logo={true} />
+                      )}
+                    </>
+                  )}
+                </Draggable>
                 <Draggable draggableId='1' key={1} index={1}>
                   {(provided, snapshot) => (
                     <>
@@ -52,6 +66,18 @@ function Ctabs({ board, setBoard }) {
                       </div>
                       {snapshot.isDragging && (
                         <DisplayImage classN="blockTab" id={3}  />
+                      )}
+                    </>
+                  )}
+                </Draggable>
+                <Draggable draggableId='4' key={4} index={4}>
+                  {(provided, snapshot) => (
+                    <>
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
+                        <Nav isDragging={snapshot.isDragging} classN="blockTab" id={4} text="Bootstrap" logo={true}/>
+                      </div>
+                      {snapshot.isDragging && (
+                        <Nav classN="blockTab" id={4} text="Bootstrap" logo={true} />
                       )}
                     </>
                   )}

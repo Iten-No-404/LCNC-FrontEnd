@@ -21,8 +21,15 @@ function StyledBlock({board,setBoard}) {
       if (block.selected===true) {
         setSelectedblock(block);
       }
+      block.children?.forEach((chilblock) => {
+        if (chilblock.selected===true) {
+          setSelectedblock(chilblock);
+        }
+      })
+
     });
   }, [board]);
+  console.log(selectedblock);
     const changeFont = () => {
       const newState = board.map((block) => {
         if (block.selected===true) {
@@ -57,10 +64,18 @@ function StyledBlock({board,setBoard}) {
     const handleuploadImage = (e) => {
       const newState = board.map((block) => {
         if (block.selected===true) {
-          dispatch(setFont(widgetList[block.id]));
           return {...block, text: URL.createObjectURL(e.target.files[0])};
+        }else if(block.children) {
+           const newchildrens= block.children.map((chiblock) => {
+            if (chiblock.selected===true) {
+              return {...chiblock, text: URL.createObjectURL(e.target.files[0])};
+            }else{
+              return chiblock;
+            }})
+            
+            return {...block, children: newchildrens};
         }else{
-            return block;
+          return block;
         }
       });
       setBoard(newState);
