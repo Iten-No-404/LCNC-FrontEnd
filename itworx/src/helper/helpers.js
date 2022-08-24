@@ -1,3 +1,15 @@
+const generatechildrencode = (block) => {
+    let codeText = ``;
+    if (block.children) {
+        console.log(block.children);
+        for (let i = 0; i < block.children.length; i++) {
+            codeText = codeText.concat(block.children[i].code1 + generatechildrencode(block.children[i]) + block.children[i].code2);
+        }
+        return codeText;
+    } else {
+        return block.CSS.text.content ? block.CSS.text.content : block.text;
+    }
+};
 export const generateCode = (board) => {
     let codeText = `<!doctype html>
   <html lang="en">
@@ -10,13 +22,13 @@ export const generateCode = (board) => {
     <body>`;
 
     for (let i = 0; i < board.length; i++) {
-        codeText = codeText.concat(board[i].code1 + board[i].text + board[i].code2);
+        codeText = codeText.concat(board[i].code1 + generatechildrencode(board[i]) + board[i].code2);
     }
 
     codeText = codeText.concat(`
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
    </body>
   </html>
-  `)
+  `);
     return codeText;
-}
+};
