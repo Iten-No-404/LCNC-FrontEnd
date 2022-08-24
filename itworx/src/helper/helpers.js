@@ -3,7 +3,7 @@ const generatechildrencode = (block) => {
     if (block.children) {
         console.log(block.children);
         for (let i = 0; i < block.children.length; i++) {
-            codeText = codeText.concat(block.children[i].code1 + generatechildrencode(block.children[i]) + block.children[i].code2);
+            codeText = codeText.concat(block.children[i].code1 + ((block.CSS.text.content) ? block.CSS.text.content : block.text) + generatechildrencode(block.children[i]) + block.children[i].code2);
         }
         return codeText;
     } else {
@@ -22,7 +22,7 @@ export const generateCode = (board) => {
     <body>`;
 
     for (let i = 0; i < board.length; i++) {
-        codeText = codeText.concat(board[i].code1 + generatechildrencode(board[i]) + board[i].code2);
+        codeText = codeText.concat(board[i].code1 +  ((board[i].CSS.text.content) ? board[i].CSS.text.content : board[i].text) + generatechildrencode(board[i]) + board[i].code2);
     }
 
     codeText = codeText.concat(`

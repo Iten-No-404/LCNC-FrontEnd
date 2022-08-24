@@ -107,7 +107,8 @@ function StyledBlock({board,setBoard}) {
       }
     }
     
-    
+    if(selectedblock?.type === blocksType.navbar)
+      return;
     return (
     <>
     {selectedblock?.type === blocksType.image? (<input

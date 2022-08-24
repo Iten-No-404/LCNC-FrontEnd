@@ -10,11 +10,10 @@ export default function Nav({ classN , logo=false ,isDragging=false, CSS, childr
       CSS = defaultCSS;
     }
   return (
+    logo && 
     <Navbar bg="light" variant="light" className={classN} style={{ border: isDragging ? "5px solid pink" : "0px"}}>
         <Container>
           <Navbar.Brand className="d-flex flex-row">
-            {children? <Board board={children} droppableId="children" /> : 
-            <>
             <img
               alt="brand"
               src="https://react-bootstrap.github.io/logo.svg"
@@ -23,9 +22,9 @@ export default function Nav({ classN , logo=false ,isDragging=false, CSS, childr
               className="d-inline-block align-top"
             />
             <div className="m-1"> Bootstrap </div>
-             </>}
           </Navbar.Brand>
         </Container>
     </Navbar>
+                
   );
 }
