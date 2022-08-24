@@ -1,8 +1,10 @@
 import React from 'react'
-import "../App.css";
-import Header from "./blocks/Header";
-import blocksType from "../helper/blocksType"
-import Section from "./blocks/Section";
+import "../../App.css";
+import Header from "../blocks/Header";
+import Section from "../blocks/Section";
+import DisplayImage from '../blocks/Image';
+import Nav from '../blocks/Nav';
+import blocksType from "../../helper/blocksType"
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import Tree from './Tree';
 
@@ -49,7 +51,7 @@ export const getBorderStyling = (parentId) => {
     }
 }
 
-function TreeNode({ id, index, font, selected, type, childs, parentId }) {
+function TreeNode({ id, index, font, CSS, text, selected, type, childs, parentId, ClassN=null }) {
     return (
         <Droppable droppableId={getDroppableId(id, parentId)} type={getDragType(parentId)} isCombineEnabled >
             {(provided) => (
@@ -61,12 +63,20 @@ function TreeNode({ id, index, font, selected, type, childs, parentId }) {
                                     <br />
                                     {/* {getDragType(parentId)} */}
                                     {/* <div style={{ background: '#0f0' }}> start</div> */}
-                                    {
-                                        type === blocksType.header &&
-                                        (<Header isDragging={snapshot.isDragging} classN="block" text={id} id={id} font={font} />)
+                                    {type === blocksType.div &&
+                                        ( <Section isDragging={snapshot.isDragging} classN="Block" text={text} id={id} font={font} CSS={CSS}/>)
+                                    }
+                                    {type === blocksType.header &&
+                                        (<Header isDragging={snapshot.isDragging} classN="Block" text={text} id={id} font={font} CSS={CSS}/>)
                                     }
                                     {type === blocksType.section &&
-                                        (<Section isDragging={snapshot.isDragging} classN="block" text={id} id={id} font={font} />)
+                                        ( <Section isDragging={snapshot.isDragging} classN="Block" text={text} id={id} font={font} CSS={CSS}/>)
+                                    }
+                                    {type === blocksType.image &&
+                                        ( <DisplayImage isDragging={snapshot.isDragging} classN="Block" id={id} selectedImage={text} width={ClassN? "300" : "30" }/>)
+                                    }
+                                    {type === blocksType.navbar &&
+                                        (  <Nav isDragging={snapshot.isDragging} classN="Block" id={id} /*children={children}*//>)
                                     }
                                     <div style={{ display: "none" }} {...provided.dragHandleProps} >
                                     </div>

@@ -1,20 +1,22 @@
 import React from "react";
-import { useDrag } from "react-dnd";
-import { defaultFont } from "../../helper/InitialFont";
+import { defaultCSS } from "../../helper/InitialCSS";
 
-export default function Header({text, id, classN, font= '', logo=false, isDragging=false}) {
+export default function Header({text, id, classN, font= '', CSS, logo=false, isDragging=false}) {
     if(logo)
-      font = defaultFont;
-
+    {
+      CSS = defaultCSS;
+      font = defaultCSS.font;
+    }
+  
   return (
     <header
     className={classN}
     style={{ border: isDragging ? "5px solid pink" : "0px",
-             fontFamily: font.family,
+             fontFamily: CSS.font.family, color: CSS.color
    }}
     >
       <div className='p-5 text-center bg-light'>
-        <h1 className='mb-3'>{text}</h1>
+        <h1 className='mb-3'>{(logo || CSS.text.content==="")?text:CSS.text.content}</h1>
       </div>
     </header>
   );

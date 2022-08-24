@@ -1,20 +1,22 @@
 import React from "react";
-import { useDrag } from "react-dnd";
-import { defaultFont } from "../../helper/InitialFont";
+import { defaultCSS } from "../../helper/InitialCSS";
 
-export default function Section({text, id, classN, font='', logo=false, isDragging=false}) {
+export default function Section({text, id, classN, font='', CSS, logo=false, isDragging=false}) {
   if(logo)
-    font = defaultFont;
-
+  {
+    CSS = defaultCSS;
+    font = defaultCSS.font;
+  }
   return (
     <section
     className={classN}
     style={{ border: isDragging ? "5px solid pink" : "0px",
-    fontFamily: font.family,
+    fontFamily: CSS.font.family,
+    color: CSS.color,
     }}
     >
       <div className='p-5 text-center bg-light'>
-        {text}
+        {(logo || CSS.text.content==="")?text:CSS.text.content}
       </div>
     </section>
   );

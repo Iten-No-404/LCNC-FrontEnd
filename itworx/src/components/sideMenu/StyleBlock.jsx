@@ -4,9 +4,9 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FontPickerTool from '../stylePickers/FontPicker';
 import ColorPickerTool from '../stylePickers/ColorPicker';
-import blocksType from "../../helper/blocksType"
-import { selectWidgetCSSFont,selectWidgetCSS, setCSS, setFont, setTextColor, setTextContent } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
-import { selectWidgetsList, getCurrentWidgetID, setWidget } from '../../states/WidgetListSlice/WidgetListSlice';
+import blocksType from "../../helper/blocksType";
+import { selectWidgetCSSFont, selectWidgetCSS, setCSS, setTextContent } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
+import { selectWidgetsList, setWidget } from '../../states/WidgetListSlice/WidgetListSlice';
 
 
 const recursiveAddimage = (myBoard,e) => {
@@ -38,7 +38,7 @@ const recursiveAddimage = (myBoard,e) => {
 function StyledBlock({board,setBoard}) {
   const CSS = useSelector(selectWidgetCSS);
   const font = useSelector(selectWidgetCSSFont);
-  const widgetList = useSelector(selectWidgetsList);
+  // const widgetList = useSelector(selectWidgetsList);
   const [content, setContent] = useState("");
   const [selectedblock, setSelectedblock] = useState(null);
   console.log('Board=',board);
