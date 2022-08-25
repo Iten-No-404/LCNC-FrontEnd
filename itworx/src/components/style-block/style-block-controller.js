@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { selectWidgetCSS } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
-import { setWidget } from '../../states/WidgetListSlice/WidgetListSlice';
-
+import { selectWidgetCSS } from '../../states//widget-css-slice//widget-css-slice';
+import { setWidget } from '../../states//widget-list-slice//widget-list-slice';
 
 const StyleBlockHandler = (setBoard) => {
 

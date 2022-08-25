@@ -1,7 +1,7 @@
 import React , { useState } from "react";
 import { useDispatch } from 'react-redux';
 import FontPicker from "font-picker-react";
-import { setFontFamily } from "../../states/WidgetCSSSlice/WidgetCSSSlice";
+import { setFontFamily } from "../../states//widget-css-slice//widget-css-slice";
 
 export default function FontPickerTool() {
         const dispatch = useDispatch();

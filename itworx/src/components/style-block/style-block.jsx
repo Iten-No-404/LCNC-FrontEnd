@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import FontPickerTool from '../font-picker/font-picker';
 import ColorPickerTool from '../color-picker/color-picker';
 import blocksType from "../../helper/blocksType";
-import { selectWidgetCSSFont, selectWidgetCSS, setTextContent } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
+import { selectWidgetCSSFont, selectWidgetCSS, setTextContent } from '../../states//widget-css-slice//widget-css-slice';
 import StyleBlockHandler from './style-block-controller';
 
 const StyledBlock = ({ board, setBoard }) => {
