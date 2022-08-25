@@ -7,11 +7,13 @@ export const generateCSSids = (board) => {
         const fontFamily = board[i].CSS.font.family;
         Allfontsfamily.add(`family=${fontFamily.replace(" ", "+")}&`);
         const color = board[i].CSS.color;
+        const fontSize = board[i].CSS.font.size;
         const id = board[i].id;
         const CSSselec = `
         #a${id}{
             font-family: "${fontFamily}";
             color: ${color};
+            font-size: "${fontSize}px";
         }`;
         codeText = codeText.concat(CSSselec + generateCSSids(board[i].children));
     }

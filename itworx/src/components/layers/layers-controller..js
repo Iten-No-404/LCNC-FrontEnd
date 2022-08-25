@@ -22,12 +22,15 @@ const LayersHandler = (setBoard) => {
 	}
 
 	const resetChosenCSS = (id) => {
-		dispatch(setCSS({
-			color: widgetList[id].color,
-			font: widgetList[id].font,
-			text: widgetList[id].text,
-			id: id
-		}));
+		dispatch(
+            setCSS({
+                color: widgetList[id].color,
+                background: widgetList[id].background,
+                font: widgetList[id].font,
+                text: widgetList[id].text,
+                id: id,
+            })
+        );
 	}
 
 	const handelDelete = (selindex) => {

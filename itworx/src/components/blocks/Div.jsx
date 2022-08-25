@@ -12,7 +12,7 @@ export default function Div({text, id, classN, font= '', CSS, logo=false, isDrag
     <div
     className={classN}
     style={{ border: isDragging ? "5px solid pink" : "0px",
-             fontFamily: CSS.font.family, color: CSS.color
+             fontFamily: CSS.font.family, color: CSS.color,  fontSize: CSS.font.size+"px"
    }}
     >
       {(logo || CSS.text.content==="")?text:CSS.text.content}

@@ -3,7 +3,7 @@ import rgbHex from "rgb-hex";
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ChromePicker } from 'react-color';
-import { setTextColor, selectWidgetCSS } from "../../states/WidgetCSSSlice/WidgetCSSSlice";
+import { setTextColor, setBackgroundColor ,selectWidgetCSS } from "../../states/WidgetCSSSlice/WidgetCSSSlice";
 
 export default function ColorPickerTool(colorType) {
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export default function ColorPickerTool(colorType) {
     }, [CSS.id]);
         return (
             <div
-            style={{ marginTop: "55px"}}
+            style={{ marginTop: "20px"}}
             >
                 <ChromePicker
                 color={activeColor}
@@ -27,6 +27,8 @@ export default function ColorPickerTool(colorType) {
                         setActiveColor("#" + rgbHex(nextColor.rgb.r, nextColor.rgb.g, nextColor.rgb.b, nextColor.rgb.a));
                         if(colorType.colorType === "textColor")
                             dispatch(setTextColor("#" + rgbHex(nextColor.rgb.r, nextColor.rgb.g, nextColor.rgb.b, nextColor.rgb.a)));
+                        else if(colorType.colorType === "backgroundColor")
+                            dispatch(setBackgroundColor("#" + rgbHex(nextColor.rgb.r, nextColor.rgb.g, nextColor.rgb.b, nextColor.rgb.a)));    
                     }
                 }
                 />

@@ -7,12 +7,15 @@ const BlockHandler = (setBoard) => {
 	const dispatch = useDispatch();
 
 	const resetChosenCSS = (id) => {
-		dispatch(setCSS({
-			color: widgetList[id].color,
-			font: widgetList[id].font,
-			text: widgetList[id].text,
-			id: id
-		}));
+		dispatch(
+            setCSS({
+                color: widgetList[id].color,
+                font: widgetList[id].font,
+                text: widgetList[id].text,
+                background: widgetList[id].background,
+                id: id,
+            })
+        );
 	}
 
 	const recursiveRemoveChild = (myBoard, id) => {

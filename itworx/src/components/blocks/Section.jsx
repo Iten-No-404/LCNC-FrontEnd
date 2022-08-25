@@ -13,6 +13,7 @@ export default function Section({text, id, classN, font='', CSS, logo=false, isD
     style={{ border: isDragging ? "5px solid pink" : "0px",
     fontFamily: CSS.font.family,
     color: CSS.color,
+    fontSize: CSS.font.size+"px"
     }}
     >
       <div className='p-5 text-center bg-light'>

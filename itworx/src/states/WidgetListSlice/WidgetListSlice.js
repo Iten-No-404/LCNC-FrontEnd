@@ -20,7 +20,8 @@ const widgetList = createSlice({
             s.widgetsList[action.payload.id] = {
                 color: action.payload.CSS.color,
                 font: action.payload.CSS.font,
-                text: action.payload.CSS.text
+                text: action.payload.CSS.text,
+                background: action.payload.CSS.background,
             };
         },
         /**

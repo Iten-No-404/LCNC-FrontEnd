@@ -73,7 +73,7 @@ const BlocksList = [
     {
         id: 5,
         type: blocksType.div,
-        text: "Bootstrap",
+        text: "Div",
         selected: false,
         code1: `
       <div id >`,
