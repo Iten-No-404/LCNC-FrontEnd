@@ -18,6 +18,8 @@ const widgetCSS = createSlice({
         background: {
             color: "black",
         },
+        width: "98",
+        height: "100",
     },
     reducers: {
         /**
@@ -94,9 +96,18 @@ const widgetCSS = createSlice({
             const s = state;
             s.background.color = action.payload;
         },
+        setWidthval: (state, action) => {
+            const s = state;
+            s.width = action.payload;
+        },
+        setHeightval: (state, action) => {
+            const s = state;
+            s.height = action.payload;
+        },
     },
 });
 
 export const selectWidgetCSS = (state) => state.widgetCSS;
-export const { setCSS, setFontFamily, setFont, setTextColor, setBackgroundColor, setTextContent, setFontsizeval } = widgetCSS.actions;
+export const { setCSS, setFontFamily, setFont, setTextColor, setBackgroundColor, setTextContent, setFontsizeval, setWidthval, setHeightval } =
+    widgetCSS.actions;
 export default widgetCSS.reducer;

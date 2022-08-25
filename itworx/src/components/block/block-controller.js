@@ -13,6 +13,8 @@ const BlockHandler = (setBoard) => {
                 font: widgetList[id].font,
                 text: widgetList[id].text,
                 background: widgetList[id].background,
+                width: widgetList[id].width,
+                height: widgetList[id].height,
                 id: id,
             })
         );

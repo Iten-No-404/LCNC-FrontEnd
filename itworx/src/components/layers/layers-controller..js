@@ -28,6 +28,8 @@ const LayersHandler = (setBoard) => {
                 background: widgetList[id].background,
                 font: widgetList[id].font,
                 text: widgetList[id].text,
+                width: widgetList[id].width,
+                height: widgetList[id].height,
                 id: id,
             })
         );

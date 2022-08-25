@@ -14,7 +14,9 @@ export default function Section({text, id, classN, font='', CSS, logo=false, isD
     fontFamily: CSS.font.family,
     color: CSS.color,
     fontSize: CSS.font.size+"px",
-    backgroundColor: CSS.background.color
+    backgroundColor: CSS.background.color,
+    width:`${CSS.width}%`,
+    height:`${CSS.height}px`
     }}
     >
       <div className='p-5 text-center'>

@@ -15,6 +15,8 @@ export default function Div({text, id, classN, font= '', CSS, logo=false, isDrag
              fontFamily: CSS.font.family, color: CSS.color,  
              fontSize: CSS.font.size+"px",
              backgroundColor: CSS.background.color,
+             width:`${CSS.width}%`,
+             height:`${CSS.height}px`
    }}
     >
       {(logo || CSS.text.content==="")?text:CSS.text.content}

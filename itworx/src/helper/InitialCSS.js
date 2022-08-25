@@ -91,7 +91,7 @@ export const defaultCSS = {
         variant: "normal",
     },
     // height: auto|length|initial|inherit
-    height: "auto",
+    height: "100",
     // The following is its structure if a custom value exists. Check using typeof === "object", then decide what to do.
     // {
     //   value: 0,
@@ -227,7 +227,7 @@ export const defaultCSS = {
     //   unit: "px"
     // }
     // width: auto|value|initial|inherit
-    width: "auto",
+    width: "98",
     // The following is its structure if a custom value exists. Check using typeof === "object", then decide what to do.
     // {
     //   value: 0,

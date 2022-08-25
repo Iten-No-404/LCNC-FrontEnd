@@ -10,12 +10,16 @@ export const generateCSSids = (board) => {
         const fontSize = board[i].CSS.font.size;
         const id = board[i].id;
         const backgroundcolor = board[i].CSS.background.color;
+        const width = board[i].CSS.width;
+        const height = board[i].CSS.height;
         const CSSselec = `
         #a${id}{
             font-family: "${fontFamily}";
             color: ${color};
-            font-size: "${fontSize}px";
+            font-size: ${fontSize}px;
             background-color: ${backgroundcolor};
+            width: ${width}%;
+            height: ${height}px
         }`;
         codeText = codeText.concat(CSSselec + generateCSSids(board[i].children));
     }
