@@ -3,7 +3,7 @@ const generatechildrencode = (board) => {
   let codeText = ``;
   for (let i = 0; i < board.length; i++) {
       const splitforid = board[i].code1.split("id");
-      const opentag = `${splitforid[0]} id=a${board[i].id} ${splitforid[1]}`;
+      const opentag = `${splitforid[0]} id="a${board[i].id}" ${splitforid[1]}`;
       codeText = codeText.concat(
           opentag +
               (board[i].CSS.text.content ? board[i].CSS.text.content : board[i].text) +

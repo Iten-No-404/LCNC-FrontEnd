@@ -13,9 +13,10 @@ export default function Header({text, id, classN, font= '', CSS, logo=false, isD
       className={classN}
       style={{ border: isDragging ? "5px solid pink" : "0px",
               fontFamily: CSS.font.family, color: CSS.color,
-              fontSize: CSS.font.size+"px"}}
+              fontSize: CSS.font.size+"px",
+              backgroundColor: CSS.background.color}}
     >
-      <div className='p-5 text-center bg-light'>
+      <div className='p-5 text-center'>
               {(logo || CSS.text.content==="")?text:CSS.text.content}
       </div>
     </header>

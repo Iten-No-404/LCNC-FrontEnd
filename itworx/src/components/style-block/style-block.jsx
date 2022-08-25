@@ -7,13 +7,12 @@ import ColorPickerTool from '../color-picker/color-picker';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import blocksType from "../../helper/blocksType";
-import { selectWidgetCSSFont, selectWidgetCSS, setTextContent, setFontsizeval } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
+import { selectWidgetCSS, setTextContent, setFontsizeval } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
 import StyleBlockHandler from './style-block-controller';
 
 const StyledBlock = ({ board, setBoard }) => {
   console.log(board);
   const CSS = useSelector(selectWidgetCSS);
-  const font = useSelector(selectWidgetCSSFont);
   const [content, setContent] = useState("");
   const [fontsize, setFontsize] = useState(10);
   const [selectedblock, setSelectedblock] = useState(null);
@@ -42,7 +41,7 @@ const StyledBlock = ({ board, setBoard }) => {
       return recursiveChangeCSS(prevBoard);
     })
 
-  }, [font, CSS.color, CSS.text]);
+  }, [CSS.font, CSS.color, CSS.text, CSS.background ]);
   useEffect(() => {
     if (CSS.id != null) {
       setContent(CSS.text.content);
@@ -52,7 +51,12 @@ const StyledBlock = ({ board, setBoard }) => {
 
 
   if (selectedblock?.type === blocksType.navbar)
-    return;
+    return(
+      <>
+        <div>Pick Background Color</div>
+        <ColorPickerTool colorType='backgroundColor' />
+      </>
+    );
 
   return (
     <>

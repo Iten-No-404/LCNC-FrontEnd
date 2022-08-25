@@ -87,8 +87,8 @@ const widgetCSS = createSlice({
         /**
          * This function sets the values of the text's size
          * @method
-         * @param {object} state The object that stores the current Widget's text's size value
-         * @param {object} action The object containing the new Widget's text's size value
+         * @param {object} state The object that stores the current Widget's background color
+         * @param {object} action The object containing the new Widget's background color
          */
         setBackgroundColor: (state, action) => {
             const s = state;
@@ -98,6 +98,5 @@ const widgetCSS = createSlice({
 });
 
 export const selectWidgetCSS = (state) => state.widgetCSS;
-export const selectWidgetCSSFont = (state) => state.widgetCSS.font;
 export const { setCSS, setFontFamily, setFont, setTextColor, setBackgroundColor, setTextContent, setFontsizeval } = widgetCSS.actions;
 export default widgetCSS.reducer;

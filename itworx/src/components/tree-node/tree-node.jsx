@@ -20,7 +20,6 @@ const TreeNode = ({ id, index, font, CSS, text, selected = false, type, childs, 
                         {(provided, snapshot) => (
                             <>
                                 <div style={{ border: '5px #0000FF' }} {...provided.draggableProps} ref={provided.innerRef} key={id} className={selected ? "SelectedBlock" : ""}>
-                                    <br />
                                     {type === blocksType.div &&
                                         (<Div isDragging={snapshot.isDragging} classN="Block" text={text} id={id} font={font} CSS={CSS} />)
                                     }
@@ -40,7 +39,7 @@ const TreeNode = ({ id, index, font, CSS, text, selected = false, type, childs, 
                                     </div>
                                     {
                                         childs && childs.length > 0 && (
-                                            <Tree data={childs} parentId={parentId} parentType={type} droppableId={getDroppableId(id, getDroppableId(id, parentId))} droppableClass="" type={getDragType(getDragType(parentId))} />
+                                            <Tree data={childs} prentBackground={CSS.background.color}  parentType={type} droppableId={getDroppableId(id, getDroppableId(id, parentId))} droppableClass="" type={getDragType(getDragType(parentId))} />
                                         )
                                     }
                                 </div>

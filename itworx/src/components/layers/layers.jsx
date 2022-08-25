@@ -15,10 +15,10 @@ const Layers = ({ board, setBoard }) => {
         return ((block.children && block.children.length > 0) ? (
           <Row key={block.id}>
             <Col xs={10} className="m-0 p-0">
-              <Accordion className="mt-2 p-0">
+              <Accordion className="m-1 p-0">
                 <Accordion.Item eventKey="0">
                   <Accordion.Header action onClick={() => handelSelect(block.id)} >{block.type}</Accordion.Header>
-                  <Accordion.Body className="m-1 p-1">
+                  <Accordion.Body className="m-1 p-0">
                     {<Layers board={block.children} setBoard={setBoard} />}
                   </Accordion.Body>
                 </Accordion.Item >

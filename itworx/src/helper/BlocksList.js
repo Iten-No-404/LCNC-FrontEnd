@@ -7,7 +7,7 @@ const BlocksList = [
         selected: false,
         code1: `
         <header id>
-         <div class='p-5 text-center bg-light'>
+         <div class='p-5 text-center'>
            <h1 class='mb-3'>`,
         code2: `
            </h1>
@@ -21,7 +21,7 @@ const BlocksList = [
         selected: false,
         code1: `
         <section id>
-          <div class='p-5 text-center bg-light'>`,
+          <div class='p-5 text-center'>`,
         code2: `
           </div>
         </section>`,
@@ -42,7 +42,7 @@ const BlocksList = [
         selected: false,
         text: "",
         code1: `
-        <nav id class="navbar navbar-light bg-light">
+        <nav id class="navbar navbar-light">
         <div class="navbar-brand d-flex flex-row m-2">`,
         code2: `
         </div>

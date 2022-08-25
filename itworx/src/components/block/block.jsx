@@ -8,7 +8,7 @@ const Block = ({ setBoard, block }) => {
 	const { handelDelete, handelSelect } = BlockHandler(setBoard);
 
 	return (
-		<ListGroup variant="dark"> 
+		<ListGroup variant="dark" className="mt-1 p-0"> 
 		<Row key={block.id}>
 			<Col xs={10}>
 				<ListGroup.Item action onClick={() => handelSelect(block.id)}>

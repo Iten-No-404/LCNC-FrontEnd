@@ -8,7 +8,7 @@ export const defaultCSS = {
         // background-clip: border-box|padding-box|content-box|initial|inherit
         clip: "border-box",
         // background-color: color|transparent|initial|inherit
-        color: "white",
+        color: "#f8f9fa",
         // background-image: url in the format url('URL')|none|initial|inherit --> It usually can take more than 1 URL, but we'll focus on 1 for now. We'll also ignore gradients.
         image: "none",
         // background-origin: padding-box|border-box|content-box|initial|inherit
