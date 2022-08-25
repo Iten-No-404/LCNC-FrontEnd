@@ -3,7 +3,7 @@ const generatechildrencode = (block) => {
     if (block.children) {
         console.log(block.children);
         for (let i = 0; i < block.children.length; i++) {
-            codeText = codeText.concat(block.children[i].code1 + ((block.CSS.text.content) ? block.CSS.text.content : block.text) + generatechildrencode(block.children[i]) + block.children[i].code2);
+            codeText = codeText.concat(block.children[i].code1 + ((block.children[i].CSS.text.content) ? block.children[i].CSS.text.content : block.children[i].text) + generatechildrencode(block.children[i]) + block.children[i].code2);
         }
         return codeText;
     } else {

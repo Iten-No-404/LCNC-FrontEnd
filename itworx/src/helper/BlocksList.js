@@ -41,6 +41,7 @@ const BlocksList = [
         id: 4,
         type: blocksType.navbar,
         selected: false,
+        text: "",
         code1: `
         <nav class="navbar navbar-light bg-light">
         <div class="navbar-brand d-flex flex-row m-2">`,
