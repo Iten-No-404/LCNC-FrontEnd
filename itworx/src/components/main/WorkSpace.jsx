@@ -12,19 +12,25 @@ import { defaultCSS } from "../../helper/InitialCSS";
 import { setWidget } from "../../states/WidgetListSlice/WidgetListSlice";
 import { useDispatch } from 'react-redux';
 import { generateCode } from "../../helper/helpers";
+import { generateCSS } from "../../helper/GenerateCSS";
 import { DragDropContext } from 'react-beautiful-dnd'
 import Tree from '../nesting/Tree';
 
 function WorkSpace() {
 
   const [board, setBoard] = useState([]);
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShowhtml, setModalShowhtml] = React.useState(false);
+  const [modalShowcss, setModalShowcss] = React.useState(false);
   const dispatch = useDispatch();
 
-  const codeText = generateCode(board);
+  const HTMLcode = generateCode(board);
+  const CSScode =  generateCSS(board);
 
-  const handleClose = () => setModalShow(false)
-  const handleOpen = () => setModalShow(true)
+  const handleClosehtml = () => setModalShowhtml(false)
+  const handleOpenhtml = () => setModalShowhtml(true)
+
+  const handleClosecss = () => setModalShowcss(false)
+  const handleOpencss = () => setModalShowcss(true)
 
   const reorder = (result) => {
     const items = Array.from(board);
@@ -260,7 +266,7 @@ function WorkSpace() {
   return (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Navigationbar handleOpen={handleOpen} />
+        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss}  />
         <Container className="mt-4">
           <Row>
             <Col xs={9} >
@@ -272,10 +278,17 @@ function WorkSpace() {
             </Col>
           </Row>
           <ModalCard
-            show={modalShow}
-            handleClose={handleClose}
+            show={modalShowhtml}
+            handleClose={handleClosehtml}
             language="html"
-            code={codeText} />
+            code={HTMLcode} />
+
+          <ModalCard
+            show={modalShowcss}
+            handleClose={handleClosecss}
+            language="css"
+            code={CSScode} />
+
         </Container>
       </DragDropContext>
     </>
