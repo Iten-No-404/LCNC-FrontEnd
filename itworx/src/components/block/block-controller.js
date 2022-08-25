@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setCSS } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
-import { selectWidgetsList } from '../../states/WidgetListSlice/WidgetListSlice';
+import { setCSS } from '../../states//widget-css-slice//widget-css-slice';
+import { selectWidgetsList } from '../../states/widget-list-slice/widget-list-slice';
 
 const BlockHandler = (setBoard) => {
 	const widgetList = useSelector(selectWidgetsList);

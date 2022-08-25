@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import BlocksList from "../../helper/BlocksList";
 import GenerateId from "../../helper/GenerateId";
 import { defaultCSS } from "../../helper/InitialCSS";
-import { setWidget } from "../../states/WidgetListSlice/WidgetListSlice";
+import { setWidget } from "../../states//widget-list-slice//widget-list-slice";
 
 const WorkSpaceHandler = (board, setBoard, modalShow, setModalShow) => {
 	const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import rgbHex from "rgb-hex";
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ChromePicker } from 'react-color';
-import { setTextColor, selectWidgetCSS } from "../../states/WidgetCSSSlice/WidgetCSSSlice";
+import { setTextColor, selectWidgetCSS } from "../../states//widget-css-slice//widget-css-slice";
 
 export default function ColorPickerTool(colorType) {
     const dispatch = useDispatch();
