@@ -1,13 +1,13 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Header from '../blocks/header';
-import Section from '../blocks/section';
-import Nav from '../blocks/nav';
+import Header from '../blocks/Header';
+import Section from '../blocks/Section';
+import Nav from '../blocks/Nav';
 import Layers from '../layers/layers';
-import DisplayImage from '../blocks/image'
+import DisplayImage from '../blocks/Image'
 import StyledBlock from '../style-block/style-block';
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import Div from '../blocks/div';
+import Div from '../blocks/Div';
 
 function Ctabs({ board, setBoard }) {
   return (

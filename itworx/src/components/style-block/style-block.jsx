@@ -12,6 +12,7 @@ const StyledBlock = ({ board, setBoard }) => {
   const CSS = useSelector(selectWidgetCSS);
   const font = useSelector(selectWidgetCSSFont);
   const [content, setContent] = useState("");
+  const [fontsize, setFontsize] = useState(10);
   const [selectedblock, setSelectedblock] = useState(null);
   const dispatch = useDispatch();
   const {

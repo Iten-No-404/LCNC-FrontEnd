@@ -1,10 +1,10 @@
 import React from 'react'
 import "../../App.css";
-import Header from "../blocks/header";
-import Section from "../blocks/section";
-import DisplayImage from '../blocks/image';
-import Nav from '../blocks/nav';
-import Div from '../blocks/div';
+import Header from "../blocks/Header";
+import Section from "../blocks/Section";
+import DisplayImage from '../blocks/Image';
+import Nav from '../blocks/Nav';
+import Div from '../blocks/Div';
 import blocksType from "../../helper/blocksType"
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import Tree from '../tree/tree';

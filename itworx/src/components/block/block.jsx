@@ -8,6 +8,7 @@ const Block = ({ setBoard, block }) => {
 	const { handelDelete, handelSelect } = BlockHandler(setBoard);
 
 	return (
+		<ListGroup variant="dark"> 
 		<Row key={block.id}>
 			<Col xs={10}>
 				<ListGroup.Item action onClick={() => handelSelect(block.id)}>
@@ -18,6 +19,7 @@ const Block = ({ setBoard, block }) => {
 				<button onClick={() => handelDelete(block.id)} > <img src="https://img.icons8.com/sf-black-filled/200/000000/trash.png" /></button>
 			</Col>
 		</Row>
+		</ListGroup>
 	);
 }
 
