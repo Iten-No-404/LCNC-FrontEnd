@@ -1,4 +1,7 @@
 const GenerateId = () => {
-    return Math.floor(Math.random() * 10000000000000);
+    const id = Math.floor(Math.random() * 10000000000000);
+    // support up to 1000 widget
+    return id > 1000 ? id : GenerateId();
 }
+
 export default GenerateId;

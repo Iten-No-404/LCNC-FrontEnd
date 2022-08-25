@@ -1,0 +1,20 @@
+{
+  "block-types": {
+    "header": "header",
+    "section": "section",
+    "image": "image",
+    "navbar": "navbar",
+    "div": "div"
+  },
+  "board": [],
+  "blocks-list": [
+    {
+      "id": 1,
+      "type": "header",
+      "text": "Header",
+      "selected": false,
+      "code1": "\n<header>\n\t<div class='p-5 text-center bg-light'>\n\t\t<h1 class='mb-3'>",
+      "code2": "\n\t\t</h1>\n\t</div>\t\n</header>"
+    }
+  ]
+}
