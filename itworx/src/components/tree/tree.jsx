@@ -4,13 +4,13 @@ import { Droppable, Draggable } from "react-beautiful-dnd";
 import TreeNode from "../tree-node/tree-node";
 import blocksType from "../../helper/blocksType"
 
-const Tree = ({ data, droppableId = "board", droppableClass = "Board", type = "board", fontChange = false, parentId= "board", parentType= null, ClassN=null }) =>{
+const Tree = ({ data, droppableId = "board", droppableClass = "Board", type = "board", prentBackground=null, parentType= null, ClassN=null }) =>{
     const isNavBar = (parentType === blocksType.navbar)? " d-flex flex-row": " ";
     return (
-        <div style={{ padding: '10px' /* For nesting*/ }}>
+        <div style={{ padding: '5px' /* For nesting*/ }}>
             <Droppable droppableId={droppableId} type={type} isCombineEnabled>
                 {(provided) => (
-                    <div className={droppableClass + isNavBar} {...provided.droppableProps} ref={provided.innerRef}>                        
+                    <div style={{backgroundColor: prentBackground }} className={droppableClass + isNavBar} {...provided.droppableProps} ref={provided.innerRef}>                        
                         {data.map(({ id, font, CSS, text, selected, type, children }, index) => {
                             return (
                                 <Draggable draggableId={id} key={id} index={index}>

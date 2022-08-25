@@ -26,10 +26,10 @@ function Ctabs({ board, setBoard }) {
                   {(provided, snapshot) => (
                     <>
                       <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
-                        <Div isDragging={snapshot.isDragging} classN="blockTab" id={5} text="Bootstrap" logo={true}/>
+                        <Div isDragging={snapshot.isDragging} classN="blockTab" id={5} text="Div" logo={true}/>
                       </div>
                       {snapshot.isDragging && (
-                        <Div classN="blockTab" id={5} text="Bootstrap" logo={true} />
+                        <Div classN="blockTab" id={5} text="Div" logo={true} />
                       )}
                     </>
                   )}
