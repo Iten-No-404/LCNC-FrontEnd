@@ -1,4 +1,3 @@
-import { Children } from "react";
 import blocksType from "./blocksType";
 const BlocksList = [
     {

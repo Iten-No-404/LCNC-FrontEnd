@@ -12,6 +12,7 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "all": "^0.0.0",
+    "axios": "^0.27.2",
     "better-docs": "^2.7.2",
     "bootstrap": "^5.2.0",
     "dotenv": "^16.0.1",
@@ -37,7 +38,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "json-server": "json-server --watch data/db.json --port 8000"
   },
   "eslintConfig": {
     "extends": [

@@ -1,5 +1,5 @@
 import Modal from 'react-bootstrap/Modal';
-import Codeblock from './Codeblock';
+import Codeblock from '../code-block/code-block';
 
 function ModalCard(props) {
 

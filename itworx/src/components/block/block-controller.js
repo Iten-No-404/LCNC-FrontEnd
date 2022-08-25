@@ -1,0 +1,84 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { setCSS } from '../../states/WidgetCSSSlice/WidgetCSSSlice';
+import { selectWidgetsList } from '../../states/WidgetListSlice/WidgetListSlice';
+
+const BlockHandler = (setBoard) => {
+	const widgetList = useSelector(selectWidgetsList);
+	const dispatch = useDispatch();
+
+	const resetChosenCSS = (id) => {
+		dispatch(setCSS({
+			color: widgetList[id].color,
+			font: widgetList[id].font,
+			text: widgetList[id].text,
+			id: id
+		}));
+	}
+
+	const recursiveRemoveChild = (myBoard, id) => {
+		if (myBoard && myBoard.length > 0) {
+			myBoard.forEach(e => {
+				if (e.id === id) {
+					myBoard.splice(myBoard.indexOf(e), 1);
+					return;
+				} else {
+					recursiveRemoveChild(e.children, id);
+				}
+			}
+			);
+		}
+	}
+
+	const recursiveSelect = (myBoard, id) => {
+		if (myBoard && myBoard.length > 0) {
+			let newBoard = [];
+			myBoard.forEach(block => {
+				if (block.id === id) {
+					resetChosenCSS(block.id);
+					const val = recursiveSelect(block.children, id);
+					if (val.length > 0) {
+						const newBlock = { ...block, selected: true, children: val };
+						newBoard.push(newBlock);
+					} else {
+						const newBlock = { ...block, selected: true };
+						newBoard.push(newBlock);
+					}
+				} else {
+					const val = recursiveSelect(block.children, id);
+					if (val.length > 0) {
+						const newBlock = { ...block, selected: false, children: val };
+						newBoard.push(newBlock);
+					} else {
+						const newBlock = { ...block, selected: false };
+						newBoard.push(newBlock);
+					}
+				}
+			}
+			);
+			return newBoard;
+		} else {
+			return [];
+		}
+	}
+
+	const handelSelect = (selindex) => {
+		setBoard((prevBoard) => {
+			return recursiveSelect(prevBoard, selindex);
+		})
+	};
+
+	const handelDelete = (selindex) => {
+		setBoard((prevBoard) => {
+			let newboard = [...prevBoard];
+			recursiveRemoveChild(newboard, selindex)
+			return newboard;
+		})
+	};
+
+	return {
+		handelSelect,
+		handelDelete
+	}
+}
+
+export default BlockHandler;

@@ -2,7 +2,6 @@ import React from "react";
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { defaultCSS } from "../../helper/InitialCSS";
-import Board from "../main/Board";
 
 export default function Nav({ classN , logo=false ,isDragging=false, CSS, children=null}) {
     if(logo)

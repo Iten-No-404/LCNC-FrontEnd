@@ -1,0 +1,216 @@
+import { useDispatch } from 'react-redux';
+import BlocksList from "../../helper/BlocksList";
+import GenerateId from "../../helper/GenerateId";
+import { defaultCSS } from "../../helper/InitialCSS";
+import { setWidget } from "../../states/WidgetListSlice/WidgetListSlice";
+
+const WorkSpaceHandler = (board, setBoard, modalShow, setModalShow) => {
+	const dispatch = useDispatch();
+
+	const reorder = (result) => {
+		const items = Array.from(board);
+		const [reorderedItem] = items.splice(result.source.index, 1);
+		items.splice(result.destination.index, 0, reorderedItem);
+		setBoard(items);
+		return result;
+	};
+
+	const recursiveAddChild = (myBoard, id, item) => {
+		if (myBoard && myBoard.length > 0) {
+			let newBoard = [];
+			myBoard.forEach(block => {
+				if (block.id === id) {
+					const newBlock = { ...block, children: [...block.children, item] };
+					newBoard.push(newBlock);
+				} else {
+					const val = recursiveAddChild(block.children, id, item);
+					if (val.length > 0) {
+						const newBlock = { ...block, children: val };
+						newBoard.push(newBlock);
+					} else {
+						newBoard.push(block);
+					}
+				}
+			}
+			);
+			return newBoard;
+		} else {
+			return [];
+		}
+	}
+
+	let removedItem;
+	const recursiveRemoveChild = (myBoard, id) => {
+		if (myBoard && myBoard.length > 0) {
+			myBoard.forEach(e => {
+				if (e.id === id) {
+					const item = myBoard.find(e => e.id === id);
+					myBoard.splice(myBoard.indexOf(e), 1);
+					removedItem = item;
+					return;
+				} else {
+					recursiveRemoveChild(e.children, id);
+				}
+			}
+			);
+		}
+	}
+
+	// this is used only when we are nesting a block
+	const nest = (board, draggableId, droppableDestination) => {
+		if (draggableId.toString().includes('l')) {
+			draggableId = draggableId.toString().split('_')[2];
+		}
+		if (droppableDestination.draggableId.toString().includes('l')) {
+			droppableDestination.draggableId = droppableDestination.draggableId.toString().split('_')[2];
+		}
+		recursiveRemoveChild(board, Number(draggableId), removedItem);
+		const boardAfterNesting = recursiveAddChild(board, Number(droppableDestination.draggableId), removedItem);
+		return boardAfterNesting;
+	};
+
+	// this is used only when we are adding a new nested block to the board
+	const copyThenNest = (source, destination, droppableSource, droppableDestination) => {
+		const sourceClone = Array.from(source);
+		const destClone = Array.from(destination);
+		const item = sourceClone[droppableSource.index - 1];
+		const newId = GenerateId();
+		dispatch(setWidget({
+			id: newId,
+			font: defaultCSS.font,
+			CSS: defaultCSS
+		}));
+		// find the element with destination id and add the new element to it's children
+		const destIndex = destClone.findIndex(e => e.id === droppableDestination.draggableId);
+		destClone[destIndex].children.push({ ...item, id: newId, children: [], CSS: defaultCSS });
+		return destClone;
+	};
+
+	const recursiveReorder = (myBoard, id, index1, index2) => {
+		if (myBoard && myBoard.length > 0) {
+			let newBoard = [];
+			myBoard.forEach(block => {
+				if (block.id === id) {
+					const children = block.children;
+					const [reorderedItem] = children.splice(index1, 1);
+					children.splice(index2, 0, reorderedItem);
+					const newBlock = { ...block, children: children };
+					newBoard.push(newBlock);
+				} else {
+					const val = recursiveReorder(block.children, id, index1, index2);
+					if (val.length > 0) {
+						const newBlock = { ...block, children: val };
+						newBoard.push(newBlock);
+					} else {
+						newBoard.push(block);
+					}
+				}
+			}
+			);
+			return newBoard;
+		} else {
+			return [];
+		}
+	};
+
+	const copy = (source, destination, droppableSource, droppableDestination) => {
+		const sourceClone = Array.from(source);
+		const destClone = Array.from(destination);
+		const item = sourceClone[droppableSource.index - 1];
+
+		const newId = GenerateId();
+		dispatch(setWidget({
+			id: newId,
+			font: defaultCSS.font,
+			CSS: defaultCSS
+		}));
+		if (item.children) {
+			const newchildren = item.children.map((child) => {
+				const newId = GenerateId();
+				dispatch(setWidget({
+					id: newId,
+					font: defaultCSS.font,
+					CSS: defaultCSS
+				}));
+				return { ...child, id: newId, CSS: defaultCSS, children: [] }
+			})
+			destClone.splice(droppableDestination.index, 0, { ...item, id: newId, CSS: defaultCSS, children: newchildren });
+		} else {
+			destClone.splice(droppableDestination.index, 0, { ...item, id: newId, CSS: defaultCSS, children: [] });
+		}
+		return destClone;
+	};
+
+	const handleOnDragEnd = (result) => {
+		const { destination, source, draggableId } = result;
+		// this is the case of nesting a block inside another block
+		if (result.combine) {
+			// when we are adding a new nested block to the board
+			if (source.droppableId === "selectWidgetTab") {
+				setBoard(
+					copyThenNest(
+						BlocksList,
+						board,
+						source,
+						result.combine
+					)
+				)
+			} else {
+				setBoard((prevBoard) => {
+					return nest(
+						prevBoard,
+						draggableId,
+						result.combine
+					)
+				}
+				);
+			}
+			return;
+		}
+		// dropped outside the list
+		if (!destination) {
+			return;
+		}
+		switch (source.droppableId) {
+			case destination.droppableId:
+				if (source.droppableId === "board") {
+					reorder(result);
+				} else {
+					setBoard((prevBoard) => {
+						return recursiveReorder(
+							prevBoard,
+							Number(source.droppableId.split('_')[2]),
+							source.index,
+							destination.index
+						)
+					}
+					);
+				}
+				break;
+			case 'selectWidgetTab':
+				setBoard(
+					copy(
+						BlocksList,
+						board,
+						source,
+						destination
+					)
+				);
+				break;
+			default:
+				setBoard((prevBoard) => {
+					return nest(
+						prevBoard,
+						draggableId,
+						destination
+					)
+				}
+				);
+				break;
+		}
+	}
+
+	return { handleOnDragEnd }
+}
+
+export default WorkSpaceHandler;
