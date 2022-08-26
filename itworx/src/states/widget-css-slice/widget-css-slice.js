@@ -18,6 +18,9 @@ const widgetCSS = createSlice({
         background: {
             color: "black",
         },
+        border: {
+            radius: "0",
+        },
         width: "100",
         height: "100",
         padding: "0",
@@ -40,6 +43,7 @@ const widgetCSS = createSlice({
             s.height = action.payload.height;
             s.padding = action.payload.padding;
             s.margin = action.payload.margin;
+            s.border = action.payload.border;
             s.id = action.payload.id;
         },
         /**
@@ -118,6 +122,10 @@ const widgetCSS = createSlice({
             const s = state;
             s.margin = action.payload;
         },
+        setBoarderrediusval: (state, action) => {
+            const s = state;
+            s.border.radius = action.payload;
+        },
     },
 });
 
@@ -134,5 +142,6 @@ export const {
     setHeightval,
     setPaddingval,
     setMarginval,
+    setBoarderrediusval,
 } = widgetCSS.actions;
 export default widgetCSS.reducer;

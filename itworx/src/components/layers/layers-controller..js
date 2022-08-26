@@ -32,6 +32,7 @@ const LayersHandler = (setBoard) => {
                 height: widgetList[id].height,
 				padding: widgetList[id].padding,
 				margin: widgetList[id].margin,
+				border: widgetList[id].border,
                 id: id,
             })
         );

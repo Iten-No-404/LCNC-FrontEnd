@@ -21,7 +21,8 @@ export default function Section({ text, id, classN, font = '', CSS, logo = false
         width: `${CSS.width}%`,
         height: `${CSS.height}px`,
         padding: `${CSS.padding}px`,
-        margin: `${CSS.margin}px`
+        margin: `${CSS.margin}px`,
+        borderRadius: `${CSS.border.radius}%`,
       }}
     >
       <div className='p-5 text-center'>

@@ -21,7 +21,8 @@ export default function Div({ text, id, classN, font = '', CSS, logo = false, is
         width: `${CSS.width}%`,
         height: `${CSS.height}px`,
         padding: `${CSS.padding}px`,
-        margin: `${CSS.margin}px`
+        margin: `${CSS.margin}px`,
+        borderRadius: `${CSS.border.radius}%`,
       }}
     >
       {(logo || CSS.text.content === "") ? text : CSS.text.content}

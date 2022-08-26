@@ -6,7 +6,7 @@ import FontPickerTool from '../font-picker/font-picker';
 import ColorPickerTool from '../color-picker/color-picker';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { selectWidgetCSS, setTextContent, setFontsizeval, setWidthval, setHeightval, setPaddingval, setMarginval } from '../../states/widget-css-slice/widget-css-slice';
+import { selectWidgetCSS, setTextContent, setFontsizeval, setWidthval, setHeightval, setPaddingval, setMarginval, setBoarderrediusval } from '../../states/widget-css-slice/widget-css-slice';
 import StyleBlockHandler from './style-block-controller';
 
 const StyledBlock = ({ board, setBoard }) => {
@@ -18,6 +18,7 @@ const StyledBlock = ({ board, setBoard }) => {
   const [height, setHeight] = useState();
   const [margin, setMargin] = useState("");
   const [padding, setPadding] = useState("");
+  const [boarderredius,setBoarderredius] = useState("");
   const [selectedblock, setSelectedblock] = useState(null);
   const dispatch = useDispatch();
   const {
@@ -92,6 +93,10 @@ const StyledBlock = ({ board, setBoard }) => {
                 <Form.Control value={margin} onChange={(e) => { dispatch(setMarginval(e.target.value)); setMargin(e.target.value) }} type="number" placeholder="ex: 5" />
               </Form.Group>
           </div>
+          <Form.Group>
+          <Form.Label>Border Radius %</Form.Label>
+              <Form.Control value={boarderredius} onChange={(e) => { dispatch(setBoarderrediusval(e.target.value)); setBoarderredius(e.target.value) }} type="number" placeholder="ex: 20" />
+          </Form.Group>
           <div>Pick Background Color</div>
           <ColorPickerTool colorType='backgroundColor' />
          </>   
@@ -101,10 +106,16 @@ const StyledBlock = ({ board, setBoard }) => {
             <Form.Group className="mb-3" controlId="textEditor">
               <Form.Control value={content} onChange={(e) => { dispatch(setTextContent(e.target.value)); setContent(e.target.value)/*handleSelect(e);*/ }} type="text" placeholder="Enter Your Text" />
             </Form.Group>
+            <div className="d-flex flex-row">
             <Form.Group className="mb-3" controlId="fontsize">
-            <Form.Label>Enter Font Size px</Form.Label>
+            <Form.Label>Font Size px</Form.Label>
               <Form.Control value={fontsize} onChange={(e) => { dispatch(setFontsizeval(e.target.value)); setFontsize(e.target.value) }} type="number" placeholder="ex: 20" />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="fontsize">
+            <Form.Label>Border Radius %</Form.Label>
+              <Form.Control value={boarderredius} onChange={(e) => { dispatch(setBoarderrediusval(e.target.value)); setBoarderredius(e.target.value) }} type="number" placeholder="ex: 20" />
+            </Form.Group>
+            </div>
             <div className="d-flex flex-row">
               <Form.Group className="mb-3" controlId="width">
                 <Form.Label>Width %</Form.Label>

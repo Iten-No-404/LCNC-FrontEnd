@@ -25,7 +25,7 @@
           "color": "",
           "style": "none",
           "width": "medium",
-          "radius": "initial"
+          "radius": "0"
         },
         "bottom": "auto",
         "color": "black",
@@ -225,7 +225,7 @@
       "color": "",
       "style": "none",
       "width": "medium",
-      "radius": "initial"
+      "radius": "0"
     },
     "bottom": "auto",
     "color": "black",

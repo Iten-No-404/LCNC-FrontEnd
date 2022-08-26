@@ -20,7 +20,8 @@ const DisplayImage = ({selectedImage="data:image/png;base64,iVBORw0KGgoAAAANSUhE
         width: `${CSS.width}%`,
         height: `${CSS.height}px`,
         padding: `${CSS.padding}px`,
-        margin: `${CSS.margin}px`
+        margin: `${CSS.margin}px`,
+        borderRadius: `${CSS.border.radius}%`
       }}  src={selectedImage} />
     </div>
   );
