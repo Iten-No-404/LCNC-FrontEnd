@@ -18,8 +18,13 @@ const widgetCSS = createSlice({
         background: {
             color: "black",
         },
-        width: "98",
+        border: {
+            radius: "0",
+        },
+        width: "100",
         height: "100",
+        padding: "0",
+        margin: "0",
     },
     reducers: {
         /**
@@ -34,6 +39,11 @@ const widgetCSS = createSlice({
             s.font = action.payload.font;
             s.text = action.payload.text;
             s.background = action.payload.background;
+            s.width = action.payload.width;
+            s.height = action.payload.height;
+            s.padding = action.payload.padding;
+            s.margin = action.payload.margin;
+            s.border = action.payload.border;
             s.id = action.payload.id;
         },
         /**
@@ -104,10 +114,34 @@ const widgetCSS = createSlice({
             const s = state;
             s.height = action.payload;
         },
+        setPaddingval: (state, action) => {
+            const s = state;
+            s.padding = action.payload;
+        },
+        setMarginval: (state, action) => {
+            const s = state;
+            s.margin = action.payload;
+        },
+        setBoarderrediusval: (state, action) => {
+            const s = state;
+            s.border.radius = action.payload;
+        },
     },
 });
 
 export const selectWidgetCSS = (state) => state.widgetCSS;
-export const { setCSS, setFontFamily, setFont, setTextColor, setBackgroundColor, setTextContent, setFontsizeval, setWidthval, setHeightval } =
-    widgetCSS.actions;
+export const {
+    setCSS,
+    setFontFamily,
+    setFont,
+    setTextColor,
+    setBackgroundColor,
+    setTextContent,
+    setFontsizeval,
+    setWidthval,
+    setHeightval,
+    setPaddingval,
+    setMarginval,
+    setBoarderrediusval,
+} = widgetCSS.actions;
 export default widgetCSS.reducer;

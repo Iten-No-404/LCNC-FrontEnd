@@ -19,7 +19,10 @@ export default function Header({ text, id, classN, font = '', CSS, logo = false,
         fontSize: CSS.font.size + "px",
         backgroundColor: CSS.background.color,
         width: `${CSS.width}%`,
-        height: `${CSS.height}px`
+        height: `${CSS.height}px`,
+        padding: `${CSS.padding}px`,
+        margin: `${CSS.margin}px`,
+        borderRadius: `${CSS.border.radius}%`,
       }}
     >
       <div className='p-5 text-center'>

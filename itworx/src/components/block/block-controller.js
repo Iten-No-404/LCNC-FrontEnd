@@ -15,6 +15,9 @@ const BlockHandler = (setBoard) => {
                 background: widgetList[id].background,
                 width: widgetList[id].width,
                 height: widgetList[id].height,
+				padding: widgetList[id].padding,
+				border: widgetList[id].border,
+				margin: widgetList[id].margin,
                 id: id,
             })
         );
