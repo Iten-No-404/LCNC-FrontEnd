@@ -98,7 +98,7 @@
           "color": "",
           "style": "none",
           "width": "medium",
-          "radius": "initial"
+          "radius": "0"
         },
         "bottom": "auto",
         "color": "#2dff02ff",
