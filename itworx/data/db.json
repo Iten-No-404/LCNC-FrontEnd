@@ -28,7 +28,7 @@
           "radius": "0"
         },
         "bottom": "auto",
-        "color": "black",
+        "color": "#ff0000ff",
         "direction": "ltr",
         "display": "initial",
         "font": {
@@ -49,7 +49,7 @@
         "position": "static",
         "right": "auto",
         "text": {
-          "content": "",
+          "content": "React",
           "align": "left",
           "alignLast": "auto",
           "decoration": {
@@ -101,7 +101,7 @@
           "radius": "initial"
         },
         "bottom": "auto",
-        "color": "black",
+        "color": "#2dff02ff",
         "direction": "ltr",
         "display": "initial",
         "font": {

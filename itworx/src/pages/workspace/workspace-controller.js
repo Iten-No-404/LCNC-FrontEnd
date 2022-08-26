@@ -42,6 +42,23 @@ const WorkSpaceHandler = (board, setBoard) => {
         }
     };
 
+    // Used to add the CSS of the Widget of the retrieved board from the API.
+    const recursiveAddCSS = (myBoard) => {
+        console.log('Add this:',myBoard);
+        if (myBoard && myBoard.length > 0) {
+            myBoard.forEach((block) => {
+                dispatch(
+                    setWidget({
+                        id: block.id,
+                        font: block.CSS.font,
+                        CSS: block.CSS,
+                    })
+                );
+                return recursiveAddCSS(block.children);
+            });
+        }
+    };
+
     let removedItem;
     const recursiveRemoveChild = (myBoard, id) => {
         if (myBoard && myBoard.length > 0) {
@@ -187,7 +204,7 @@ const WorkSpaceHandler = (board, setBoard) => {
         }
     };
 
-    return { handleOnDragEnd };
+    return { handleOnDragEnd, recursiveAddCSS };
 };
 
 export default WorkSpaceHandler;

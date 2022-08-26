@@ -11,8 +11,7 @@ export default function FontPickerTool() {
             style={{ marginTop: "10px", marginBottom: "10px", alignContent: "center" }}
             >
                 <FontPicker
-                    apiKey="AIzaSyCPcfk138hzU-ViguuofBsbJRhaqX_2D0M"
-                    // apiKey={process.env.FONT_KEY}
+                    apiKey={process.env.REACT_APP_FONT_PICKER_API_KEY}
                     activeFontFamily={activeFontFamily}
                     onChange={(nextFont) =>
                         {
