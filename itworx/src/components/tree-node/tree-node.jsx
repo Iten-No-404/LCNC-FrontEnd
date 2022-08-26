@@ -29,7 +29,7 @@ const TreeNode = ({ id, index, font, CSS, text, selected = false, type, childs, 
                                         (<Section isDragging={snapshot.isDragging} classN="Block" text={text} id={id} font={font} CSS={CSS} />)
                                     }
                                     {type === "image" &&
-                                        (<DisplayImage isDragging={snapshot.isDragging} classN="Block" id={id} selectedImage={text} width={ClassN ? "300" : "30"} />)
+                                        (<DisplayImage isDragging={snapshot.isDragging} classN="Block" id={id} selectedImage={text} CSS={CSS} />)
                                     }
                                     {type === "navbar" &&
                                         (<Nav isDragging={snapshot.isDragging} classN="Block" id={id} /*children={children}*/ />)

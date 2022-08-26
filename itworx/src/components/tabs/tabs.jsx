@@ -22,10 +22,10 @@ function Ctabs({ board, setBoard }) {
               justify
             >
               <Tab eventKey="profile" title="Blocks" className='Blocks'>
-              <Draggable draggableId='5' key={5} index={5}>
+              <Draggable draggableId='5' key={5} index={5} >
                   {(provided, snapshot) => (
                     <>
-                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className="mt-3">
                         <Div isDragging={snapshot.isDragging} classN="blockTab" id={5} text="Div" logo={true}/>
                       </div>
                       {snapshot.isDragging && (
@@ -37,7 +37,7 @@ function Ctabs({ board, setBoard }) {
                 <Draggable draggableId='1' key={1} index={1}>
                   {(provided, snapshot) => (
                     <>
-                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}  className="mt-3">
                         <Header isDragging={snapshot.isDragging} classN="blockTab" text="Header" logo={true} />
                       </div>
                       {snapshot.isDragging && (
@@ -49,7 +49,7 @@ function Ctabs({ board, setBoard }) {
                 <Draggable draggableId='2' key={2} index={2}>
                   {(provided, snapshot) => (
                     <>
-                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}  className="mt-3">
                         <Section isDragging={snapshot.isDragging} classN="blockTab" text="Section" id={2} logo={true} />
                       </div>
                       {snapshot.isDragging && (
@@ -61,11 +61,11 @@ function Ctabs({ board, setBoard }) {
                 <Draggable draggableId='3' key={3} index={3}>
                   {(provided, snapshot) => (
                     <>
-                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
-                        <DisplayImage isDragging={snapshot.isDragging} classN="blockTab" id={3} />
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}  className="mt-3">
+                        <DisplayImage isDragging={snapshot.isDragging} classN="blockTab" id={3} logo={true}/>
                       </div>
                       {snapshot.isDragging && (
-                        <DisplayImage classN="blockTab" id={3}  />
+                        <DisplayImage classN="blockTab" id={3}  logo={true}/>
                       )}
                     </>
                   )}
@@ -73,7 +73,7 @@ function Ctabs({ board, setBoard }) {
                 <Draggable draggableId='4' key={4} index={4}>
                   {(provided, snapshot) => (
                     <>
-                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}  className="mt-3">
                         <Nav isDragging={snapshot.isDragging} classN="blockTab" id={4} text="Bootstrap" logo={true}/>
                       </div>
                       {snapshot.isDragging && (

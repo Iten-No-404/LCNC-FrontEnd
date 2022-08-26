@@ -12,6 +12,8 @@ export const generateCSSids = (board) => {
         const backgroundcolor = board[i].CSS.background.color;
         const width = board[i].CSS.width;
         const height = board[i].CSS.height;
+        const padding = board[i].CSS.padding;
+        const margin = board[i].CSS.margin;
         const CSSselec = `
         #a${id}{
             font-family: "${fontFamily}";
@@ -19,7 +21,9 @@ export const generateCSSids = (board) => {
             font-size: ${fontSize}px;
             background-color: ${backgroundcolor};
             width: ${width}%;
-            height: ${height}px
+            height: ${height}px;
+            padding: ${padding}px;
+            margin: ${margin}px;
         }`;
         codeText = codeText.concat(CSSselec + generateCSSids(board[i].children));
     }

@@ -23,7 +23,9 @@ const widgetList = createSlice({
                 text: action.payload.CSS.text,
                 background: action.payload.CSS.background,
                 width: action.payload.CSS.width,
-                height: action.payload.CSS.heigth,
+                height: action.payload.CSS.height,
+                padding: action.payload.CSS.padding,
+                margin: action.payload.CSS.margin,
             };
         },
         /**
