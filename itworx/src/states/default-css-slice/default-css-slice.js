@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const defaultCSSReducer = createSlice({
+const defaultCSS = createSlice({
     name: 'defaultCSS',
-    initialState:[],
+    initialState:{},
     reducers: {        
         setDefaultCSS: (state, action) => {
-            state = action.payload;            
+            return action.payload; 
         }
     }
 })
 
-export const { setDefaultCSS } = defaultCSSReducer.actions;
-export default defaultCSSReducer.reducer;
+export const selectDefaultCSS = (state) => state.defaultCSS;
+export const { setDefaultCSS } = defaultCSS.actions;
+export default defaultCSS.reducer;

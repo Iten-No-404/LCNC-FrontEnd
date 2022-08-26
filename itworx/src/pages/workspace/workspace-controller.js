@@ -1,10 +1,14 @@
 import { useDispatch } from 'react-redux';
-import BlocksList from "../../helper/BlocksList";
-import GenerateId from "../../helper/GenerateId";
-import { defaultCSS } from "../../helper/InitialCSS";
+import GenerateId from "../../helper/generate-id";
 import { setWidget } from "../../states//widget-list-slice//widget-list-slice";
+import { useSelector } from "react-redux";
+import { selectDefaultCSS } from "../../states/default-css-slice/default-css-slice";
+import { selectBlocksList } from '../../states/blocks-list-slice/blocks-list-slice';
 
 const WorkSpaceHandler = (board, setBoard) => {
+    const defaultCSS = useSelector(selectDefaultCSS);
+    const blocksList = useSelector(selectBlocksList);
+
     const dispatch = useDispatch();
 
     const reorder = (result) => {
@@ -150,7 +154,7 @@ const WorkSpaceHandler = (board, setBoard) => {
         if (result.combine) {
             // when we are adding a new nested block to the board
             if (source.droppableId === "selectWidgetTab") {
-                setBoard(copyThenNest(BlocksList, board, source, result.combine));
+                setBoard(copyThenNest(blocksList, board, source, result.combine));
             } else {
                 setBoard((prevBoard) => {
                     return nest(prevBoard, draggableId, result.combine);
@@ -173,7 +177,7 @@ const WorkSpaceHandler = (board, setBoard) => {
                 }
                 break;
             case "selectWidgetTab":
-                setBoard(copy(BlocksList, board, source, destination));
+                setBoard(copy(blocksList, board, source, destination));
                 break;
             default:
                 setBoard((prevBoard) => {

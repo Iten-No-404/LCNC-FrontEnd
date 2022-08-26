@@ -5,7 +5,6 @@ import Section from "../blocks/section";
 import DisplayImage from '../blocks/image';
 import Nav from '../blocks/nav';
 import Div from '../blocks/div';
-import blocksType from "../../helper/blocksType"
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import Tree from '../tree/tree';
 import TreeNodeHandler from './tree-node-controller';
@@ -20,19 +19,19 @@ const TreeNode = ({ id, index, font, CSS, text, selected = false, type, childs, 
                         {(provided, snapshot) => (
                             <>
                                 <div style={{ border: '5px #0000FF' }} {...provided.draggableProps} ref={provided.innerRef} key={id} className={selected ? "SelectedBlock" : ""}>
-                                    {type === blocksType.div &&
+                                    {type === "div" &&
                                         (<Div isDragging={snapshot.isDragging} classN="Block" text={text} id={id} font={font} CSS={CSS} />)
                                     }
-                                    {type === blocksType.header &&
+                                    {type === "header" &&
                                         (<Header isDragging={snapshot.isDragging} classN="Block" text={text} id={id} font={font} CSS={CSS} />)
                                     }
-                                    {type === blocksType.section &&
+                                    {type === "section" &&
                                         (<Section isDragging={snapshot.isDragging} classN="Block" text={text} id={id} font={font} CSS={CSS} />)
                                     }
-                                    {type === blocksType.image &&
+                                    {type === "image" &&
                                         (<DisplayImage isDragging={snapshot.isDragging} classN="Block" id={id} selectedImage={text} width={ClassN ? "300" : "30"} />)
                                     }
-                                    {type === blocksType.navbar &&
+                                    {type === "navbar" &&
                                         (<Nav isDragging={snapshot.isDragging} classN="Block" id={id} /*children={children}*/ />)
                                     }
                                     <div style={{ display: "none" }} {...provided.dragHandleProps} >

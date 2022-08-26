@@ -28,7 +28,6 @@ export const generateCSSids = (board) => {
 
 export const generateCSS = (board) => {
     const Cssids = generateCSSids(board);
-    console.log(Cssids);
     let codeText = `@import url('https://fonts.googleapis.com/css2?`;
     for (const fontFamily of Allfontsfamily) {
         codeText = codeText.concat(fontFamily);

@@ -5,10 +5,11 @@ const blocksListReducer = createSlice({
     initialState:[],
     reducers: {        
         setBlocksList: (state, action) => {
-            state = action.payload;            
+            return action.payload;
         }
     }
 })
 
+export const selectBlocksList = (state) => state.blocksList;
 export const { setBlocksList } = blocksListReducer.actions;
 export default blocksListReducer.reducer;

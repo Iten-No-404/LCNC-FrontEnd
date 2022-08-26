@@ -2,10 +2,9 @@ import "../../App.css";
 import React from 'react'
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import TreeNode from "../tree-node/tree-node";
-import blocksType from "../../helper/blocksType"
 
 const Tree = ({ data, droppableId = "board", droppableClass = "Board", type = "board", prentBackground=null, parentType= null, ClassN=null }) =>{
-    const isNavBar = (parentType === blocksType.navbar)? " d-flex flex-row": " ";
+    const isNavBar = (parentType === "navbar")? " d-flex flex-row": " ";
     return (
         <div style={{ padding: '5px' /* For nesting*/ }}>
             <Droppable droppableId={droppableId} type={type} isCombineEnabled>
