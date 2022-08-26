@@ -1,9 +1,9 @@
-const blocksType={
-    header:"header",
-    section:"section",
-    image:"image",
-    navbar:"navbar",
-    div:"div",
-}
+// const blocksType={
+//     header:"header",
+//     section:"section",
+//     image:"image",
+//     navbar:"navbar",
+//     div:"div",
+// }
 
-export default blocksType;
+// export default blocksType;

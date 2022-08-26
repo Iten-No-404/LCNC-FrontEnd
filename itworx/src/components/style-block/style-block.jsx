@@ -6,12 +6,10 @@ import FontPickerTool from '../font-picker/font-picker';
 import ColorPickerTool from '../color-picker/color-picker';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import blocksType from "../../helper/blocksType";
 import { selectWidgetCSS, setTextContent, setFontsizeval, setWidthval, setHeightval } from '../../states/widget-css-slice/widget-css-slice';
 import StyleBlockHandler from './style-block-controller';
 
 const StyledBlock = ({ board, setBoard }) => {
-  console.log(board);
   const CSS = useSelector(selectWidgetCSS);
   const [content, setContent] = useState("");
   const [fontsize, setFontsize] = useState();
@@ -54,7 +52,7 @@ const StyledBlock = ({ board, setBoard }) => {
   }, [CSS.id]);
 
 
-  if (selectedblock?.type === blocksType.navbar)
+  if (selectedblock?.type === "navbar")
     return(
       <>
         <div>Pick Background Color</div>
@@ -64,7 +62,7 @@ const StyledBlock = ({ board, setBoard }) => {
 
   return (
     <>
-      {selectedblock?.type === blocksType.image ? (<input
+      {selectedblock?.type === 'image' ? (<input
         class="form-control"
         type="file"
         name="myImage"

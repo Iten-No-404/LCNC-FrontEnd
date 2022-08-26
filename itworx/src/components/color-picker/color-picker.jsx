@@ -12,7 +12,6 @@ export default function ColorPickerTool(colorType) {
     useEffect(() => {
         if(CSS.id != null)
         {
-            console.log('Change font color to: ',CSS.color);
             setActiveColor(CSS.color);
         }
     }, [CSS.id]);
