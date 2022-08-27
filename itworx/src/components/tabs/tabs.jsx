@@ -8,7 +8,17 @@ import DisplayImage from '../blocks/image'
 import StyledBlock from '../style-block/style-block';
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import Div from '../blocks/div';
+import { PropTypes } from "prop-types";
 
+/**
+ * That the side menue that show three Tabs 
+ * 
+ *1- first one show the available widgets that can be drag and drop
+ * 
+ *2- second one show the layers component
+ * 
+ *3- third one show the styled block comonent
+ */
 function Ctabs({ board, setBoard }) {
   return (
     <div>
@@ -16,12 +26,12 @@ function Ctabs({ board, setBoard }) {
         {(provided) => (
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} key={21}>
             <Tabs
-              defaultActiveKey="profile"
+              defaultActiveKey="widgets"
               id="justify-tab-example"
               className="mb-3"
               justify
             >
-              <Tab eventKey="profile" title="Blocks" className='Blocks'>
+              <Tab eventKey="widgets" title="Blocks" className='Blocks'>
               <Draggable draggableId='5' key={5} index={5} >
                   {(provided, snapshot) => (
                     <>
@@ -99,3 +109,21 @@ function Ctabs({ board, setBoard }) {
 }
 
 export default Ctabs;
+
+Ctabs.propTypes = {
+   /** board is have the all widget that is in the project */
+  board: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      type:  PropTypes.string,
+      text: PropTypes.string,
+      selected: PropTypes.bool,
+      code1: PropTypes.string,
+      code2:  PropTypes.string,
+      CSS: PropTypes.object,
+      children: PropTypes.array
+    })
+  ),
+  /** setBoard function use to update the board */
+  setBoard: PropTypes.func
+}
