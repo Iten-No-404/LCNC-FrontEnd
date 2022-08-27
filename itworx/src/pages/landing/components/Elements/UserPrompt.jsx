@@ -41,14 +41,6 @@ function UserPrompt({userPromptContoller}) {
     const handleSignUp = () => {
         if(password !== reEnterPassword)
             return;
-        console.log({
-            fullName: fullName,
-            email: email,
-            phoneNo: phoneNo,
-            password: password,
-            isEmailconfirmed: true,
-            isActive: true
-        });
         dispatch(signUpThunk({
             fullName: fullName,
             email: email,
@@ -57,8 +49,6 @@ function UserPrompt({userPromptContoller}) {
             isEmailconfirmed: true,
             isActive: true
         }));
-        // if(user.isActive)
-        //     window.location = window.location.protocol + "//app." + window.location.host;
     }
 
   return (

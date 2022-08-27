@@ -1,5 +1,6 @@
 import Col from 'react-bootstrap/Col';
 import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Ctabs from '../../components/tabs/tabs';
@@ -19,6 +20,9 @@ import { useDispatch } from 'react-redux';
 import updateProject from './save-board-service'
 
 function WorkSpace() {
+
+  //Change this later:
+  const { id } = useParams();
 
   const [board, setBoard] = useState([]);
   const [project, setProject] = useState({});
@@ -57,7 +61,7 @@ function WorkSpace() {
   // fetch the board data
   useEffect(() => {
     async function fetchData() {
-      const response = await getBoard();
+      const response = await getBoard(id);
       setBoard(JSON.parse(response.widgets));
       console.log('Received BoardList',JSON.parse(response.widgets));
       setProject(response);

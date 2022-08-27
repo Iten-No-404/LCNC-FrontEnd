@@ -10,21 +10,17 @@ const headers = {
 
 export const getUserThunk = createAsyncThunk(
     'getUser',
-    async (query) => fetch(`${api}/User/${query}`, {
-    // async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/${query}`, {
+    async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/${query}`, {
       method: 'GET',
       headers: {
         ...headers
       },
-      // body: JSON.stringify(query),
     }).then((res) => res.json()),
   );
 
   export const logInThunk = createAsyncThunk(
     'login',
-    async (query) => fetch(`${api}/User/Login`, {
-    // async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Login`, {
-      // crossDomain:true,
+    async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/Login`, {
       method: 'POST',
       headers: {
         ...headers
@@ -35,9 +31,7 @@ export const getUserThunk = createAsyncThunk(
 
   export const signUpThunk = createAsyncThunk(
     'signUp',
-    async (query) => fetch(`${api}/User/Signup`, {
-    // async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Signup`, {
-      // crossDomain:true,
+    async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/Signup`, {
       method: 'POST',
       headers: {
         ...headers
@@ -48,8 +42,7 @@ export const getUserThunk = createAsyncThunk(
 
   export const updateUserThunk = createAsyncThunk(
     'updateUser',
-    async (query) => fetch(`${api}/User/UpdateUser`, {
-    // async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/UpdateUser`, {
+    async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/UpdateUser`, {
       method: 'POST',
       headers: {
         ...headers
@@ -59,8 +52,7 @@ export const getUserThunk = createAsyncThunk(
   );
   export const deleteUserThunk = createAsyncThunk(
     'deleteUser',
-    async (query) => fetch(`${api}/User/DeleteUser`, {
-    // async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/DeleteUser`, {
+    async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/DeleteUser`, {
       method: 'DELETE',
       headers: {
         ...headers
