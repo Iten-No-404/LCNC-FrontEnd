@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectDefaultCSS } from "../../states/default-css-slice/default-css-slice";
-
 export default function Div({ text, id, classN, font = '', CSS, logo = false, isDragging = false }) {
   const defaultCSS = useSelector(selectDefaultCSS);
 
@@ -9,7 +8,7 @@ export default function Div({ text, id, classN, font = '', CSS, logo = false, is
     CSS = defaultCSS;
     font = defaultCSS.font;
   }
-
+  
   return (
     <div
       className={classN}

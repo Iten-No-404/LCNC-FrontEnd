@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setCSS } from '../../states//widget-css-slice//widget-css-slice';
+import { setCSS } from '../../states/widget-css-slice/widget-css-slice';
 import { selectWidgetsList } from '../../states/widget-list-slice/widget-list-slice';
 import { PropTypes } from "prop-types";
 /**

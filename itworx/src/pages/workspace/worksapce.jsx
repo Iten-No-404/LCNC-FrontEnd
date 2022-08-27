@@ -25,7 +25,7 @@ function WorkSpace() {
   const [isLoadingBlocksList, setIsLoadingBlocksList] = useState(true);
   const [isLoadingDefaultCSS, setIsLoadingDefaultCSS] = useState(true);
 
-  const { handleOnDragEnd } = workSpaceHandler(board, setBoard);
+  const { handleOnDragEnd, recursiveAddCSS } = workSpaceHandler(board, setBoard);
   const HTMLcode = generateCode(board);
   const CSScode = generateCSS(board);
 
@@ -46,6 +46,11 @@ function WorkSpace() {
     }
     fetchData();
   }, []);
+
+  // fill the Widget List with their CSS properties.
+  useEffect(() => {
+    recursiveAddCSS(board);
+  }, [isLoadingBoard]);
 
   // fetch the default css
   useEffect(() => {
