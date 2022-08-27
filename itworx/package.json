@@ -71,8 +71,8 @@
       "last 1 safari version"
     ]
   },
-    "devDependencies": {
-      "react-app-rewired": "^2.2.1",
-      "react-styleguidist": "^11.2.0"
-    }
+  "devDependencies": {
+    "react-app-rewired": "^2.2.1",
+    "react-styleguidist": "^11.2.0"
+  }
 }

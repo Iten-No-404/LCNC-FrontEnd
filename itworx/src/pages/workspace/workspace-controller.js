@@ -166,6 +166,26 @@ const WorkSpaceHandler = (board, setBoard) => {
         return destClone;
     };
 
+	const recursiveDisSelect = (myBoard) => {
+		if (myBoard && myBoard.length > 0) {
+			let newBoard = [];
+			myBoard.forEach(block => {
+					const val = recursiveDisSelect(block.children);
+					if (val.length > 0) {
+						const newBlock = { ...block, selected: false, children: val };
+						newBoard.push(newBlock);
+					} else {
+						const newBlock = { ...block, selected: false };
+						newBoard.push(newBlock);
+				}
+			}
+			);
+			return newBoard;
+		} else {
+			return [];
+		}
+	}
+
     const handleOnDragEnd = (result) => {
         const { destination, source, draggableId } = result;
         // this is the case of nesting a block inside another block
@@ -205,7 +225,7 @@ const WorkSpaceHandler = (board, setBoard) => {
         }
     };
 
-    return { handleOnDragEnd, recursiveAddCSS };
+    return { handleOnDragEnd, recursiveAddCSS, recursiveDisSelect };
 };
 
 export default WorkSpaceHandler;

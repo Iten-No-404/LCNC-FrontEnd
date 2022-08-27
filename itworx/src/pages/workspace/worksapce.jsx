@@ -25,10 +25,11 @@ function WorkSpace() {
   const [modalShowhtml, setModalShowhtml] = React.useState(false);
   const [modalShowcss, setModalShowcss] = React.useState(false);
   const [isLoadingBoard, setIsLoadingBoard] = useState(true);
+  const [isLoadingBoardCSS, setIsLoadingBoardCSS] = useState(true);
   const [isLoadingBlocksList, setIsLoadingBlocksList] = useState(true);
   const [isLoadingDefaultCSS, setIsLoadingDefaultCSS] = useState(true);
 
-  const { handleOnDragEnd, recursiveAddCSS } = workSpaceHandler(board, setBoard);
+  const { handleOnDragEnd, recursiveAddCSS, recursiveDisSelect } = workSpaceHandler(board, setBoard);
   const HTMLcode = generateCode(board);
   const CSScode = generateCSS(board);
 
@@ -49,14 +50,16 @@ function WorkSpace() {
 
   // save the board data
   useEffect(() => {
-    updateProject(project);
+    if(!isLoadingBoard)
+      updateProject(project);
   }, [project.widgets]);
+
   // fetch the board data
   useEffect(() => {
     async function fetchData() {
       const response = await getBoard();
       setBoard(JSON.parse(response.widgets));
-      // console.log(JSON.parse(response.widgets));
+      console.log('Received BoardList',JSON.parse(response.widgets));
       setProject(response);
       setIsLoadingBoard(false);
     }
@@ -65,7 +68,12 @@ function WorkSpace() {
 
   // fill the Widget List with their CSS properties.
   useEffect(() => {
-    recursiveAddCSS(board);
+    if(!isLoadingBoard && isLoadingBoardCSS)
+    {
+      setBoard(recursiveDisSelect(board));
+      recursiveAddCSS(board);
+      setIsLoadingBoardCSS(false);
+    }
   }, [isLoadingBoard]);
 
   // fetch the default css

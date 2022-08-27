@@ -12,16 +12,16 @@ import { logInThunk, getUserThunk, selectUser } from '../../states/user-slice/us
 function Navigationbar({handleOpenhtml, handleOpencss, saveBoard }) {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  console.log(user);
-  useEffect(() => {
-    // console.log("Can I log in?");
-    // dispatch(logInThunk({
-    //   email: "max@yahoo.com",
-    //   password: "qwerty123"
-    // }));
-    // console.log('Logged in!!',user);
-    // dispatch(getUserThunk(5));
-  }, []);
+  // console.log(user);
+  // useEffect(() => {
+  //   // console.log("Can I log in?");
+  //   // dispatch(logInThunk({
+  //   //   email: "max@yahoo.com",
+  //   //   password: "qwerty123"
+  //   // }));
+  //   // console.log('Logged in!!',user);
+  //   // dispatch(getUserThunk(5));
+  // }, []);
   return (
       <Navbar bg="dark" variant="dark">
         <Container>

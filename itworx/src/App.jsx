@@ -10,10 +10,10 @@ import { selectUser, setUser } from './states/user-slice/user-slice';
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isOnAppSub, setIsOnAppSub] = useState(false);
-  console.log(isLoggedIn+' '+isOnAppSub);
-  console.log(user);
+  // console.log(isLoggedIn+' '+isOnAppSub);
+  // console.log(user);
   useEffect(() => {
     dispatch(setUser());
     let host = window.location.host;
