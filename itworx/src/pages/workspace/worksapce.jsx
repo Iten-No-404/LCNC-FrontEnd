@@ -25,7 +25,7 @@ function WorkSpace() {
   const [isLoadingBlocksList, setIsLoadingBlocksList] = useState(true);
   const [isLoadingDefaultCSS, setIsLoadingDefaultCSS] = useState(true);
 
-  const { handleOnDragEnd, recursiveAddCSS } = workSpaceHandler(board, setBoard);
+  const { handleOnDragEnd, recursiveAddCSS, generateCodeZip } = workSpaceHandler(board, setBoard);
   const HTMLcode = generateCode(board);
   const CSScode = generateCSS(board);
 
@@ -71,11 +71,13 @@ function WorkSpace() {
     }
     fetchData();
   }, []);
+  
+  const generateZip = () => generateCodeZip(HTMLcode,CSScode);
 
   return !isLoadingBoard && !isLoadingDefaultCSS && (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} />
+        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} generateZip={generateZip} />
         <Container className="mt-4">
           <Row>
             <Col xs={9} >
