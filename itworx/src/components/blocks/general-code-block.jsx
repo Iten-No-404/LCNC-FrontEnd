@@ -3,16 +3,14 @@ import { useSelector } from "react-redux";
 import { selectDefaultCSS } from "../../states/default-css-slice/default-css-slice";
 import parse from 'html-react-parser';
 
-export default function GeneralCodeBlock({ text, id, classN, font = '', CSS, logo = false, isDragging = false, code1, code2 }) {
+export default function GeneralCodeBlock({ classN,text, CSS=null, isDragging = false, code1, code2 }) {
     const defaultCSS = useSelector(selectDefaultCSS);
 
-    if (logo) {
+    if (!CSS) {
         CSS = defaultCSS;
-        font = defaultCSS.font;
     }
 
     const styling = {
-        "border": isDragging ? "5px solid pink" : "0px",
         "font-family": CSS.font.family,
         "color": CSS.color,
         "font-size": CSS.font.size + "px",
@@ -26,7 +24,6 @@ export default function GeneralCodeBlock({ text, id, classN, font = '', CSS, log
     let stringStyles = ''
 
     Object.entries(styling).map(([key, value]) => {
-        // console.log(key)
         stringStyles += key + ':' + value + '; '
     })
 
@@ -38,6 +35,5 @@ export default function GeneralCodeBlock({ text, id, classN, font = '', CSS, log
         (CSS.text.content ? CSS.text.content : text) +
         code2
     );
-    // console.log(codeText)
     return parse(codeText);    
 }

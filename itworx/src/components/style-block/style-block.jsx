@@ -8,7 +8,11 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { selectWidgetCSS, setTextContent, setFontsizeval, setWidthval, setHeightval, setPaddingval, setMarginval, setBoarderrediusval } from '../../states/widget-css-slice/widget-css-slice';
 import StyleBlockHandler from './style-block-controller';
+import { PropTypes } from "prop-types";
 
+/**
+ * render the style proberties depend on the selected widget and manage the user to change CSS for that widget
+ */
 const StyledBlock = ({ board, setBoard }) => {
   console.log(board);
   const CSS = useSelector(selectWidgetCSS);
@@ -161,3 +165,22 @@ const StyledBlock = ({ board, setBoard }) => {
 }
 
 export default StyledBlock;
+
+
+StyledBlock.propTypes = {
+  /** board is have the all widget that is in the project */
+ board: PropTypes.arrayOf(
+   PropTypes.shape({
+     id: PropTypes.number,
+     type:  PropTypes.string,
+     text: PropTypes.string,
+     selected: PropTypes.bool,
+     code1: PropTypes.string,
+     code2:  PropTypes.string,
+     CSS: PropTypes.object,
+     children: PropTypes.array
+   })
+ ),
+ /** setBoard function use to update the board */
+ setBoard: PropTypes.func
+}
