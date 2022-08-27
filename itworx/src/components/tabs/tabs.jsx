@@ -19,7 +19,7 @@ import GeneralCodeBlock from '../blocks/general-code-block';
  */
 function Ctabs({ board, setBoard }) {
   const blocksList = useSelector(selectBlocksList);
-  console.log(blocksList);
+  // console.log(blocksList);
   return (
     <div>
       <Droppable droppableId="selectWidgetTab" isDropDisabled={true} type="board" >
@@ -39,10 +39,10 @@ function Ctabs({ board, setBoard }) {
                       {(provided, snapshot) => (
                         <>
                           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className="mt-3">
-                            <GeneralCodeBlock isDragging={snapshot.isDragging} classN="blockTab" id={block.id} text={block.text} code1={block.code1} code2={block.code2}/>
+                            <GeneralCodeBlock isDragging={snapshot.isDragging} classN="blockTab" id={block.id} text={block.text} code1={block.widgetCodeSnippet.code1} code2={block.widgetCodeSnippet.code2} />
                           </div>
                           {snapshot.isDragging && (
-                            <GeneralCodeBlock classN="blockTab" id={block.id} text={block.text} code1={block.code1} code2={block.code2} />
+                            <GeneralCodeBlock classN="blockTab" id={block.id} text={block.text} code1={block.widgetCodeSnippet.code1} code2={block.widgetCodeSnippet.code2} />
                           )}
                         </>
                       )}

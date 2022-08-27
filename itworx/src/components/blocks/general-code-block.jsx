@@ -24,7 +24,6 @@ export default function GeneralCodeBlock({ classN,text, CSS=null, isDragging = f
     let stringStyles = ''
 
     Object.entries(styling).map(([key, value]) => {
-        console.log(key)
         stringStyles += key + ':' + value + '; '
     })
 
@@ -36,6 +35,5 @@ export default function GeneralCodeBlock({ classN,text, CSS=null, isDragging = f
         (CSS.text.content ? CSS.text.content : text) +
         code2
     );
-    console.log(codeText)
     return <div className={classN} style={{"border": isDragging ? "5px solid pink" : "0px"}}>{parse(codeText)}</div>
 }
