@@ -49,9 +49,12 @@ const StyledBlock = ({ board, setBoard }) => {
   useEffect(() => {
     if (CSS.id != null) {
       setContent(CSS.text.content);
-      //setFontsize(CSS.font.size);
-      //setWidth(CSS.width);
-      //setHeight(CSS.height);
+      setFontsize(CSS.font.size);
+      setWidth(CSS.width);
+      setHeight(CSS.height);
+      setBoarderredius(CSS.border.radius);
+      setPadding(CSS.padding);
+      setMargin(CSS.margin);
     }
   }, [CSS.id]);
 
@@ -104,7 +107,7 @@ const StyledBlock = ({ board, setBoard }) => {
         (selectedblock &&
           <Form>
             <Form.Group className="mb-3" controlId="textEditor">
-              <Form.Control value={content} onChange={(e) => { dispatch(setTextContent(e.target.value)); setContent(e.target.value)/*handleSelect(e);*/ }} type="text" placeholder="Enter Your Text" />
+              <Form.Control value={content} onChange={(e) => { dispatch(setTextContent(e.target.value)); setContent(e.target.value) }} type="text" placeholder="Enter Your Text" />
             </Form.Group>
             <div className="d-flex flex-row">
             <Form.Group className="mb-3" controlId="fontsize">

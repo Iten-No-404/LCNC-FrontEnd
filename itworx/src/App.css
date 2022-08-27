@@ -1,6 +1,18 @@
 @import url(https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css);
 @import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
 
+.hide {
+  display: none;
+}
+
+/* .myDIV {
+  color: red;
+
+} */
+.myDIV:hover + .hide {
+  display: block;
+  font-weight: bold;
+}
 
 .blockTab  {
   margin: 10px;
