@@ -177,7 +177,7 @@
           "id": 4,
           "type": "navbar",
           "selected": false,
-          "text": "",
+          "text": "Navbar",
           "code1": "\n        <nav id class=\"navbar navbar-light\">\n        <div class=\"navbar-brand d-flex flex-row m-2\">",
           "code2": "\n        </div>\n        </nav>",
           "children": [

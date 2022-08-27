@@ -2,7 +2,9 @@ import React , { useState } from "react";
 import { useDispatch } from 'react-redux';
 import FontPicker from "font-picker-react";
 import { setFontFamily } from "../../states//widget-css-slice//widget-css-slice";
-
+/**
+ * Manage the user to select font type for the  selected widget
+ */
 export default function FontPickerTool() {
         const dispatch = useDispatch();
         const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");

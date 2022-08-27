@@ -2,7 +2,10 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import BlockHandler from './block-controller';
-
+import { PropTypes } from "prop-types";
+/**
+ * Use to mange recertion in the layers that render widget name where you can select it or delete
+ */
 const Block = ({ setBoard, block }) => {
 
 	const { handelDelete, handelSelect } = BlockHandler(setBoard);
@@ -24,3 +27,19 @@ const Block = ({ setBoard, block }) => {
 }
 
 export default Block;
+
+Block.propTypes = {
+	/** block is rebresent one widget */
+	block: PropTypes.shape({
+	   id: PropTypes.number,
+	   type:  PropTypes.string,
+	   text: PropTypes.string,
+	   selected: PropTypes.bool,
+	   code1: PropTypes.string,
+	   code2:  PropTypes.string,
+	   CSS: PropTypes.object,
+	   children: PropTypes.array
+	 }),
+   /** setBoard function use to update the board */
+   setBoard: PropTypes.func
+  }
