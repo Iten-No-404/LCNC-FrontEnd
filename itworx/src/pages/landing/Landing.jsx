@@ -1,23 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // Sections
 import TopNavbar from "./components/Nav/TopNavbar";
 import Header from "./components/Sections/Header";
 import Services from "./components/Sections/Services";
-import Projects from "./components/Sections/Projects";
-import Blog from "./components/Sections/Blog";
-import Pricing from "./components/Sections/Pricing";
 import Contact from "./components/Sections/Contact";
 import Footer from "./components/Sections/Footer";
+import UserPrompt from "./components/Elements/UserPrompt";
 
 export default function Landing() {
+  const [userPromptOpen, setUserPrompt] = useState(false);
+  const handlePromptClose = () => setUserPrompt(false);
+  const handlePromptOpen = () => setUserPrompt(true);
+  const [promptType, setPromptType] = useState('Login');
+  const setPromptTypeLogin = () => setPromptType('Login');
+  const setPromptTypeSignUp = () => setPromptType('SignUp');
+  const userPromptContoller = {
+    userPromptOpen,
+    handlePromptClose,
+    handlePromptOpen,
+    promptType,
+    setPromptTypeLogin,
+    setPromptTypeSignUp
+  };
   return (
     <>
-      <TopNavbar />
+      <TopNavbar userPromptContoller={userPromptContoller} />
+      <UserPrompt userPromptContoller={userPromptContoller}/>
       <Header />
       <Services />
-      {/* <Projects /> */}
-      {/* <Blog /> */}
-      {/* <Pricing /> */}
       <Contact />
       <Footer />
     </>

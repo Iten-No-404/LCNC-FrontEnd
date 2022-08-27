@@ -12,10 +12,11 @@ export default function Header() {
     <Wrapper id="home" className="container flexSpaceCenter">
       <LeftSide className="flexCenter">
         <div>
-          <h1 className="extraBold font60">We are Digital Agency.</h1>
+          <h1 className="extraBold font60">No need to code again!</h1>
           <HeaderP className="font13 semiBold">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-            voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            LCNC Design Tool is a low-code-no-code tool to create web apps with no to very little coding.
+            Whether you're tired of coding or you aren't familiar with it in the first place, using this 
+            tool, you can create the website of your dreams with just a few clicks.
           </HeaderP>
           <BtnWrapper>
             <FullButton title="Get Started" />

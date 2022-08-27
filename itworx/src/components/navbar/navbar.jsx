@@ -14,7 +14,7 @@ function Navigationbar({handleOpenhtml, handleOpencss }) {
   const user = useSelector(selectUser);
   console.log(user);
   useEffect(() => {
-    console.log("Can I log in?");
+    // console.log("Can I log in?");
     // dispatch(logInThunk({
     //   email: "max@yahoo.com",
     //   password: "qwerty123"
@@ -45,10 +45,10 @@ function Navigationbar({handleOpenhtml, handleOpencss }) {
           <Container className="justify-content-end">
           <h2 className="justify-content-end myDIV">
             My Project by {user.fullName}
-          </h2>
             <p className='hide'>
             Logged in using {user.email}
             </p>
+          </h2>
           </Container>
           
 

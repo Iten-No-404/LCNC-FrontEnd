@@ -2,18 +2,20 @@ import './App.css';
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'; 
 import WorkSpace from './pages/workspace/worksapce';
+import AppHome from './pages/app-home/app-home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Landing from "./pages/landing/Landing";
-import { logInThunk, getUserThunk, selectUser } from './states/user-slice/user-slice';
+import { selectUser, setUser } from './states/user-slice/user-slice';
 
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOnAppSub, setIsOnAppSub] = useState(false);
+  console.log(isLoggedIn+' '+isOnAppSub);
+  console.log(user);
   useEffect(() => {
-    dispatch(getUserThunk(5));
-    setIsLoggedIn(true);
+    dispatch(setUser());
     let host = window.location.host;
     let parts = host.split(".");
     if(process.env.NODE_ENV === "development")
@@ -34,16 +36,17 @@ function App() {
       }
     }
 }, []);
-  // if(isLoggedIn)
-  //   window.location
+  useEffect(() => {
+    if(user.isActive)
+      setIsLoggedIn(true);
+  }, [user.isActive])
   return (
     <Router>
       <div className="App">
         <Routes>
-          {isLoggedIn && isOnAppSub && <Route path="/" element={<WorkSpace />} />}
+          {isLoggedIn && isOnAppSub && <Route path="/" element={<AppHome />} />}
+          {isLoggedIn && isOnAppSub && <Route path="/:id" element={<WorkSpace />} />}
           <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<Landing />} />
-          <Route path="/signup" element={<Landing />} />
         </Routes>
       </div>
     </Router>
