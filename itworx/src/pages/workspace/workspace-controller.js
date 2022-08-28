@@ -216,7 +216,13 @@ const WorkSpaceHandler = (board, setBoard) => {
         });
     };
 
-    return { handleOnDragEnd, recursiveAddCSS, generateCodeZip };
+    const generateOneCode = (htmlcode, csscode) => {
+        const stylepostion = htmlcode.split('<link href="style.css" rel="stylesheet" />');
+        return `${stylepostion[0]} <style>  ${csscode}   </style> ${stylepostion[1]}`;
+
+    };
+
+    return { handleOnDragEnd, recursiveAddCSS, generateCodeZip, generateOneCode };
 };
 
 export default WorkSpaceHandler;
