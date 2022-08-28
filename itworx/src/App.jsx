@@ -2,7 +2,6 @@ import './App.css';
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'; 
 import WorkSpace from './pages/workspace/worksapce';
-import AppHome from './pages/app-home/app-home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import Landing from "./pages/landing/Landing";
@@ -48,12 +47,10 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {/* {isLoggedIn && isOnAppSub && <Route path="/" element={<AppHome />} />} */}
           <Route path="/" element={<Landing />} />
           {isLoggedIn && isOnAppSub && <Route  path="/:id" element={<Projects />}></Route>}
           {isLoggedIn && isOnAppSub && <Route path="/project/:id" element={<WorkSpace />} />}
           {isLoggedIn && isOnAppSub && <Route  path="/project/:id/preview" element={<Preview />}></Route>}
-          {/* <Route  path="/" element={<WorkSpace />}></Route> */}
       </Routes>
       </div>
     </Router>
