@@ -8,17 +8,17 @@ const StyleBlockHandler = (setBoard) => {
 	const CSS = useSelector(selectWidgetCSS);
 	const dispatch = useDispatch();
 
-	const recursiveAddimage = (myBoard, e) => {
+	const recursiveAddimage = (myBoard, img) => {
 		if (myBoard && myBoard.length > 0) {
-			console.log("e=",e);
+			console.log("e=",img);
 			// console.log("URL.createObjectURL(e.target.files[0])=",URL.createObjectURL(e.target.files[0]));
 			let newBoard = [];
 			myBoard.forEach(block => {
 				if (block.selected) {
-					const newBlock = { ...block, text: e };
+					const newBlock = { ...block, text: img };
 					newBoard.push(newBlock);
 				} else {
-					const val = recursiveAddimage(block.children, e);
+					const val = recursiveAddimage(block.children, img);
 					if (val.length > 0) {
 						const newBlock = { ...block, children: val };
 						newBoard.push(newBlock);
