@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './states/store';
 import './index.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./pages/landing/style/flexboxgrid.min.css";
+import './pages/landing/style/index.css';
 import App from './App';
 //import reportWebVitals from './reportWebVitals';
 

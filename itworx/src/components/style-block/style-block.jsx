@@ -53,9 +53,12 @@ const StyledBlock = ({ board, setBoard }) => {
   useEffect(() => {
     if (CSS.id != null) {
       setContent(CSS.text.content);
-      //setFontsize(CSS.font.size);
-      //setWidth(CSS.width);
-      //setHeight(CSS.height);
+      setFontsize(CSS.font.size);
+      setWidth(CSS.width);
+      setHeight(CSS.height);
+      setBoarderredius(CSS.border.radius);
+      setPadding(CSS.padding);
+      setMargin(CSS.margin);
     }
   }, [CSS.id]);
 
@@ -78,12 +81,12 @@ const StyledBlock = ({ board, setBoard }) => {
           name="myImage"
           onChange={(e) => handleUploadImage(e)} />
           <div className="d-flex flex-row">
-              <Form.Group className="mb-3" controlId="fontsize">
+              <Form.Group className="mb-3" controlId="width">
                 <Form.Label>Width %</Form.Label>
                 <Form.Control value={width} onChange={(e) => { dispatch(setWidthval(e.target.value)); setWidth(e.target.value) }} type="number" placeholder="ex: 100"/>
               </Form.Group>
-              <Form.Group className="mb-3" controlId="fontsize">
-                <Form.Label>Height px</Form.Label>
+              <Form.Group className="mb-3" controlId="height">
+                <Form.Label>Height %</Form.Label>
                 <Form.Control value={height} onChange={(e) => { dispatch(setHeightval(e.target.value)); setHeight(e.target.value) }} type="number" placeholder="ex: 100" />
               </Form.Group>
           </div>
@@ -108,14 +111,14 @@ const StyledBlock = ({ board, setBoard }) => {
         (selectedblock &&
           <Form>
             <Form.Group className="mb-3" controlId="textEditor">
-              <Form.Control value={content} onChange={(e) => { dispatch(setTextContent(e.target.value)); setContent(e.target.value)/*handleSelect(e);*/ }} type="text" placeholder="Enter Your Text" />
+              <Form.Control value={content} onChange={(e) => { dispatch(setTextContent(e.target.value)); setContent(e.target.value) }} type="text" placeholder="Enter Your Text" />
             </Form.Group>
             <div className="d-flex flex-row">
             <Form.Group className="mb-3" controlId="fontsize">
             <Form.Label>Font Size px</Form.Label>
               <Form.Control value={fontsize} onChange={(e) => { dispatch(setFontsizeval(e.target.value)); setFontsize(e.target.value) }} type="number" placeholder="ex: 20" />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="fontsize">
+            <Form.Group className="mb-3" controlId="borderradius">
             <Form.Label>Border Radius %</Form.Label>
               <Form.Control value={boarderredius} onChange={(e) => { dispatch(setBoarderrediusval(e.target.value)); setBoarderredius(e.target.value) }} type="number" placeholder="ex: 20" />
             </Form.Group>

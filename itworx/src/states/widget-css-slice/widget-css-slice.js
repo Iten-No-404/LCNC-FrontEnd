@@ -4,7 +4,7 @@ const widgetCSS = createSlice({
     name: "widgetCSS",
     initialState: {
         id: null,
-        color: "black",
+        color: "#000000FF",
         font: {
             family: "Open Sans",
             size: 25,
@@ -16,7 +16,7 @@ const widgetCSS = createSlice({
             content: "",
         },
         background: {
-            color: "black",
+            color: "#000000FF",
         },
         border: {
             radius: "0",

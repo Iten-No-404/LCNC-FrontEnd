@@ -21,7 +21,7 @@ export const generateCSSids = (board) => {
             font-size: ${fontSize}px;
             background-color: ${backgroundcolor};
             width: ${width}%;
-            height: ${height}px;
+            height: ${height}%;
             padding: ${padding}px;
             margin: ${margin}px;
         }`;

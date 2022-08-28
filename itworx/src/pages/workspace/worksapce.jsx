@@ -1,5 +1,6 @@
 import Col from 'react-bootstrap/Col';
 import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Ctabs from '../../components/tabs/tabs';
@@ -15,20 +16,26 @@ import getBlocksList from './blocks-list-service';
 import getDefaultCSS from './default-css-service';
 import { setBlocksList } from '../../states/blocks-list-slice/blocks-list-slice';
 import { setDefaultCSS } from '../../states/default-css-slice/default-css-slice';
+import {setGeneratedCode} from '../../states/generated-code-slice/generated-code-slice';
 import { useDispatch } from 'react-redux';
 import updateProject from './save-board-service'
-
+import  { useNavigate } from 'react-router-dom'
 function WorkSpace() {
+
+  //Change this later:
+  const { id } = useParams();
 
   const [board, setBoard] = useState([]);
   const [project, setProject] = useState({});
   const [modalShowhtml, setModalShowhtml] = React.useState(false);
   const [modalShowcss, setModalShowcss] = React.useState(false);
   const [isLoadingBoard, setIsLoadingBoard] = useState(true);
+  const [isLoadingBoardCSS, setIsLoadingBoardCSS] = useState(true);
   const [isLoadingBlocksList, setIsLoadingBlocksList] = useState(true);
   const [isLoadingDefaultCSS, setIsLoadingDefaultCSS] = useState(true);
 
-  const { handleOnDragEnd, recursiveAddCSS } = workSpaceHandler(board, setBoard);
+  const { handleOnDragEnd, recursiveAddCSS, generateCodeZip, generateOneCode, recursiveDisSelect } = workSpaceHandler(board, setBoard);
+
   const HTMLcode = generateCode(board);
   const CSScode = generateCSS(board);
 
@@ -38,7 +45,16 @@ function WorkSpace() {
   const handleClosecss = () => setModalShowcss(false)
   const handleOpencss = () => setModalShowcss(true)
 
+  const generateZip = () => generateCodeZip(HTMLcode,CSScode);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleOpenpreview = () =>{
+    const generatedCode=generateOneCode(HTMLcode,CSScode);
+    dispatch(setGeneratedCode(generatedCode));
+    navigate("/project/"+id+"/preview");
+  }
 
   const saveBoard = () => {
     setProject({
@@ -49,14 +65,16 @@ function WorkSpace() {
 
   // save the board data
   useEffect(() => {
-    updateProject(project);
+    if(!isLoadingBoard)
+      updateProject(project);
   }, [project.widgets]);
+
   // fetch the board data
   useEffect(() => {
     async function fetchData() {
-      const response = await getBoard();
+      const response = await getBoard(id);
       setBoard(JSON.parse(response.widgets));
-      // console.log(JSON.parse(response.widgets));
+      console.log('Received BoardList',JSON.parse(response.widgets));
       setProject(response);
       setIsLoadingBoard(false);
     }
@@ -65,7 +83,12 @@ function WorkSpace() {
 
   // fill the Widget List with their CSS properties.
   useEffect(() => {
-    recursiveAddCSS(board);
+    if(!isLoadingBoard && isLoadingBoardCSS)
+    {
+      setBoard(recursiveDisSelect(board));
+      recursiveAddCSS(board);
+      setIsLoadingBoardCSS(false);
+    }
   }, [isLoadingBoard]);
 
   // fetch the default css
@@ -87,11 +110,12 @@ function WorkSpace() {
     }
     fetchData();
   }, []);
+  
 
   return !isLoadingBoard && !isLoadingDefaultCSS && (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard}/>
+        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />
         <Container className="mt-4">
           <Row>
             <Col xs={9} >

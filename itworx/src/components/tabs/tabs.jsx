@@ -31,7 +31,7 @@ function Ctabs({ board, setBoard }) {
               className="mb-3"
               justify
             >
-              <Tab eventKey="widgets" title="Blocks" className='Blocks'>
+              <Tab eventKey="widgets" title="Blocks" className='Blocks' style={{ overflow: 'scroll', maxHeight: '500px'}}>
                 {
                   blocksList.map((block)=>{
                     return (

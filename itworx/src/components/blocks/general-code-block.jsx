@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { selectDefaultCSS } from "../../states/default-css-slice/default-css-slice";
 import parse from 'html-react-parser';
 
-export default function GeneralCodeBlock({ classN,text, CSS=null, isDragging = false, code1, code2 }) {
+export default function GeneralCodeBlock({ classN, text, CSS=null, isDragging = false, code1, code2 }) {
     const defaultCSS = useSelector(selectDefaultCSS);
-
+    console.log(CSS);
     if (!CSS) {
         CSS = defaultCSS;
     }
@@ -16,7 +16,7 @@ export default function GeneralCodeBlock({ classN,text, CSS=null, isDragging = f
         "font-size": CSS.font.size + "px",
         "background-color": CSS.background.color,
         "width": `${CSS.width}%`,
-        "height": `${CSS.height}px`,
+        "height": `${CSS.height}%`,
         "padding": `${CSS.padding}px`,
         "margin": `${CSS.margin}px`,
         "border-radius": `${CSS.border.radius}%`,
@@ -35,5 +35,5 @@ export default function GeneralCodeBlock({ classN,text, CSS=null, isDragging = f
         (CSS.text.content ? CSS.text.content : text) +
         code2
     );
-    return <div className={classN} style={{"border": isDragging ? "5px solid pink" : "0px"}}>{parse(codeText)}</div>
+    return parse(codeText);    
 }

@@ -17,7 +17,11 @@ export default function ColorPickerTool({colorType}) {
     useEffect(() => {
         if(CSS.id != null)
         {
-            setActiveColor(CSS.color);
+            if(colorType.colorType === "textColor")
+                setActiveColor(CSS.color);
+            else if(colorType.colorType === "backgroundColor")
+                setActiveColor(CSS.background.color);
+            
         }
     }, [CSS.id]);
         return (
