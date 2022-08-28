@@ -16,9 +16,10 @@ import getBlocksList from './blocks-list-service';
 import getDefaultCSS from './default-css-service';
 import { setBlocksList } from '../../states/blocks-list-slice/blocks-list-slice';
 import { setDefaultCSS } from '../../states/default-css-slice/default-css-slice';
+import {setGeneratedCode} from '../../states/generated-code-slice/generated-code-slice';
 import { useDispatch } from 'react-redux';
 import updateProject from './save-board-service'
-
+import  { useNavigate } from 'react-router-dom'
 function WorkSpace() {
 
   //Change this later:
@@ -33,7 +34,8 @@ function WorkSpace() {
   const [isLoadingBlocksList, setIsLoadingBlocksList] = useState(true);
   const [isLoadingDefaultCSS, setIsLoadingDefaultCSS] = useState(true);
 
-  const { handleOnDragEnd, recursiveAddCSS, recursiveDisSelect } = workSpaceHandler(board, setBoard);
+  const { handleOnDragEnd, recursiveAddCSS, generateCodeZip, generateOneCode, recursiveDisSelect } = workSpaceHandler(board, setBoard);
+
   const HTMLcode = generateCode(board);
   const CSScode = generateCSS(board);
 
@@ -43,7 +45,16 @@ function WorkSpace() {
   const handleClosecss = () => setModalShowcss(false)
   const handleOpencss = () => setModalShowcss(true)
 
+  const generateZip = () => generateCodeZip(HTMLcode,CSScode);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleOpenpreview = () =>{
+    const generatedCode=generateOneCode(HTMLcode,CSScode);
+    dispatch(setGeneratedCode(generatedCode));
+    navigate("/project/"+id+"/preview");
+  }
 
   const saveBoard = () => {
     setProject({
@@ -99,11 +110,12 @@ function WorkSpace() {
     }
     fetchData();
   }, []);
+  
 
   return !isLoadingBoard && !isLoadingDefaultCSS && (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard}/>
+        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />
         <Container className="mt-4">
           <Row>
             <Col xs={9} >

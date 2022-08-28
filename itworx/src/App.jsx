@@ -4,18 +4,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import WorkSpace from './pages/workspace/worksapce';
 import AppHome from './pages/app-home/app-home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useParams } from 'react-router-dom'
 import Landing from "./pages/landing/Landing";
-import { selectUser, setUser } from './states/user-slice/user-slice';
+import { selectUser, setUser, getUserThunk } from './states/user-slice/user-slice';
+import Preview from './pages/preview/Preview';
+import Projects from './pages/projects/projects';
 
 function App() {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const user = useSelector(selectUser);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isOnAppSub, setIsOnAppSub] = useState(false);
   // console.log(isLoggedIn+' '+isOnAppSub);
   // console.log(user);
   useEffect(() => {
-    dispatch(setUser());
+    dispatch(getUserThunk(id));
     let host = window.location.host;
     let parts = host.split(".");
     if(process.env.NODE_ENV === "development")
@@ -44,10 +48,13 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {isLoggedIn && isOnAppSub && <Route path="/" element={<AppHome />} />}
-          {isLoggedIn && isOnAppSub && <Route path="/:id" element={<WorkSpace />} />}
+          {/* {isLoggedIn && isOnAppSub && <Route path="/" element={<AppHome />} />} */}
           <Route path="/" element={<Landing />} />
-        </Routes>
+          {isLoggedIn && isOnAppSub && <Route  path="/:id" element={<Projects />}></Route>}
+          {isLoggedIn && isOnAppSub && <Route path="/project/:id" element={<WorkSpace />} />}
+          {isLoggedIn && isOnAppSub && <Route  path="/project/:id/preview" element={<Preview />}></Route>}
+          {/* <Route  path="/" element={<WorkSpace />}></Route> */}
+      </Routes>
       </div>
     </Router>
   );

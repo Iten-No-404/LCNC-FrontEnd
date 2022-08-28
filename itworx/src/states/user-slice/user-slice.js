@@ -76,7 +76,8 @@ const user = createSlice({
             id: null,
             addedData: "0000-00-00T00:00:00",
             modifiedTime: "0000-00-00T00:00:00"
-        }
+        },
+        status: 'idle'
         // ex:
         // {
         //     "fullName": "Iten",
@@ -144,19 +145,28 @@ const user = createSlice({
                 modifiedTime: "0000-00-00T00:00:00"
             };
             localStorage.clear();
+        },
+        setStatusToIdle: (state) => {
+          const s = state; 
+          s.status = 'idle';
         }
-    },
-    extraReducers: {
-        [getUserThunk.pending]: () => {
+      },
+      extraReducers: {
+        [getUserThunk.pending]: (state) => {
+          const s = state; 
+          s.status = 'pending';
         },
         [getUserThunk.fulfilled]: (state, { payload }) => {
+          const s = state; 
           console.log('Get User Payload:',payload);
-          state.user = payload;
+          s.user = payload;
+          s.status = 'fulfilled';
           localStorage.setItem('user', JSON.stringify(state.user));
-          // localStorage.setItem('user', JSON.stringify(state.user));
           // window.location.replace('/dashboard');
         },
-        [getUserThunk.rejected]: () => {
+        [getUserThunk.rejected]: (state) => {
+          const s = state; 
+          s.status = 'rejected';
         },
         [logInThunk.pending]: () => {
           console.log('Login in Progress');
@@ -174,7 +184,7 @@ const user = createSlice({
         [signUpThunk.fulfilled]: (state, { payload }) => {
           console.log('SignUp Payload:',payload);
           state.user = payload;
-          localStorage.setItem('user', JSON.stringify(state.user));
+          // localStorage.setItem('user', JSON.stringify(state.user));
         },
         [signUpThunk.rejected]: () => {
           console.log('SignUp in Failed!!!!');
@@ -215,5 +225,6 @@ const user = createSlice({
 })
 
 export const selectUser = (state) => state.user.user;
+export const selectUserStatus = (state) => state.user.status;
 export const { setUser, logOut } = user.actions;
 export default user.reducer;

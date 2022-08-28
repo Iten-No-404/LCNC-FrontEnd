@@ -24,7 +24,7 @@ function UserPrompt({userPromptContoller}) {
         if(!entered && user.isActive)
         {
             setEntered(true);
-            window.location = window.location.protocol + "//app." + window.location.host;
+            window.location = window.location.protocol + "//app." + window.location.host + `/${user.id}`;
         }
     }, [user.isActive]);
 
@@ -41,6 +41,14 @@ function UserPrompt({userPromptContoller}) {
     const handleSignUp = () => {
         if(password !== reEnterPassword)
             return;
+        console.log('Send this:',{
+            fullName: fullName,
+            email: email,
+            phoneNo: phoneNo,
+            password: password,
+            isEmailconfirmed: true,
+            isActive: true
+        });
         dispatch(signUpThunk({
             fullName: fullName,
             email: email,

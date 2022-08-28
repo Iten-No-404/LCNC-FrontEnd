@@ -16,7 +16,7 @@ export default function GeneralCodeBlock({ classN, text, CSS=null, isDragging = 
         "font-size": CSS.font.size + "px",
         "background-color": CSS.background.color,
         "width": `${CSS.width}%`,
-        "height": `${CSS.height}px`,
+        "height": `${CSS.height}%`,
         "padding": `${CSS.padding}px`,
         "margin": `${CSS.margin}px`,
         "border-radius": `${CSS.border.radius}%`,

@@ -4,6 +4,8 @@ import { setWidget } from "../../states//widget-list-slice//widget-list-slice";
 import { useSelector } from "react-redux";
 import { selectDefaultCSS } from "../../states/default-css-slice/default-css-slice";
 import { selectBlocksList } from '../../states/blocks-list-slice/blocks-list-slice';
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
 
 const WorkSpaceHandler = (board, setBoard) => {
     const defaultCSS = useSelector(selectDefaultCSS);
@@ -45,7 +47,7 @@ const WorkSpaceHandler = (board, setBoard) => {
     //////////////////// Fix this ////////////////////////////
     // Used to add the CSS of the Widget of the retrieved board from the API.
     const recursiveAddCSS = (myBoard) => {
-        console.log('Add this:',myBoard);
+        console.log("Add this:", myBoard);
         if (myBoard && myBoard.length > 0) {
             myBoard.forEach((block) => {
                 dispatch(
@@ -224,8 +226,24 @@ const WorkSpaceHandler = (board, setBoard) => {
                 break;
         }
     };
+    const generateCodeZip = (htmlcode, csscode) => {
+        var zip = new JSZip();
 
-    return { handleOnDragEnd, recursiveAddCSS, recursiveDisSelect };
+        zip.file("index.html", htmlcode.toString());
+        zip.file("style.css", csscode.toString());
+
+        zip.generateAsync({ type: "blob" }).then(function (content) {
+            saveAs(content, "project.zip");
+        });
+    };
+
+    const generateOneCode = (htmlcode, csscode) => {
+        const stylepostion = htmlcode.split('<link href="style.css" rel="stylesheet" />');
+        return `${stylepostion[0]} <style>  ${csscode}   </style> ${stylepostion[1]}`;
+
+    };
+
+    return { handleOnDragEnd, recursiveAddCSS, generateCodeZip, generateOneCode, recursiveDisSelect };
 };
 
 export default WorkSpaceHandler;

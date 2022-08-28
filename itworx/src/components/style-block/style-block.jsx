@@ -86,7 +86,7 @@ const StyledBlock = ({ board, setBoard }) => {
                 <Form.Control value={width} onChange={(e) => { dispatch(setWidthval(e.target.value)); setWidth(e.target.value) }} type="number" placeholder="ex: 100"/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="height">
-                <Form.Label>Height px</Form.Label>
+                <Form.Label>Height %</Form.Label>
                 <Form.Control value={height} onChange={(e) => { dispatch(setHeightval(e.target.value)); setHeight(e.target.value) }} type="number" placeholder="ex: 100" />
               </Form.Group>
           </div>

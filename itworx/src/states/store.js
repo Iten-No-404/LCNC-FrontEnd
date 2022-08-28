@@ -6,7 +6,7 @@ import blocksListReducer from './blocks-list-slice/blocks-list-slice';
 import defaultCSSReducer from './default-css-slice/default-css-slice';
 import userReducer from './user-slice/user-slice';
 import projectReducer from './project-slice/project-slice';
-
+import generatedCodeReducer from './generated-code-slice/generated-code-slice';
 
 const store = configureStore({
     reducer: {
@@ -16,7 +16,8 @@ const store = configureStore({
         widgetList: widgetListReducer,
         board:boardReducer,
         defaultCSS:defaultCSSReducer,
-        blocksList:blocksListReducer
+        blocksList:blocksListReducer,
+        generatedCode:generatedCodeReducer,
     },
 });
 
