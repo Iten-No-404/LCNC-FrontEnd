@@ -17,10 +17,12 @@ import { setBlocksList } from '../../states/blocks-list-slice/blocks-list-slice'
 import { setDefaultCSS } from '../../states/default-css-slice/default-css-slice';
 import {setGeneratedCode} from '../../states/generated-code-slice/generated-code-slice';
 import { useDispatch } from 'react-redux';
+import updateProject from './save-board-service'
 import  { useNavigate } from 'react-router-dom'
 function WorkSpace() {
 
   const [board, setBoard] = useState([]);
+  const [project, setProject] = useState({});
   const [modalShowhtml, setModalShowhtml] = React.useState(false);
   const [modalShowcss, setModalShowcss] = React.useState(false);
   const [isLoadingBoard, setIsLoadingBoard] = useState(true);
@@ -48,11 +50,24 @@ function WorkSpace() {
     navigate("/preview");
   }
 
+  const saveBoard = () => {
+    setProject({
+      ...project,
+      widgets: JSON.stringify(board)
+    });
+  }
+
+  // save the board data
+  useEffect(() => {
+    updateProject(project);
+  }, [project.widgets]);
   // fetch the board data
   useEffect(() => {
     async function fetchData() {
       const response = await getBoard();
-      setBoard(response);
+      setBoard(JSON.parse(response.widgets));
+      // console.log(JSON.parse(response.widgets));
+      setProject(response);
       setIsLoadingBoard(false);
     }
     fetchData();
@@ -87,7 +102,7 @@ function WorkSpace() {
   return !isLoadingBoard && !isLoadingDefaultCSS && (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />
+        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />
         <Container className="mt-4">
           <Row>
             <Col xs={9} >

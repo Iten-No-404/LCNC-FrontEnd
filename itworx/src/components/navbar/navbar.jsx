@@ -41,6 +41,13 @@ function Navigationbar(props) {
               </Button>
             </OverlayTrigger>
 
+            <OverlayTrigger placement='left' overlay={<Tooltip >Preview</Tooltip>}>
+            <Button className="justify-content-end" variant="dark" onClick={() =>props.saveBoard()}>
+               <img width={40} alt="save board button" src="https://img.icons8.com/ultraviolet/50/000000/save.png"/>
+            </Button>
+            </OverlayTrigger>
+
+
             <OverlayTrigger placement='left' overlay={<Tooltip>Download</Tooltip>}>
               <Button className="justify-content-end" variant="dark" onClick={props.generateZip}>
                   <img  width={40} alt="download" src="https://img.icons8.com/office/40/000000/downloads-folder.png"/>

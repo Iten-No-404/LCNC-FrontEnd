@@ -1,16 +1,17 @@
 import axios from 'axios';
 
-const getBoard = async () =>{
+const updateProject = async (data) =>{
     try{
-        const response = await axios.get(`${process.env.REACT_APP_LOCAL_API}/Project/1`);
+        // console.log("Updated Data:",data);
+        const response = await axios.put(`${process.env.REACT_APP_LOCAL_API}/Project/Update`, data);
         // const data = response.json();
         // console.log('Received from back',response);
         // const data = JSON.parse(response.data.widgets);
-        // console.log(data);
+        // console.log(response.data);
         return response.data;
     }catch (err){
         console.log(err);
         return undefined;
     }
 }
-export default getBoard;
+export default updateProject;

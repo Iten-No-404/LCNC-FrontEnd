@@ -2,13 +2,13 @@ const generatechildrencode = (board) => {
   if (!board) return ``;
   let codeText = ``;
   for (let i = 0; i < board.length; i++) {
-      const splitforid = board[i].code1.split("id");
+      const splitforid = board[i].widgetCodeSnippet.code1.split("id");
       const opentag = `${splitforid[0]} id="a${board[i].id}" ${splitforid[1]}`;
       codeText = codeText.concat(
           opentag +
               (board[i].CSS.text.content ? board[i].CSS.text.content : board[i].text) +
               generatechildrencode(board[i].children) +
-              board[i].code2
+              board[i].widgetCodeSnippet.code2
       );
   }
   return codeText;
