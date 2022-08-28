@@ -10,6 +10,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import React from "react";
 import '../../App.css';
+import LogoIcon from "../../pages/landing/assets/svg/Logo";
 import { logInThunk, getUserThunk, selectUser } from '../../states/user-slice/user-slice';
 
   function Navigationbar(props) {
@@ -19,29 +20,15 @@ import { logInThunk, getUserThunk, selectUser } from '../../states/user-slice/us
   return (
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="/">
-          {/* <Link to="/" style={{ textDecoration: 'none', alignItems: 'center' }}> */}
-          <img
-              alt=""
-              src="/logo192.png"
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />
-            Home
-          {/* </Link> */}
-          </Navbar.Brand>
-          {/* <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-          </Nav> */}
+        <Link className="pointer flexNullCenter" to="home" smooth={true}>
+            <LogoIcon />
+            <h1 style={{ marginLeft: "15px", width: "200px" }} className="font20 extraBold">
+              LCNC Design Tool
+            </h1>
+          </Link>
           <Container className="justify-content-end">
           <h2 className="justify-content-end myDIV">
-            My Project by {user.fullName}
-            <p className='hide'>
-            Logged in using {user.email}
-            </p>
+
           </h2>
           </Container>
           
