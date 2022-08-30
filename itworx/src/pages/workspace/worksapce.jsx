@@ -29,9 +29,6 @@ function WorkSpace() {
   const [project, setProject] = useState({});
   const [modalShowhtml, setModalShowhtml] = React.useState(false);
   const [modalShowcss, setModalShowcss] = React.useState(false);
-  // const [HTMLcode, setHTMLcode] = useState(generateCode(board));
-  // console.log(HTMLcode);
-  // const [CSScode, setCSScode] = useState(generateCSS(board));
   const [isLoadingBoard, setIsLoadingBoard] = useState(true);
   const [isLoadingBoardCSS, setIsLoadingBoardCSS] = useState(true);
   const [isLoadingBlocksList, setIsLoadingBlocksList] = useState(true);
@@ -66,12 +63,6 @@ function WorkSpace() {
     });
   }
 
-  // // Update the HTML code
-  // useEffect(() => {
-  //   if(!isLoadingBoard)
-  //     setHTMLcode(generateCode(board));
-  // }, [board]);
-
   // save the board data
   useEffect(() => {
     if(!isLoadingBoard)
@@ -83,7 +74,6 @@ function WorkSpace() {
     async function fetchData() {
       const response = await getBoard(id);
       setBoard(JSON.parse(response.widgets));
-      // setHTMLcode(generateCode(response.widgets));
       console.log('Received BoardList',JSON.parse(response.widgets));
       setProject(response);
       setIsLoadingBoard(false);
