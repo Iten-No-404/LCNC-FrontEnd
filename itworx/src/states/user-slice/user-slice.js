@@ -185,9 +185,17 @@ const user = createSlice({
         [getLoggedInUserThunk.fulfilled]: (state, { payload }) => {
           console.log('User Authentication Payload:',payload);
           state.user = payload;
+          localStorage.setItem('user', JSON.stringify(state.user));
         },
-        [getLoggedInUserThunk.rejected]: () => {
+        [getLoggedInUserThunk.rejected]: (state) => {
           console.log('User Authentication in Failed!!!!');
+          const loggedInUser = localStorage.getItem('user');
+          if (loggedInUser) {
+            const foundUser = JSON.parse(loggedInUser);
+            state.user = foundUser;
+            localStorage.clear();
+            localStorage.setItem('user', JSON.stringify(state.user));
+          }
         },
         [logInThunk.pending]: () => {
           console.log('Login in Progress');

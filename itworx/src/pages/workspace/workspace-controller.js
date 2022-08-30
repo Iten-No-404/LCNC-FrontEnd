@@ -47,7 +47,7 @@ const WorkSpaceHandler = (board, setBoard) => {
     //////////////////// Fix this ////////////////////////////
     // Used to add the CSS of the Widget of the retrieved board from the API.
     const recursiveAddCSS = (myBoard) => {
-        console.log("Add this:", myBoard);
+        // console.log("Add this:", myBoard);
         if (myBoard && myBoard.length > 0) {
             myBoard.forEach((block) => {
                 dispatch(

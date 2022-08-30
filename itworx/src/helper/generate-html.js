@@ -3,12 +3,12 @@ const generatechildrencode = (board) => {
   let codeText = ``;
   for (let i = 0; i < board.length; i++) {
       const splitforid = board[i].widgetCodeSnippet.code1.split("id");
-      const opentag = `${splitforid[0]} id="a${board[i].id}" ${splitforid[1]}`;
+      const opentag = `\t${splitforid[0]} id="a${board[i].id}" ${splitforid[1]}`;
       codeText = codeText.concat(
           opentag +
               (board[i].CSS.text.content ? board[i].CSS.text.content : board[i].text) +
-              generatechildrencode(board[i].children) +
-              board[i].widgetCodeSnippet.code2
+              generatechildrencode(board[i].children) + 
+              board[i].widgetCodeSnippet.code2 + '\n'
       );
   }
   return codeText;
@@ -23,7 +23,7 @@ export const generateCode = (board) => {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet" />
   </head>
-  <body>`;
+  <body> \n`;
 
   codeText = codeText.concat(generatechildrencode(board));
 

@@ -6,7 +6,6 @@ import { PropTypes } from "prop-types";
  * Modal that pop up when click on HTML OR CSS generate code icon
  */
 function ModalCard(props) {
-
   return (
     <Modal
       show={props.show}
