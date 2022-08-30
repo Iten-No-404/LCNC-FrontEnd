@@ -10,8 +10,6 @@ const StyleBlockHandler = (setBoard) => {
 
 	const recursiveAddimage = (myBoard, img) => {
 		if (myBoard && myBoard.length > 0) {
-			console.log("e=",img);
-			// console.log("URL.createObjectURL(e.target.files[0])=",URL.createObjectURL(e.target.files[0]));
 			let newBoard = [];
 			myBoard.forEach(block => {
 				if (block.selected) {

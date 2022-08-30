@@ -3,8 +3,6 @@ import { api } from '../../apis/globalapi.js';
 import axios from 'axios';
 
 const headers = {
-  // Accept: 'application/json',
-  // 'Transfer-Encoding': 'chunked',
   'Content-Type': 'application/json'
 };
 
@@ -13,7 +11,18 @@ export const getUserThunk = createAsyncThunk(
     async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/${query}`, {
       method: 'GET',
       headers: {
-        ...headers
+        ...headers,
+      },
+    }).then((res) => res.json()),
+  );
+
+export const getLoggedInUserThunk = createAsyncThunk(
+    'getLoggedInUser',
+    async (token) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/GetLoggedInUser`, {
+      method: 'GET',
+      headers: {
+        ...headers,
+        'Authorization': `Bearer ${token}`
       },
     }).then((res) => res.json()),
   );
@@ -23,10 +32,11 @@ export const getUserThunk = createAsyncThunk(
     async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/Login`, {
       method: 'POST',
       headers: {
-        ...headers
+        ...headers,
+        "accept": "text/plain"
       },
       body: JSON.stringify(query),
-    }).then((res) => res.json()),
+    }).then((res) => res.text()),
   );
 
   export const signUpThunk = createAsyncThunk(
@@ -64,6 +74,7 @@ export const getUserThunk = createAsyncThunk(
 const user = createSlice({
     name: 'user',
     initialState: {
+        authToken: "",
         user: {
             fullName: "",
             email: "",
@@ -161,19 +172,29 @@ const user = createSlice({
           console.log('Get User Payload:',payload);
           s.user = payload;
           s.status = 'fulfilled';
-          localStorage.setItem('user', JSON.stringify(state.user));
+          // localStorage.setItem('user', JSON.stringify(state.user));
           // window.location.replace('/dashboard');
         },
         [getUserThunk.rejected]: (state) => {
           const s = state; 
           s.status = 'rejected';
         },
+        [getLoggedInUserThunk.pending]: () => {
+          console.log('User Authentication in Progress');
+        },
+        [getLoggedInUserThunk.fulfilled]: (state, { payload }) => {
+          console.log('User Authentication Payload:',payload);
+          state.user = payload;
+        },
+        [getLoggedInUserThunk.rejected]: () => {
+          console.log('User Authentication in Failed!!!!');
+        },
         [logInThunk.pending]: () => {
           console.log('Login in Progress');
         },
         [logInThunk.fulfilled]: (state, { payload }) => {
           console.log('Login Payload:',payload);
-          state.user = payload;
+          state.authToken = payload;
         },
         [logInThunk.rejected]: () => {
           console.log('Login in Failed!!!!');
@@ -225,6 +246,7 @@ const user = createSlice({
 })
 
 export const selectUser = (state) => state.user.user;
+export const selectUserAuthToken = (state) => state.user.authToken;
 export const selectUserStatus = (state) => state.user.status;
 export const { setUser, logOut } = user.actions;
 export default user.reducer;

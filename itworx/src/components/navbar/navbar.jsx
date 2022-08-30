@@ -11,16 +11,12 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import React from "react";
 import '../../App.css';
 import LogoIcon from "../../pages/landing/assets/svg/Logo";
-import { logInThunk, getUserThunk, selectUser } from '../../states/user-slice/user-slice';
 
   function Navigationbar(props) {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const user = useSelector(selectUser);
   return (
       <Navbar bg="dark" variant="dark">
         <Container>
-        <Link className="pointer flexNullCenter" to="home" smooth={true}>
+        <Link className="pointer flexNullCenter" to="/" smooth={true}>
             <LogoIcon />
             <h1 style={{ marginLeft: "15px", width: "200px" }} className="font20 extraBold">
               LCNC Design Tool

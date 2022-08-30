@@ -5,12 +5,12 @@ import Tab from 'react-bootstrap/esm/Tab';
 import Tabs from 'react-bootstrap/esm/Tabs';
 import Form from 'react-bootstrap/esm/Form';
 import Modal from 'react-bootstrap/Modal';
-import { logInThunk, signUpThunk, getUserThunk, selectUser } from '../../../../states/user-slice/user-slice';
+import { logInThunk, signUpThunk, selectUserAuthToken } from '../../../../states/user-slice/user-slice';
 
 
 function UserPrompt({userPromptContoller}) {
     const dispatch = useDispatch();
-    const user = useSelector(selectUser);
+    const userAuthToken = useSelector(selectUserAuthToken);
     const { userPromptOpen, handlePromptClose, handlePromptOpen, promptType, setPromptTypeLogin, setPromptTypeSignUp  } = userPromptContoller;
     const [entered, setEntered] = useState(false);
     const [fullName, setFullName] = useState('');
@@ -21,12 +21,12 @@ function UserPrompt({userPromptContoller}) {
     console.log(userPromptOpen, promptType);
 
     useEffect(() => {
-        if(!entered && user.isActive)
+        if(!entered && userAuthToken)
         {
             setEntered(true);
-            window.location = window.location.protocol + "//app." + window.location.host + `/${user.id}`;
+            window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${userAuthToken}`;
         }
-    }, [user.isActive]);
+    }, [userAuthToken]);
 
 
     const handleLogIn = () => {
@@ -41,14 +41,6 @@ function UserPrompt({userPromptContoller}) {
     const handleSignUp = () => {
         if(password !== reEnterPassword)
             return;
-        console.log('Send this:',{
-            fullName: fullName,
-            email: email,
-            phoneNo: phoneNo,
-            password: password,
-            isEmailconfirmed: true,
-            isActive: true
-        });
         dispatch(signUpThunk({
             fullName: fullName,
             email: email,

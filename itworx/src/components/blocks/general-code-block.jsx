@@ -5,7 +5,6 @@ import parse from 'html-react-parser';
 
 export default function GeneralCodeBlock({ classN, text, CSS=null, isDragging = false, code1, code2 }) {
     const defaultCSS = useSelector(selectDefaultCSS);
-    console.log(CSS);
     if (!CSS) {
         CSS = defaultCSS;
     }
