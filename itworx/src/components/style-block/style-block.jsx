@@ -14,7 +14,6 @@ import { PropTypes } from "prop-types";
  * render the style proberties depend on the selected widget and manage the user to change CSS for that widget
  */
 const StyledBlock = ({ board, setBoard }) => {
-  console.log(board);
   const CSS = useSelector(selectWidgetCSS);
   const [content, setContent] = useState("");
   const [fontsize, setFontsize] = useState("");

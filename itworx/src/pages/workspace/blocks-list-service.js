@@ -3,7 +3,6 @@ import axios from 'axios';
 const getBlocksList = async () =>{
     try{
         const response = await axios.get(`${process.env.REACT_APP_LOCAL_API}/Widget/All`);
-        console.log(response.data);
         return response.data;
     }catch (err){
         console.log(err);

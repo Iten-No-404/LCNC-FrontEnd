@@ -5,7 +5,6 @@ import TreeNode from "../tree-node/tree-node";
 
 const Tree = ({ data, droppableId = "board", droppableClass = "Board", type = "board", prentBackground=null, parentType= null, ClassN=null }) =>{
     const isNavBar = (parentType === "navbar")? " d-flex flex-row": " ";
-    console.log(data);
     return (
         <div style={{ padding: '5px' /* For nesting*/ }}>
             <Droppable droppableId={droppableId} type={type} isCombineEnabled>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux'; 
 import getProjects from "./get-user-projects-service";
 import addProject from "./add-project-service";
 import Card from 'react-bootstrap/Card';
@@ -11,11 +12,14 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Navigationbar from "../../components/navbar/navbar";
+import { selectUser } from "../../states/user-slice/user-slice";
 
 function Projects() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const user = useSelector(selectUser);
     const [projects, setProjects] = useState([]);
+    console.log(projects);
     const [show, setShow] = useState(false);
     const [title, setTitle] = useState("");
     const [desctiption, setDescription] = useState("");
@@ -30,7 +34,7 @@ function Projects() {
       generatedAppPath: "\\",
       appTypeId: 1,
       targetFramework_Id: 1,
-      user_Id: id,
+      user_Id: user.id,
       widgets: "[]"
     })
     // window.replace('/project/'+res.id);
@@ -38,15 +42,17 @@ function Projects() {
     }
     useEffect(() => {
         async function fetchData() {
-          const response = await getProjects(id);
+          console.log('user=',user);
+          const response = await getProjects(user.id);
           setProjects(response);
         }
-        fetchData();
-      }, []);
+        if(user.isActive)
+          fetchData();
+      }, [user.isActive]);
 
     return (
         <>
-        <Navigationbar handleNewproject={handleShow} project/>
+        <Navigationbar handleNewproject={handleShow} project={projects !== []}/>
         <Container>
         <Row>
         {projects.map((project)=>{

@@ -8,7 +8,6 @@ import { PropTypes } from "prop-types";
 
 const BlockHandler = (setBoard) => {
     const widgetList = useSelector(selectWidgetsList);
-    console.log(widgetList);
     const dispatch = useDispatch();
 
     const resetChosenCSS = (id) => {
