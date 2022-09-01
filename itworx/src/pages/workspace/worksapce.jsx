@@ -112,7 +112,7 @@ function WorkSpace() {
   }, []);
   
 
-  return !isLoadingBoard && !isLoadingDefaultCSS && (
+  return !isLoadingBoard && !isLoadingDefaultCSS && !isLoadingBlocksList && (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />

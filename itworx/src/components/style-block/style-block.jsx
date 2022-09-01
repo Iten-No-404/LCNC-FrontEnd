@@ -23,6 +23,7 @@ const StyledBlock = ({ board, setBoard }) => {
   const [padding, setPadding] = useState("");
   const [boarderredius,setBoarderredius] = useState("");
   const [selectedblock, setSelectedblock] = useState(null);
+  const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const dispatch = useDispatch();
   const {
     handleUploadImage,
@@ -58,6 +59,7 @@ const StyledBlock = ({ board, setBoard }) => {
       setBoarderredius(CSS.border.radius);
       setPadding(CSS.padding);
       setMargin(CSS.margin);
+      setActiveFontFamily(CSS.font.family)
     }
   }, [CSS.id]);
 
@@ -143,7 +145,7 @@ const StyledBlock = ({ board, setBoard }) => {
               </Form.Group>
             </div>
             <Form.Group controlId="typographyStyles">
-              <FontPickerTool />
+              <FontPickerTool  activeFontFamily={activeFontFamily} setActiveFontFamily={setActiveFontFamily} />
               <Tabs
                 defaultActiveKey="font"
                 id="uncontrolled-tab-example"
