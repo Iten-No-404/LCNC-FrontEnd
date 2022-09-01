@@ -1,9 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux'; 
-import { useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -11,7 +7,11 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import React from "react";
 import '../../App.css';
 import LogoIcon from "../../pages/landing/assets/svg/Logo";
+import { PropTypes } from "prop-types";
 
+/**
+ * General Navbar for the APP 
+ */
   function Navigationbar(props) {
   return (
       <Navbar bg="dark" variant="dark">
@@ -79,3 +79,21 @@ import LogoIcon from "../../pages/landing/assets/svg/Logo";
 }
 
 export default Navigationbar;
+
+
+Navigationbar.propTypes = {
+  /**  to determen show add project icon or add (preview , HTML, CSS, save and Download ) icons */
+  project: PropTypes.bool,
+  /** to add nwe project */
+  handleNewproject: PropTypes.func,
+  /** to open preview page */
+  handleOpenpreview: PropTypes.func,
+  /** to save the board in the database */
+  saveBoard: PropTypes.func,
+  /** to genrate folder with code and download as zip folder */
+  generateZip: PropTypes.func,
+  /** to open HTML modal */
+  handleOpenhtml: PropTypes.func,
+  /** to Open CSS modal */
+  handleOpencss: PropTypes.func,
+}

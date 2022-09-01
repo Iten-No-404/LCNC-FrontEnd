@@ -12,7 +12,8 @@ export default function FontPickerTool() {
     useEffect(() => {
         if(CSS.id != null)
         {   
-            setActiveFontFamily(CSS.font.family);
+            // setActiveFontFamily(CSS.font.family);
+            // console.log(CSS.font.family);
         }
     }, [CSS.id]);
         return (

@@ -45,7 +45,7 @@ function WorkSpace() {
   const handleClosecss = () => setModalShowcss(false)
   const handleOpencss = () => setModalShowcss(true)
 
-  const generateZip = () => generateCodeZip(HTMLcode,CSScode);
+  const generateZip = () => generateCodeZip(HTMLcode,CSScode,project.title);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
