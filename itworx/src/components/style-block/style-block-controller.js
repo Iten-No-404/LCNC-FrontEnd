@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import uploadImage from './upload-image-service';
 import { selectWidgetCSS } from '../../states//widget-css-slice//widget-css-slice';
 import { setWidget } from '../../states//widget-list-slice//widget-list-slice';
+import getImage from './get-image-service';
 
 const StyleBlockHandler = (setBoard) => {
 
@@ -38,10 +39,13 @@ const StyleBlockHandler = (setBoard) => {
 		formData.append("ImageName", e.target.files[0].name);
 		formData.append("Image", e.target.files[0]);
 		const res = await uploadImage(formData);
-		console.log(res);
+		// console.log(res);
+
+		const img = await getImage('http://'+res.imagePath);
+		// console.log(img);
 
 		setBoard((prevBoard) => {
-			return recursiveAddimage(prevBoard, res);
+			return recursiveAddimage(prevBoard, 'http://'+res.imagePath);
 			// return recursiveAddimage(prevBoard, res.data);
 		})
 	};
