@@ -33,15 +33,40 @@ const StyleBlockHandler = (setBoard) => {
 		}
 	}
 
-	const handleUploadImage = async (e) => {
+	const convertDataURIToBinary = (dataURI) => {
+		var BASE64_MARKER = ';base64,';
+		var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+		var base64 = dataURI.substring(base64Index);
+		var raw = window.atob(base64);
+		var rawLength = raw.length;
+		var array = new Uint8Array(new ArrayBuffer(rawLength));
+	
+		for(var i = 0; i < rawLength; i++) {
+			array[i] = raw.charCodeAt(i);
+		}
+		return array;
+	}
 
+	const handleUploadImage = async (e, selectedBlockId, projectId) => {
+		console.log("Image", e.target.files[0]);
+		const imageNameArr = e.target.files[0].name.split('.');
+		// var binaryImg = convertDataURIToBinary(e.target.files[0]);
+		// const formData = {
+		// 	Image: binaryImg,
+		// 	ImageName: selectedBlockId + '.' + imageNameArr[imageNameArr.length-1],
+		// 	ImagePath: projectId+'/'
+		// };
 		const formData = new FormData();
-		formData.append("ImageName", e.target.files[0].name);
+		// console.log(selectedBlockId + '.' + imageNameArr[imageNameArr.length-1]);
+		// formData.append("ImageName", e.target.files[0].name);
+		formData.append("ImageName", selectedBlockId + '.' + imageNameArr[imageNameArr.length-1]);
+		formData.append("ImagePath", projectId+'/');
 		formData.append("Image", e.target.files[0]);
+		// console.log(formData);
 		const res = await uploadImage(formData);
 		// console.log(res);
 
-		const img = await getImage('http://'+res.imagePath);
+		// const img = await getImage('http://'+res.imagePath);
 		// console.log(img);
 
 		setBoard((prevBoard) => {

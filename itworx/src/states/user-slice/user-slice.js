@@ -52,20 +52,22 @@ export const getLoggedInUserThunk = createAsyncThunk(
 
   export const updateUserThunk = createAsyncThunk(
     'updateUser',
-    async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/UpdateUser`, {
+    async ({query, token}) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/UpdateUser`, {
       method: 'POST',
       headers: {
-        ...headers
+        ...headers,
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(query),
     }).then((res) => res.json()),
   );
   export const deleteUserThunk = createAsyncThunk(
     'deleteUser',
-    async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/DeleteUser`, {
+    async ({query, token}) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/DeleteUser`, {
       method: 'DELETE',
       headers: {
-        ...headers
+        ...headers,
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(query),
     }).then((res) => res.json()),
@@ -160,6 +162,11 @@ const user = createSlice({
         setStatusToIdle: (state) => {
           const s = state; 
           s.status = 'idle';
+        },
+        setAuthToken: (state, action) => {
+          const s = state;
+          s.authToken = action.payload;
+          localStorage.setItem('authToken', action.payload);
         }
       },
       extraReducers: {
@@ -248,5 +255,5 @@ const user = createSlice({
 export const selectUser = (state) => state.user.user;
 export const selectUserAuthToken = (state) => state.user.authToken;
 export const selectUserStatus = (state) => state.user.status;
-export const { setUser, logOut } = user.actions;
+export const { setUser, setAuthToken, logOut, setStatusToIdle } = user.actions;
 export default user.reducer;

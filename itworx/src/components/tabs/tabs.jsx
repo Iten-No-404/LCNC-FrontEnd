@@ -17,7 +17,7 @@ import GeneralCodeBlock from '../blocks/general-code-block';
  * 
  *3- third one show the styled block comonent
  */
-function Ctabs({ board, setBoard }) {
+function Ctabs({ board, setBoard, projectId }) {
   const blocksList = useSelector(selectBlocksList);
   // console.log(blocksList);
   return (
@@ -55,7 +55,7 @@ function Ctabs({ board, setBoard }) {
                 <Layers board={board} setBoard={setBoard} />
               </Tab>
               <Tab eventKey="style" title="Style">
-                <StyledBlock board={board} setBoard={setBoard} />
+                <StyledBlock board={board} setBoard={setBoard} projectId={projectId} />
               </Tab>
             </Tabs>
             {provided.placeholder}
