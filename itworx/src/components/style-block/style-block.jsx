@@ -23,6 +23,7 @@ const StyledBlock = ({ board, setBoard, projectId }) => {
   const [padding, setPadding] = useState("");
   const [boarderredius,setBoarderredius] = useState("");
   const [selectedblock, setSelectedblock] = useState(null);
+  const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const dispatch = useDispatch();
   const {
     handleUploadImage,
@@ -58,18 +59,18 @@ const StyledBlock = ({ board, setBoard, projectId }) => {
       setBoarderredius(CSS.border.radius);
       setPadding(CSS.padding);
       setMargin(CSS.margin);
-      console.log(CSS.color, CSS.background.color);
+      setActiveFontFamily(CSS.font.family)
     }
   }, [CSS.id]);
 
 
-  if (selectedblock?.type === "navbar")
-    return(
-      <>
-        <div>Pick Background Color</div>
-        <ColorPickerTool colorType='backgroundColor' />
-      </>
-    );
+  // if (selectedblock?.type === "navbar")
+  //   return(
+  //     <>
+  //       <div>Pick Background Color</div>
+  //       <ColorPickerTool colorType='backgroundColor' />
+  //     </>
+  //   );
 
   return (
     <>
@@ -144,7 +145,7 @@ const StyledBlock = ({ board, setBoard, projectId }) => {
               </Form.Group>
             </div>
             <Form.Group controlId="typographyStyles">
-              <FontPickerTool />
+              <FontPickerTool  activeFontFamily={activeFontFamily} setActiveFontFamily={setActiveFontFamily} />
               <Tabs
                 defaultActiveKey="font"
                 id="uncontrolled-tab-example"
@@ -175,8 +176,10 @@ StyledBlock.propTypes = {
      type:  PropTypes.string,
      text: PropTypes.string,
      selected: PropTypes.bool,
-     code1: PropTypes.string,
-     code2:  PropTypes.string,
+     widgetCodeSnippet: PropTypes.shape({
+      code1: PropTypes.string,
+      code2:  PropTypes.string,
+     }),
      CSS: PropTypes.object,
      children: PropTypes.array
    })
