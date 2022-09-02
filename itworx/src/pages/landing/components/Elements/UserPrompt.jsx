@@ -18,7 +18,6 @@ function UserPrompt({userPromptContoller}) {
     const [phoneNo, setPhoneNo] = useState('');
     const [password, setPassword] = useState('');
     const [reEnterPassword, setreEnterPassword] = useState('');
-    console.log(userPromptOpen, promptType);
 
     useEffect(() => {
         if(!entered && userAuthToken)

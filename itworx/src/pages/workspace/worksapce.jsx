@@ -37,7 +37,7 @@ function WorkSpace() {
 
   const { handleOnDragEnd, recursiveAddCSS, generateCodeZip, generateOneCode, recursiveDisSelect } = workSpaceHandler(board, setBoard);
 
-  const HTMLcode = generateCode(board);
+  const HTMLcode = generateCode(board,project?.title);
   const CSScode = generateCSS(board);
 
   const handleClosehtml = () => setModalShowhtml(false)
@@ -75,7 +75,6 @@ function WorkSpace() {
     async function fetchData() {
       const response = await getBoard({id:id, token: authToken});
       setBoard(JSON.parse(response.widgets));
-      console.log('Received BoardList',JSON.parse(response.widgets));
       setProject(response);
       setIsLoadingBoard(false);
     }

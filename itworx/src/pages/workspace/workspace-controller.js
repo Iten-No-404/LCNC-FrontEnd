@@ -47,7 +47,6 @@ const WorkSpaceHandler = (board, setBoard) => {
     //////////////////// Fix this ////////////////////////////
     // Used to add the CSS of the Widget of the retrieved board from the API.
     const recursiveAddCSS = (myBoard) => {
-        console.log("Add this:", myBoard);
         if (myBoard && myBoard.length > 0) {
             myBoard.forEach((block) => {
                 dispatch(
@@ -168,25 +167,24 @@ const WorkSpaceHandler = (board, setBoard) => {
         return destClone;
     };
 
-	const recursiveDisSelect = (myBoard) => {
-		if (myBoard && myBoard.length > 0) {
-			let newBoard = [];
-			myBoard.forEach(block => {
-					const val = recursiveDisSelect(block.children);
-					if (val.length > 0) {
-						const newBlock = { ...block, selected: false, children: val };
-						newBoard.push(newBlock);
-					} else {
-						const newBlock = { ...block, selected: false };
-						newBoard.push(newBlock);
-				}
-			}
-			);
-			return newBoard;
-		} else {
-			return [];
-		}
-	}
+    const recursiveDisSelect = (myBoard) => {
+        if (myBoard && myBoard.length > 0) {
+            let newBoard = [];
+            myBoard.forEach((block) => {
+                const val = recursiveDisSelect(block.children);
+                if (val.length > 0) {
+                    const newBlock = { ...block, selected: false, children: val };
+                    newBoard.push(newBlock);
+                } else {
+                    const newBlock = { ...block, selected: false };
+                    newBoard.push(newBlock);
+                }
+            });
+            return newBoard;
+        } else {
+            return [];
+        }
+    };
 
     const recursiveGetBlockType = (myBoard, id) => {
         if (myBoard && myBoard.length > 0) {
@@ -206,8 +204,6 @@ const WorkSpaceHandler = (board, setBoard) => {
     };
 
     const handleOnDragEnd = (result) => {
-        console.log("result");
-        console.log(result);
         const { destination, source, draggableId } = result;
         // this is the case of nesting a block inside another block
         if (result.combine) {

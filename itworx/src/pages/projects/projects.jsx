@@ -18,7 +18,6 @@ function Projects() {
     const user = useSelector(selectUser);
     const authToken = useSelector(selectUserAuthToken);
     const [projects, setProjects] = useState([]);
-    console.log(projects);
     const [show, setShow] = useState(false);
     const [title, setTitle] = useState("");
     const [desctiption, setDescription] = useState("");
@@ -41,7 +40,6 @@ function Projects() {
     }
     useEffect(() => {
         async function fetchData() {
-          console.log('user=',user);
           const response = await getProjects({id: user.id, token: authToken });
           setProjects(response);
         }
