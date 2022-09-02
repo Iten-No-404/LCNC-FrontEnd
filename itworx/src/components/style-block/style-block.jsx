@@ -13,7 +13,7 @@ import { PropTypes } from "prop-types";
 /**
  * render the style proberties depend on the selected widget and manage the user to change CSS for that widget
  */
-const StyledBlock = ({ board, setBoard }) => {
+const StyledBlock = ({ board, setBoard, projectId }) => {
   const CSS = useSelector(selectWidgetCSS);
   const [content, setContent] = useState("");
   const [fontsize, setFontsize] = useState("");
@@ -77,10 +77,10 @@ const StyledBlock = ({ board, setBoard }) => {
       {selectedblock?.type === 'image' ? (
         <>
           <input
-          class="form-control"
+          className="form-control"
           type="file"
           name="myImage"
-          onChange={(e) => handleUploadImage(e)} />
+          onChange={(e) => handleUploadImage(e, selectedblock.id, projectId)} />
           <div className="d-flex flex-row">
               <Form.Group className="mb-3" controlId="width">
                 <Form.Label>Width %</Form.Label>
