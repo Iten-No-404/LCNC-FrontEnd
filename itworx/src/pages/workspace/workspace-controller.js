@@ -188,15 +188,44 @@ const WorkSpaceHandler = (board, setBoard) => {
 		}
 	}
 
+    const recursiveGetBlockType = (myBoard, id) => {
+        if (myBoard && myBoard.length > 0) {
+            for (let i = 0; i < myBoard.length; i++) {
+                const block = myBoard[i];
+                if (block.id === id) {
+                    return block.type;
+                } else {
+                    const type = recursiveGetBlockType(block.children, id);
+                    if (type) return type;
+                }
+            }
+            return "";
+        } else {
+            return "";
+        }
+    };
+
     const handleOnDragEnd = (result) => {
+        console.log("result");
+        console.log(result);
         const { destination, source, draggableId } = result;
         // this is the case of nesting a block inside another block
         if (result.combine) {
             // when we are adding a new nested block to the board
             if (source.droppableId === "selectWidgetTab") {
-                setBoard(copyThenNest(blocksList, board, source, result.combine));
+                setBoard((prevBoard) => {
+                    if (recursiveGetBlockType(prevBoard, Number(result.combine.draggableId)) === "image") {
+                        alert("Can not add widet to image");
+                        return prevBoard;
+                    }
+                    return copyThenNest(blocksList, prevBoard, source, result.combine);
+                });
             } else {
                 setBoard((prevBoard) => {
+                    if (recursiveGetBlockType(prevBoard, Number(result.combine.draggableId)) === "image") {
+                        alert("Can not add widet to image");
+                        return prevBoard;
+                    }
                     return nest(prevBoard, draggableId, result.combine);
                 });
             }
@@ -221,7 +250,11 @@ const WorkSpaceHandler = (board, setBoard) => {
                 break;
             default:
                 setBoard((prevBoard) => {
-                    return nest(prevBoard, draggableId, destination);
+                    if (recursiveGetBlockType(prevBoard, Number(result.combine.draggableId)) === "image") {
+                        alert("Can not add widet to image");
+                        return prevBoard;
+                    }
+                    return nest(prevBoard, draggableId, result.combine);
                 });
                 break;
         }

@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { api } from '../../apis/globalapi.js';
 import axios from 'axios';
 
 const headers = {

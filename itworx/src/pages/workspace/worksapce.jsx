@@ -46,7 +46,7 @@ function WorkSpace() {
   const handleClosecss = () => setModalShowcss(false)
   const handleOpencss = () => setModalShowcss(true)
 
-  const generateZip = () => generateCodeZip(HTMLcode,CSScode);
+  const generateZip = () => generateCodeZip(HTMLcode,CSScode,project.title);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -113,7 +113,7 @@ function WorkSpace() {
   }, []);
   
 
-  return !isLoadingBoard && !isLoadingDefaultCSS && (
+  return !isLoadingBoard && !isLoadingDefaultCSS && !isLoadingBlocksList && (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />

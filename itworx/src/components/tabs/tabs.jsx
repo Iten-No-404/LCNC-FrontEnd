@@ -76,8 +76,10 @@ Ctabs.propTypes = {
       type:  PropTypes.string,
       text: PropTypes.string,
       selected: PropTypes.bool,
-      code1: PropTypes.string,
-      code2:  PropTypes.string,
+      widgetCodeSnippet: PropTypes.shape({
+        code1: PropTypes.string,
+        code2:  PropTypes.string,
+       }),
       CSS: PropTypes.object,
       children: PropTypes.array
     })
