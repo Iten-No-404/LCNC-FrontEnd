@@ -13,6 +13,9 @@ import Form from 'react-bootstrap/Form';
 import Navigationbar from "../../components/navbar/navbar";
 import { selectUser, selectUserAuthToken } from "../../states/user-slice/user-slice";
 
+/**
+ * page show all the projects for the user and mange the user to creat new project
+ */
 function Projects() {
     const navigate = useNavigate();
     const user = useSelector(selectUser);
@@ -52,6 +55,7 @@ function Projects() {
         <Navigationbar handleNewproject={handleShow} project={projects !== []}/>
         <Container>
         <Row>
+        {/* loop over all user project and show each one in card */}
         {projects.map((project)=>{
         return (
         <Card style={{ width: '18rem' }} className="m-2" key={project.id}>
@@ -68,7 +72,7 @@ function Projects() {
          })}
         </Row>
         </Container>
-
+        {/* creat new project modal   */}
         <Modal
         show={show}
         onHide={handleClose}

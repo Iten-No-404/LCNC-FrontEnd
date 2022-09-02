@@ -8,9 +8,6 @@ const widgetCSS = createSlice({
         font: {
             family: "Open Sans",
             size: 25,
-            // sizeUnit: "px",
-            // style: "normal",
-            // weight: "normal"
         },
         text: {
             content: "",
@@ -97,7 +94,7 @@ const widgetCSS = createSlice({
             s.font.size = action.payload;
         },
         /**
-         * This function sets the values of the text's size
+         * This function sets the values of the widget background color
          * @method
          * @param {object} state The object that stores the current Widget's background color
          * @param {object} action The object containing the new Widget's background color
@@ -106,22 +103,52 @@ const widgetCSS = createSlice({
             const s = state;
             s.background.color = action.payload;
         },
+        /**
+         * This function sets the values of the widget width
+         * @method
+         * @param {object} state The object that stores the current Widget's width
+         * @param {object} action The object containing the new Widget's width
+         */
         setWidthval: (state, action) => {
             const s = state;
             s.width = action.payload;
         },
+        /**
+         * This function sets the values of the widget height
+         * @method
+         * @param {object} state The object that stores the current Widget's height
+         * @param {object} action The object containing the new Widget's height
+         */
         setHeightval: (state, action) => {
             const s = state;
             s.height = action.payload;
         },
+        /**
+         * This function sets the values of the widget padding
+         * @method
+         * @param {object} state The object that stores the current Widget's padding
+         * @param {object} action The object containing the new Widget's padding
+         */
         setPaddingval: (state, action) => {
             const s = state;
             s.padding = action.payload;
         },
+         /**
+         * This function sets the values of the widget margin
+         * @method
+         * @param {object} state The object that stores the current Widget's margin
+         * @param {object} action The object containing the new Widget's margin
+         */
         setMarginval: (state, action) => {
             const s = state;
             s.margin = action.payload;
         },
+         /**
+         * This function sets the values of the widget boarder redius
+         * @method
+         * @param {object} state The object that stores the current Widget's border redius
+         * @param {object} action The object containing the new Widget's boarder redius
+         */
         setBoarderrediusval: (state, action) => {
             const s = state;
             s.border.radius = action.payload;
