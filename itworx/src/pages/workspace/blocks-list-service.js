@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getBlocksList = async (token) =>{
     try{
-        const response = await axios.get(`${process.env.REACT_APP_LOCAL_API}/Widget/All`,
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/Widget/All`,
         {
             headers: {
               Authorization: 'Bearer ' + token

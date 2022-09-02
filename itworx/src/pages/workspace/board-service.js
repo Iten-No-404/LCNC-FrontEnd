@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getBoard = async ({id, token}) =>{
     try{
-        const response = await axios.get(`${process.env.REACT_APP_LOCAL_API}/Project/${id}`, 
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/Project/${id}`, 
         {
             headers: {
               Authorization: 'Bearer ' + token

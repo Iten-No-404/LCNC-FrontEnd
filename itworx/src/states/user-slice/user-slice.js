@@ -8,7 +8,7 @@ const headers = {
 
 export const getUserThunk = createAsyncThunk(
     'getUser',
-    async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/${query}`, {
+    async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/${query}`, {
       method: 'GET',
       headers: {
         ...headers,
@@ -18,7 +18,7 @@ export const getUserThunk = createAsyncThunk(
 
 export const getLoggedInUserThunk = createAsyncThunk(
     'getLoggedInUser',
-    async (token) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/GetLoggedInUser`, {
+    async (token) => fetch(`${process.env.REACT_APP_BASE_URL}/User/GetLoggedInUser`, {
       method: 'GET',
       headers: {
         ...headers,
@@ -29,7 +29,7 @@ export const getLoggedInUserThunk = createAsyncThunk(
 
   export const logInThunk = createAsyncThunk(
     'login',
-    async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/Login`, {
+    async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Login`, {
       method: 'POST',
       headers: {
         ...headers,
@@ -41,7 +41,7 @@ export const getLoggedInUserThunk = createAsyncThunk(
 
   export const signUpThunk = createAsyncThunk(
     'signUp',
-    async (query) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/Signup`, {
+    async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Signup`, {
       method: 'POST',
       headers: {
         ...headers
@@ -52,7 +52,7 @@ export const getLoggedInUserThunk = createAsyncThunk(
 
   export const updateUserThunk = createAsyncThunk(
     'updateUser',
-    async ({query, token}) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/UpdateUser`, {
+    async ({query, token}) => fetch(`${process.env.REACT_APP_BASE_URL}/User/UpdateUser`, {
       method: 'POST',
       headers: {
         ...headers,
@@ -63,7 +63,7 @@ export const getLoggedInUserThunk = createAsyncThunk(
   );
   export const deleteUserThunk = createAsyncThunk(
     'deleteUser',
-    async ({query, token}) => fetch(`${process.env.REACT_APP_LOCAL_API}/User/DeleteUser`, {
+    async ({query, token}) => fetch(`${process.env.REACT_APP_BASE_URL}/User/DeleteUser`, {
       method: 'DELETE',
       headers: {
         ...headers,
