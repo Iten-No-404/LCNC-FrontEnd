@@ -4,7 +4,6 @@ import getProjects from "./get-user-projects-service";
 import addProject from "./add-project-service";
 import Card from 'react-bootstrap/Card';
 import {Link } from "react-router-dom";
-import { useParams } from 'react-router-dom'
 import  { useNavigate } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,12 +11,12 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Navigationbar from "../../components/navbar/navbar";
-import { selectUser } from "../../states/user-slice/user-slice";
+import { selectUser, selectUserAuthToken } from "../../states/user-slice/user-slice";
 
 function Projects() {
-    const { id } = useParams();
     const navigate = useNavigate();
     const user = useSelector(selectUser);
+    const authToken = useSelector(selectUserAuthToken);
     const [projects, setProjects] = useState([]);
     console.log(projects);
     const [show, setShow] = useState(false);
@@ -43,7 +42,7 @@ function Projects() {
     useEffect(() => {
         async function fetchData() {
           console.log('user=',user);
-          const response = await getProjects(user.id);
+          const response = await getProjects({id: user.id, token: authToken });
           setProjects(response);
         }
         if(user.isActive)

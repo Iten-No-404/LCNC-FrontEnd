@@ -1,5 +1,6 @@
 import Col from 'react-bootstrap/Col';
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux'; 
 import { useParams } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -17,14 +18,14 @@ import getDefaultCSS from './default-css-service';
 import { setBlocksList } from '../../states/blocks-list-slice/blocks-list-slice';
 import { setDefaultCSS } from '../../states/default-css-slice/default-css-slice';
 import {setGeneratedCode} from '../../states/generated-code-slice/generated-code-slice';
-import { useDispatch } from 'react-redux';
 import updateProject from './save-board-service'
 import  { useNavigate } from 'react-router-dom'
+import { selectUserAuthToken } from '../../states/user-slice/user-slice';
+
 function WorkSpace() {
-
-  //Change this later:
   const { id } = useParams();
-
+  // console.log('Project Id= ',id);
+  const authToken = useSelector(selectUserAuthToken);
   const [board, setBoard] = useState([]);
   const [project, setProject] = useState({});
   const [modalShowhtml, setModalShowhtml] = React.useState(false);
@@ -66,13 +67,13 @@ function WorkSpace() {
   // save the board data
   useEffect(() => {
     if(!isLoadingBoard)
-      updateProject(project);
+      updateProject({data: project, token: authToken});
   }, [project.widgets]);
 
   // fetch the board data
   useEffect(() => {
     async function fetchData() {
-      const response = await getBoard(id);
+      const response = await getBoard({id:id, token: authToken});
       setBoard(JSON.parse(response.widgets));
       console.log('Received BoardList',JSON.parse(response.widgets));
       setProject(response);
@@ -94,7 +95,7 @@ function WorkSpace() {
   // fetch the default css
   useEffect(() => {
     async function fetchData() {
-      const response = await getDefaultCSS();
+      const response = await getDefaultCSS(authToken);
       dispatch(setDefaultCSS(response));
       setIsLoadingDefaultCSS(false);
     }
@@ -104,7 +105,7 @@ function WorkSpace() {
   // fetch the blocks list
   useEffect(() => {
     async function fetchData() {
-      const response = await getBlocksList();
+      const response = await getBlocksList(authToken);
       dispatch(setBlocksList(response));
       setIsLoadingBlocksList(false);
     }
@@ -122,7 +123,7 @@ function WorkSpace() {
               <Tree data={board} ClassN="Board" />
             </Col>
             <Col xs={3} >
-              <Ctabs board={board} setBoard={setBoard} />
+              <Ctabs board={board} setBoard={setBoard} projectId={id} />
             </Col>
           </Row>
           <ModalCard
