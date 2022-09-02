@@ -109,8 +109,8 @@ const StyledBlock = ({ board, setBoard, projectId }) => {
           <ColorPickerTool colorType='backgroundColor' />
          </>   
         ) :
-        (selectedblock &&
-          <Form>
+        (selectedblock ?
+          (<Form>
             <Form.Group className="mb-3" controlId="textEditor">
               <Form.Control value={content} onChange={(e) => { dispatch(setTextContent(e.target.value)); setContent(e.target.value) }} type="text" placeholder="Enter Your Text" />
             </Form.Group>
@@ -159,7 +159,7 @@ const StyledBlock = ({ board, setBoard, projectId }) => {
                 </Tab>
               </Tabs>
             </Form.Group>
-          </Form>)
+          </Form>):(<div>Please select block from the Layers Tab to be styled</div>))
       }
     </>
   );
