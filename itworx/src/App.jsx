@@ -33,7 +33,7 @@ function App() {
       {
         // If we get more than 3 parts, then we have a subdomain
         // INFO: This could be 4, if you have a co.uk TLD or something like that.
-        if (parts.length >= 3) {
+        if (parts.length >= 4) {
           setIsOnAppSub(true);
         }
       }
