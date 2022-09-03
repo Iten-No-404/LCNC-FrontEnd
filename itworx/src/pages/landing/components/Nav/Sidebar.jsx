@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'; 
 import styled from "styled-components";
 import { Link } from "react-scroll";
 // Assets
 import CloseIcon from "../../assets/svg/CloseIcon";
 import LogoIcon from "../../assets/svg/Logo";
+import { logOut, selectUser, selectUserAuthToken } from '../../../../states/user-slice/user-slice';
 
-export default function Sidebar({ sidebarOpen, toggleSidebar }) {
+export default function Sidebar({ sidebarOpen, toggleSidebar, userPromptContoller }) {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const authToken = useSelector(selectUserAuthToken);
+  const { userPromptOpen, handlePromptClose, handlePromptOpen, promptType, setPromptTypeLogin, setPromptTypeSignUp  } = userPromptContoller;
   return (
     <Wrapper className="animate darkBg" sidebarOpen={sidebarOpen}>
       <SidebarHeader className="flexSpaceCenter">
@@ -64,17 +70,39 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
           </Link>
         </li>
       </UlStyle>
+      {user.isActive &&
       <UlStyle className="flexSpaceCenter">
+        <li className="semiBold font15">
+          Welcome, {user.fullName.split(' ')[0]}!
+        </li>
+      </UlStyle>}
+      <UlStyle className="flexSpaceCenter">
+      {user.isActive ?
+            <>
         <li className="semiBold font15 pointer">
-          <a href="/" style={{ padding: "10px 30px 10px 0" }} className="whiteColor">
-            Log in
-          </a>
+          <div style={{ padding: "10px 30px 10px 0" }} className="whiteColor" onClick={() =>  { window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${authToken}`;} }>
+            My Projects
+          </div>
         </li>
         <li className="semiBold font15 pointer flexCenter">
-          <a href="/" className="radius8 lightBg" style={{ padding: "10px 15px" }}>
-            Sign Up
-          </a>
+          <div className="radius8 lightBg" style={{ padding: "10px 15px" }} onClick={() =>  dispatch(logOut(false)) }>
+          Log Out
+          </div>
         </li>
+        </>:
+        <>
+        <li className="semiBold font15 pointer">
+          <div style={{ padding: "10px 30px 10px 0" }} className="whiteColor" onClick={() => { setPromptTypeLogin(); handlePromptOpen(); toggleSidebar(!sidebarOpen);}}>
+            Log in
+          </div>
+        </li>
+        <li className="semiBold font15 pointer flexCenter">
+          <div className="radius8 lightBg" style={{ padding: "10px 15px" }} onClick={() => { setPromptTypeSignUp(); handlePromptOpen(); toggleSidebar(!sidebarOpen);}}>
+            Sign Up
+          </div>
+        </li>
+        </>
+      }
       </UlStyle>
     </Wrapper>
   );
