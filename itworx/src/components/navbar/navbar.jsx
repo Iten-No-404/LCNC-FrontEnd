@@ -32,12 +32,23 @@ import {  useLocation } from 'react-router-dom';
   return (
       <Navbar bg="dark" variant="dark">
         <Container>
-        <a className="pointer flexNullCenter" onClick={toRoot} smooth={true}>
+          { props.project ? (<div className="pointer flexNullCenter" onClick={ () => {
+              var domain = window.location.host.split('.');
+              domain.shift();
+              window.location = window.location.protocol + "//" + domain.join('.');
+          }}>
+            <LogoIcon />
+            <h1 style={{ marginLeft: "15px", width: "200px", color: "#0D6EFD" }} className="font20 extraBold">
+              LCNC Design Tool
+            </h1>
+          </div>) : (
+            <Link className="pointer flexNullCenter" to="/" smooth={true}>
             <LogoIcon />
             <h1 style={{ marginLeft: "15px", width: "200px" }} className="font20 extraBold">
               LCNC Design Tool
             </h1>
-          </a>
+          </Link>
+          )}
           <Container className="justify-content-end">
             {props.project && (
             <h2 className="justify-content-end">
