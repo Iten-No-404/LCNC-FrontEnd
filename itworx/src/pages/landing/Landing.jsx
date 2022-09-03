@@ -19,7 +19,7 @@ export default function Landing() {
     handlePromptClose,
     handlePromptOpen,
     promptType,
-    setPromptTypeLogin,
+    setPromptTypeLogin, 
     setPromptTypeSignUp
   };
   return (

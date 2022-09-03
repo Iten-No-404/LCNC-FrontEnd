@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
@@ -8,11 +9,13 @@ import React from "react";
 import '../../App.css';
 import LogoIcon from "../../pages/landing/assets/svg/Logo";
 import { PropTypes } from "prop-types";
+import { logOut } from "../../states/user-slice/user-slice";
 
 /**
  * General Navbar for the APP 
  */
   function Navigationbar(props) {
+  const dispatch = useDispatch();
   return (
       <Navbar bg="dark" variant="dark">
         <Container>
@@ -23,9 +26,15 @@ import { PropTypes } from "prop-types";
             </h1>
           </Link>
           <Container className="justify-content-end">
-          <h2 className="justify-content-end myDIV">
-
-          </h2>
+            {props.project && (
+            <h2 className="justify-content-end">
+              <OverlayTrigger placement='right' overlay={<Tooltip >Logged in with: {props.userEmail}</Tooltip>}>
+                <span className="justify-content-end mr-2" style={{ color: 'white'}} >Welcome, {props.userName}!</span>
+              </OverlayTrigger>
+                <Button variant='dark' className="justify-content-end" style={{ display: 'inline-block'}} onClick={ () => dispatch(logOut(true)) }> Logout</Button>
+            </h2>
+            )
+            }
           </Container>
           
 

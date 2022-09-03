@@ -19,7 +19,6 @@ import GeneralCodeBlock from '../blocks/general-code-block';
  */
 function Ctabs({ board, setBoard, projectId }) {
   const blocksList = useSelector(selectBlocksList);
-  // console.log(blocksList);
   return (
     <div>
       <Droppable droppableId="selectWidgetTab" isDropDisabled={true} type="board" >
