@@ -57,7 +57,11 @@ function WorkSpace() {
   const handleOpenpreview = () =>{
     const generatedCode=generateOneCode(HTMLcode,CSScode);
     dispatch(setGeneratedCode(generatedCode));
-    navigate("/project/"+id+"/preview");
+    if (window.confirm("Make sure you have saved the work or cancel to save")) {
+      navigate("/project/"+id+"/preview");
+    } else {
+      return;
+    }
   }
 
   const saveBoard = () => {

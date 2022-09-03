@@ -9,22 +9,35 @@ import React from "react";
 import '../../App.css';
 import LogoIcon from "../../pages/landing/assets/svg/Logo";
 import { PropTypes } from "prop-types";
+import  { useNavigate } from 'react-router-dom'
 import { logOut } from "../../states/user-slice/user-slice";
+import {  useLocation } from 'react-router-dom';
 
 /**
  * General Navbar for the APP 
  */
   function Navigationbar(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const toRoot = () =>{
+    if(location.pathname=='/')
+      return 
+    if (window.confirm("Make sure you have saved the work or cancel to save")) {
+      navigate("/");
+    } else {
+      return;
+    }
+  }
   return (
       <Navbar bg="dark" variant="dark">
         <Container>
-        <Link className="pointer flexNullCenter" to="/" smooth={true}>
+        <a className="pointer flexNullCenter" onClick={toRoot} smooth={true}>
             <LogoIcon />
             <h1 style={{ marginLeft: "15px", width: "200px" }} className="font20 extraBold">
               LCNC Design Tool
             </h1>
-          </Link>
+          </a>
           <Container className="justify-content-end">
             {props.project && (
             <h2 className="justify-content-end">
