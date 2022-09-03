@@ -1,0 +1,52 @@
+@import url(https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css);
+@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
+
+.hide {
+  display: none;
+}
+
+/* .myDIV {
+  color: red;
+
+} */
+.myDIV:hover + .hide {
+  display: block;
+  font-weight: bold;
+}
+
+.blockTab  {
+  margin: 10px;
+  cursor: move;
+}
+
+.Block {
+  margin: 5px;
+}
+
+.Board {
+  width:100%;
+  min-height: 600px;
+  border: 2px solid black;
+  overflow: hidden;
+}
+
+.SelectedBlock {
+  border: 4px dotted rgb(54, 54, 198);
+}
+
+
+.code {
+  font-family: -apple-system, Roboto, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.demo {
+  font-family: "Fira Code", monospace;
+}
+
+#wrapper{
+  width:100%;
+}
+
+img#uploadimg {
+  width: 300px;
+}

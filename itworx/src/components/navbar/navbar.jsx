@@ -7,7 +7,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import React from "react";
 import '../../App.css';
-import LogoIcon from "../../pages/landing/assets/svg/Logo";
+import LogoIcon from './Logo';
 import { PropTypes } from "prop-types";
 import  { useNavigate } from 'react-router-dom'
 import { logOut } from "../../states/user-slice/user-slice";

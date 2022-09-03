@@ -68,7 +68,7 @@ function UserPrompt({userPromptContoller}) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {promptType === 'Login'? 'Log In to your account!': 'Create a new account!'}
+          {promptType === 'Login'? 'Log In to your account!' : 'Create a new account!'}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
