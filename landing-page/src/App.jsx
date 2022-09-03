@@ -33,7 +33,10 @@ function App() {
       if(window.location.pathname === '/logout')
       {
         dispatch(logOut(false));
-        window.location = window.location.protocol + "//" + window.location.host;
+        if(process.env.REACT_APP_SPLIT === "true")
+          window.location = process.env.REACT_APP_APP_URL
+        else
+          window.location = window.location.protocol + "//" + window.location.host;
       }
     }
   }, [gotAuthToken])

@@ -80,7 +80,12 @@ export default function Sidebar({ sidebarOpen, toggleSidebar, userPromptContolle
       {user.isActive ?
             <>
         <li className="semiBold font15 pointer">
-          <div style={{ padding: "10px 30px 10px 0" }} className="whiteColor" onClick={() =>  { window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${authToken}`;} }>
+          <div style={{ padding: "10px 30px 10px 0" }} className="whiteColor" onClick={() =>  { 
+            if(process.env.REACT_APP_SPLIT === "true")
+              window.location = process.env.REACT_APP_APP_URL + `/redirect/${authToken}`;
+            else
+              window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${authToken}`;
+        } }>
             My Projects
           </div>
         </li>

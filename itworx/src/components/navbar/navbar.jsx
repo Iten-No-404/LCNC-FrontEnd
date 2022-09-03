@@ -31,9 +31,15 @@ import { logOut } from "../../states/user-slice/user-slice";
       <Navbar bg="dark" variant="dark">
         <Container>
           { props.project ? (<div className="pointer flexNullCenter" onClick={ () => {
+            if(process.env.REACT_APP_SPLIT === "true")
+            {
+              window.location = process.env.REACT_APP_LANDING_URL;
+            }
+            else{
               var domain = window.location.host.split('.');
               domain.shift();
               window.location = window.location.protocol + "//" + domain.join('.');
+            }
           }}>
             <LogoIcon />
             <h1 style={{ marginLeft: "15px", width: "200px", color: "#0D6EFD" }} className="font20 extraBold">

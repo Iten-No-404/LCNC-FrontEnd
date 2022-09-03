@@ -33,10 +33,24 @@ function App() {
     else
     {
       setIsLoading(false);
-      if(window.location.pathname === '/')
+      if(process.env.REACT_APP_SPLIT === "true")
       {
-        var domain = window.location.host.split('.');
-        domain.shift();
+        if(window.location.pathname === '/')
+        {
+        window.location = process.env.REACT_APP_LANDING_URL + '/logout';
+        }
+      else if(window.location.pathname === '/logout')
+      {
+        dispatch(logOut(false));
+        window.location = process.env.REACT_APP_LANDING_URL;
+      }
+      }
+      else
+      {
+        if(window.location.pathname === '/')
+        {
+          var domain = window.location.host.split('.');
+          domain.shift();
         window.location = window.location.protocol + "//" + domain.join('.') + '/logout';
       }
       else if(window.location.pathname === '/logout')
@@ -46,6 +60,7 @@ function App() {
         domain.shift();
         window.location = window.location.protocol + "//" + domain.join('.');
       }
+    }
     }
   }, [gotAuthToken])
   useEffect(() => {

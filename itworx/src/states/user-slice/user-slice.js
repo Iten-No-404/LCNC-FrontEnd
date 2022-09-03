@@ -148,9 +148,15 @@ const user = createSlice({
             localStorage.clear();
             if(action.payload)
             {
-              var domain = window.location.host.split('.');
-              domain.shift();
-              window.location = window.location.protocol + "//" + domain.join('.') + '/logout';
+              if(process.env.REACT_APP_SPLIT === "true")
+              {
+                window.location = process.env.REACT_APP_LANDING_URL + '/logout';
+              }
+              else{
+                var domain = window.location.host.split('.');
+                domain.shift();
+                window.location = window.location.protocol + "//" + domain.join('.') + '/logout';
+              }
             }
         },
         setStatusToIdle: (state) => {

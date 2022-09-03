@@ -28,7 +28,10 @@ function UserPrompt({userPromptContoller}) {
         {
             setEntered(true);
             // if(process.env.NODE_ENV === "development")
-            window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${authToken}`;
+            if(process.env.REACT_APP_SPLIT === "true")
+                window.location = process.env.REACT_APP_APP_URL + `/redirect/${authToken}`;
+            else
+                window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${authToken}`;
         }
     }, [authToken]);
 
