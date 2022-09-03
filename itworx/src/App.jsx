@@ -35,8 +35,7 @@ function App() {
       }
       else
       {
-        // If we get more than 3 parts, then we have a subdomain
-        // INFO: This could be 4, if you have a co.uk TLD or something like that.
+        // If we get 4 or more parts, then we have a subdomain
         if (parts.length >= 4) {
           setIsOnAppSub(true);
         }
@@ -60,7 +59,14 @@ function App() {
       {
         var domain = window.location.host.split('.');
         domain.shift();
-        window.location = window.location.protocol + "//" + domain.join('.') + './logout';
+        window.location = window.location.protocol + "//" + domain.join('.') + '/logout';
+      }
+      else if(isOnAppSub && window.location.pathname === '/logout')
+      {
+        dispatch(logOut(false));
+        var domain = window.location.host.split('.');
+        domain.shift();
+        window.location = window.location.protocol + "//" + domain.join('.');
       }
       else if(window.location.pathname === '/logout')
       {
