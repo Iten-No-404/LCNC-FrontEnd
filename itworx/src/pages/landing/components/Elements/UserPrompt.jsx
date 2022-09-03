@@ -10,9 +10,10 @@ import { logInThunk, signUpThunk, selectUserAuthToken } from '../../../../states
 
 function UserPrompt({userPromptContoller}) {
     const dispatch = useDispatch();
-    const userAuthToken = useSelector(selectUserAuthToken);
+    const authToken = useSelector(selectUserAuthToken);
     const { userPromptOpen, handlePromptClose, handlePromptOpen, promptType, setPromptTypeLogin, setPromptTypeSignUp  } = userPromptContoller;
     const [entered, setEntered] = useState(false);
+    const [autoEnter, setAutoEntered] = useState(false);
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNo, setPhoneNo] = useState('');
@@ -20,12 +21,13 @@ function UserPrompt({userPromptContoller}) {
     const [reEnterPassword, setreEnterPassword] = useState('');
 
     useEffect(() => {
-        if(!entered && userAuthToken)
+        if(autoEnter && !entered && authToken)
         {
             setEntered(true);
-            window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${userAuthToken}`;
+            // if(process.env.NODE_ENV === "development")
+            window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${authToken}`;
         }
-    }, [userAuthToken]);
+    }, [authToken]);
 
 
     const handleLogIn = () => {
@@ -35,19 +37,21 @@ function UserPrompt({userPromptContoller}) {
             isEmailconfirmed: true,
             isActive: true
         }));
+        setAutoEntered(true);
     }
-
+    
     const handleSignUp = () => {
         if(password !== reEnterPassword)
             return;
-        dispatch(signUpThunk({
-            fullName: fullName,
+            dispatch(signUpThunk({
+                fullName: fullName,
             email: email,
             phoneNo: phoneNo,
             password: password,
             isEmailconfirmed: true,
             isActive: true
         }));
+        setAutoEntered(true);
     }
 
   return (

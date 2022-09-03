@@ -43,10 +43,11 @@ export const getLoggedInUserThunk = createAsyncThunk(
     async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Signup`, {
       method: 'POST',
       headers: {
-        ...headers
+        ...headers,
+        "accept": "text/plain"
       },
       body: JSON.stringify(query),
-    }).then((res) => res.json()),
+    }).then((res) => res.text()),
   );
 
   export const updateUserThunk = createAsyncThunk(
@@ -90,20 +91,6 @@ const user = createSlice({
             modifiedTime: "0000-00-00T00:00:00"
         },
         status: 'idle'
-        // ex:
-        // {
-        //     "fullName": "Iten",
-        //     "email": "iten_emad@yahoo.com",
-        //     "phoneNo": 1124988295,
-        //     "password": "qwerty123",
-        //     "subscriptionDate": "2020-12-12T00:00:00",
-        //     "isEmailConfirmed": true,
-        //     "isActive": true,
-        //     "project": null,
-        //     "id": 5,
-        //     "addedData": "2020-12-12T00:00:00",
-        //     "modifiedTime": "2020-12-12T00:00:00"
-        // }
     },
     reducers: {
         /**
@@ -141,7 +128,7 @@ const user = createSlice({
          * @method
          * @param {object} state The object that stores the current user data.
          */
-        logOut: (state) => {
+        logOut: (state, action) => {
             const s = state;
             s.user = {
                 fullName: "",
@@ -156,16 +143,46 @@ const user = createSlice({
                 addedData: "0000-00-00T00:00:00",
                 modifiedTime: "0000-00-00T00:00:00"
             };
+            s.authToken = '';
             localStorage.clear();
+            if(action.payload)
+            {
+              var domain = window.location.host.split('.');
+              domain.shift();
+              window.location = window.location.protocol + "//" + domain.join('.') + '/logout';
+            }
         },
         setStatusToIdle: (state) => {
           const s = state; 
           s.status = 'idle';
         },
+        /**
+         * This function sets the value of the authentication token of the user.
+         * @method
+         * @param {object} state The object that stores the current user's authentication token.
+         * @param {object} action The object that contains the new value of the user's authentication token.
+         */
         setAuthToken: (state, action) => {
           const s = state;
           s.authToken = action.payload;
           localStorage.setItem('authToken', action.payload);
+        },
+        /**
+         * This function retrives the user's authentication token from local storage if exist.
+         * @method
+         * @param {object} state The object that stores the current user's data.
+         */
+        getAuthToken: (state) => {
+          const s = state;
+          const authToken = localStorage.getItem('authToken');
+          if (authToken) {
+            s.authToken = authToken;
+            localStorage.clear();
+            localStorage.setItem('authToken', s.authToken);
+          }
+          else {
+            s.authToken = '';
+          }
         }
       },
       extraReducers: {
@@ -185,7 +202,7 @@ const user = createSlice({
           const s = state; 
           s.status = 'rejected';
         },
-        [getLoggedInUserThunk.pending]: () => {
+        [getLoggedInUserThunk.pending]: (state, { payload }) => {
           console.log('User Authentication in Progress');
         },
         [getLoggedInUserThunk.fulfilled]: (state, { payload }) => {
@@ -201,6 +218,7 @@ const user = createSlice({
         [logInThunk.fulfilled]: (state, { payload }) => {
           console.log('Login Payload:',payload);
           state.authToken = payload;
+          localStorage.setItem('authToken', payload);
         },
         [logInThunk.rejected]: () => {
           console.log('Login in Failed!!!!');
@@ -210,8 +228,8 @@ const user = createSlice({
         },
         [signUpThunk.fulfilled]: (state, { payload }) => {
           console.log('SignUp Payload:',payload);
-          state.user = payload;
-          // localStorage.setItem('user', JSON.stringify(state.user));
+          state.authToken = payload;
+          localStorage.setItem('authToken', payload);
         },
         [signUpThunk.rejected]: () => {
           console.log('SignUp in Failed!!!!');
@@ -254,5 +272,5 @@ const user = createSlice({
 export const selectUser = (state) => state.user.user;
 export const selectUserAuthToken = (state) => state.user.authToken;
 export const selectUserStatus = (state) => state.user.status;
-export const { setUser, setAuthToken, logOut, setStatusToIdle } = user.actions;
+export const { setUser, setAuthToken, logOut, setStatusToIdle, getAuthToken } = user.actions;
 export default user.reducer;

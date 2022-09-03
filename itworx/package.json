@@ -49,6 +49,7 @@
     "start": "react-scripts start",
     "start-sub": "react-app-rewired start",
     "start:development": "react-app-rewired start env-cmd -f .env.development",
+    "start:production": "react-app-rewired start env-cmd -f .env.production",
     "build:production": "react-scripts build env-cmd -f .env.production",
     "build": "react-scripts build",
     "build-sub": "react-app-rewired build",

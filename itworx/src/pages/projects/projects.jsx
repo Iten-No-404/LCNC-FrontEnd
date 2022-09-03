@@ -46,12 +46,13 @@ function Projects() {
         if(user.isActive)
           fetchData();
       }, [user.isActive]);
-
+      console.log(projects);
     return (
         <>
-        <Navigationbar handleNewproject={handleShow} project={projects !== []}/>
+        <Navigationbar handleNewproject={handleShow} userEmail={user.email} userName={user.fullName.split(' ')[0]} project={projects !== []}/>
         <Container>
         <Row>
+        {projects.length === 0 && <div className="p-4 m-4" style={{ textAlign: 'center' }}>You have no projects yet! Click the button on the right to create a new one!</div>}
         {projects.map((project)=>{
         return (
         <Card style={{ width: '18rem' }} className="m-2" key={project.id}>
