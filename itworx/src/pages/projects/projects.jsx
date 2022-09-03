@@ -23,6 +23,7 @@ function Projects() {
     const authToken = useSelector(selectUserAuthToken);
     const [projects, setProjects] = useState([]);
     const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState("");
     const [desctiption, setDescription] = useState("");
 
@@ -49,17 +50,17 @@ function Projects() {
         async function fetchData() {
           const response = await getProjects({id: user.id, token: authToken });
           setProjects(response);
+          setLoading(false);
         }
         if(user.isActive)
           fetchData();
       }, [user.isActive]);
-      console.log(projects);
     return (
         <>
         <Navigationbar handleNewproject={handleShow} userEmail={user.email} userName={user.fullName.split(' ')[0]} project={projects !== []}/>
         <Container>
         <Row>
-        {projects.length === 0 && <div className="p-4 m-4" style={{ textAlign: 'center' }}>You have no projects yet! Click the button on the right to create a new one!</div>}
+        {!loading && projects.length === 0 && <div className="p-4 m-4" style={{ textAlign: 'center' }}>You have no projects yet! Click the button on the right to create a new one!</div>}
         {/* loop over all user project and show each one in card */}
         {projects.map((project)=>{
         return (

@@ -19,7 +19,9 @@ import { logOut } from "../../states/user-slice/user-slice";
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toRoot = () =>{
-    if (window.confirm("Make sure you have saved the work or cancel to save")) {
+    if((props.saved))
+      navigate("/");
+    else if (!(props.saved) && window.confirm("Make sure you have saved the work or cancel to save")) {
       navigate("/");
     } else {
       return;
@@ -46,12 +48,18 @@ import { logOut } from "../../states/user-slice/user-slice";
           </a>
           )}
           <Container className="justify-content-end">
-            {props.project && (
+            {props.project ? (
             <h2 className="justify-content-end">
               <OverlayTrigger placement='right' overlay={<Tooltip >Logged in with: {props.userEmail}</Tooltip>}>
                 <span className="justify-content-end mr-2" style={{ color: 'white'}} >Welcome, {props.userName}!</span>
               </OverlayTrigger>
                 <Button variant='dark' className="justify-content-end" style={{ display: 'inline-block'}} onClick={ () => dispatch(logOut(true)) }> Logout</Button>
+            </h2>
+            ) : (
+              <h2 className="justify-content-end">
+              <OverlayTrigger placement='right' overlay={<Tooltip >Logged in with: {props.userEmail}</Tooltip>}>
+                <span className="justify-content-end mr-2" style={{ color: 'white'}} >{props.projectTitle}</span>
+              </OverlayTrigger>
             </h2>
             )
             }
