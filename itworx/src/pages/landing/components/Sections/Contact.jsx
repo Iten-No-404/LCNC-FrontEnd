@@ -12,7 +12,7 @@ export default function Contact() {
 
     emailjs.sendForm('service_gx5jmcc', 'template_cl1bl7g', form.current, 'lGhLXltPZHinyfoQ4')
       .then((result) => {
-          alert("Thank You Your Message is send");
+          alert("Thank You! Your Message is sent");
       }, (error) => {
         alert("There is an error please try again");
       });

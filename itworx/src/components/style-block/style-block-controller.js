@@ -48,30 +48,14 @@ const StyleBlockHandler = (setBoard) => {
 	}
 
 	const handleUploadImage = async (e, selectedBlockId, projectId) => {
-		console.log("Image", e.target.files[0]);
 		const imageNameArr = e.target.files[0].name.split('.');
-		// var binaryImg = convertDataURIToBinary(e.target.files[0]);
-		// const formData = {
-		// 	Image: binaryImg,
-		// 	ImageName: selectedBlockId + '.' + imageNameArr[imageNameArr.length-1],
-		// 	ImagePath: projectId+'/'
-		// };
 		const formData = new FormData();
-		// console.log(selectedBlockId + '.' + imageNameArr[imageNameArr.length-1]);
-		// formData.append("ImageName", e.target.files[0].name);
 		formData.append("ImageName", selectedBlockId + '.' + imageNameArr[imageNameArr.length-1]);
 		formData.append("ImagePath", projectId+'/');
 		formData.append("Image", e.target.files[0]);
-		// console.log(formData);
 		const res = await uploadImage(formData);
-		// console.log(res);
-
-		// const img = await getImage('http://'+res.imagePath);
-		// console.log(img);
-
 		setBoard((prevBoard) => {
 			return recursiveAddimage(prevBoard, 'http://'+res.imagePath);
-			// return recursiveAddimage(prevBoard, res.data);
 		})
 	};
 

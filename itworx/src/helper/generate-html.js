@@ -1,3 +1,10 @@
+/**
+ * This function is recursive function to loop over all widgets and its childrens 
+ * and get the open tag code and end tag code and write thr text of widget between this two tags
+ * and add id attribute in the open tage to give the access to style the widget 
+ * @method
+ * @param {Array} board The Array of widgets stored in the board
+ */
 const generatechildrencode = (board) => {
     if (!board) return ``;
     let codeText = ``;
@@ -5,7 +12,7 @@ const generatechildrencode = (board) => {
         const splitforid = board[i].widgetCodeSnippet.code1.split("id");
         const opentag = `${splitforid[0]} id="a${board[i].id}" ${splitforid[1]}`;
         codeText = codeText.concat(
-            `${opentag}
+      `${opentag}
           ${board[i].CSS.text.content ? board[i].CSS.text.content : board[i].text}
           ${generatechildrencode(board[i].children)} 
       ${board[i].widgetCodeSnippet.code2}
@@ -14,6 +21,12 @@ const generatechildrencode = (board) => {
     }
     return codeText;
 };
+/**
+ * This function generate the HTML file for all the widgets in the board
+ * @method
+ * @param {Array} board The Array of widgets stored in the board
+ * @param {string} title Title for the page
+ */
 export const generateCode = (board, title) => {
     let codeText = `<!doctype html>
 <html lang="en">
