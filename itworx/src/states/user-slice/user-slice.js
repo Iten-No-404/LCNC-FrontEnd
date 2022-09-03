@@ -90,7 +90,8 @@ const user = createSlice({
             addedData: "0000-00-00T00:00:00",
             modifiedTime: "0000-00-00T00:00:00"
         },
-        status: 'idle'
+        status: 'idle',
+        statusMessage: ''
     },
     reducers: {
         /**
@@ -195,8 +196,6 @@ const user = createSlice({
           console.log('Get User Payload:',payload);
           s.user = payload;
           s.status = 'fulfilled';
-          // localStorage.setItem('user', JSON.stringify(state.user));
-          // window.location.replace('/dashboard');
         },
         [getUserThunk.rejected]: (state) => {
           const s = state; 
@@ -212,27 +211,59 @@ const user = createSlice({
         [getLoggedInUserThunk.rejected]: () => {
           console.log('User Authentication in Failed!!!!');
         },
-        [logInThunk.pending]: () => {
+        [logInThunk.pending]: (state) => {
           console.log('Login in Progress');
+          const s = state; 
+          s.status = 'pending';
         },
         [logInThunk.fulfilled]: (state, { payload }) => {
           console.log('Login Payload:',payload);
-          state.authToken = payload;
-          localStorage.setItem('authToken', payload);
+          const s = state; 
+          if(payload.length > 100)
+          {
+            s.authToken = payload;
+            localStorage.setItem('authToken', payload);
+            s.status = 'fulfilled';
+          }
+          else{
+            s.status = 'failed';
+            s.statusMessage = payload;
+          }
         },
-        [logInThunk.rejected]: () => {
+        [logInThunk.rejected]: (state) => {
           console.log('Login in Failed!!!!');
+          const s = state; 
+          s.status = 'rejected';
         },
-        [signUpThunk.pending]: () => {
+        [signUpThunk.pending]: (state) => {
           console.log('SignUp in Progress');
+          const s = state; 
+          s.status = 'pending';
         },
         [signUpThunk.fulfilled]: (state, { payload }) => {
           console.log('SignUp Payload:',payload);
-          state.authToken = payload;
-          localStorage.setItem('authToken', payload);
+          const s = state;
+          if(payload.length > 100 && payload.slice(0,7) !== '{"type"')
+          {
+            s.authToken = payload;
+            localStorage.setItem('authToken', payload);
+            s.status = 'fulfilled';
+          }
+          else{
+            s.status = 'failed';
+            if(payload.length > 100)
+              {
+                // const res = JSON.parse(payload);
+                s.statusMessage = "Please enter real values.";
+              }
+            else
+              s.statusMessage = payload;
+          }
         },
-        [signUpThunk.rejected]: () => {
+        [signUpThunk.rejected]: (state) => {
           console.log('SignUp in Failed!!!!');
+          const s = state; 
+          s.status = 'rejected';
         },
         [updateUserThunk.pending]: () => {
           console.log('UpdateUser in Progress');
@@ -272,5 +303,6 @@ const user = createSlice({
 export const selectUser = (state) => state.user.user;
 export const selectUserAuthToken = (state) => state.user.authToken;
 export const selectUserStatus = (state) => state.user.status;
+export const selectUserStatusMessage = (state) => state.user.statusMessage;
 export const { setUser, setAuthToken, logOut, setStatusToIdle, getAuthToken } = user.actions;
 export default user.reducer;
