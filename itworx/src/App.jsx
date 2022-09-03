@@ -14,8 +14,6 @@ function App() {
   const user = useSelector(selectUser);
   const userStatus = useSelector(selectUserStatus);
   const authToken = useSelector(selectUserAuthToken);
-  console.log(window.location.pathname);
-  console.log("Token:" , authToken);
   const [isLoading, setIsLoading] = useState(true);
   const [gotAuthToken, setGotAuthToken] = useState(false);
   const [isGettingUserInfo, setIsGettingUserInfo] = useState(false);
@@ -44,14 +42,12 @@ function App() {
       }
     }, []);
   useEffect(() => {
-  console.log('1. Check if Token is in localstorage');
   if(!isLoggedIn){
     dispatch(getAuthToken());
     setGotAuthToken(true);
   }
   }, [])
   useEffect(() => {
-    console.log('2. Check if Token can be used to get user data');
     if(authToken !== ""){
       dispatch(getLoggedInUserThunk(authToken));
       setIsGettingUserInfo(true);
@@ -59,7 +55,6 @@ function App() {
     else
     {
       setIsLoading(false);
-      console.log(window.location.pathname);
       if(isOnAppSub && window.location.pathname === '/')
       {
         var domain = window.location.host.split('.');
@@ -74,7 +69,6 @@ function App() {
     }
   }, [gotAuthToken])
   useEffect(() => {
-    console.log('3. Check if User is logged in');
   if(userStatus === "fulfilled" && isGettingUserInfo){
       setIsLoggedIn(true);
     }

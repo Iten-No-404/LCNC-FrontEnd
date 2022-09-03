@@ -15,36 +15,36 @@ export default function Services() {
           <HeaderInfo>
             <h1 className="font40 extraBold">Our Awesome Features</h1>
             <p className="font13">
-             The tool has basics features that will increase and add more features in the future  
+             The tool has basics features that will increase and more widgets will be added in the future.  
             </p>
           </HeaderInfo>
           <ServiceBoxRow className="flex">
             <ServiceBoxWrapper>
               <ServiceBox
                 icon="add"
-                title="Add widegts to project"
-                subtitle="widgets such as Navbar, Footer, header, div, span, and image can be added, nested, and reorder"
+                title="Add Widgets to the Project"
+                subtitle="Widgets such as Navbar, Header, Footer, Div, Span, and Image can be added, nested, and reordered."
               />
             </ServiceBoxWrapper>
             <ServiceBoxWrapper>
               <ServiceBox
                 icon="download"
                 title="Download the Project"
-                subtitle="Download the code of any project in zip folder"
+                subtitle="Download the code of any project in zip file."
               />
             </ServiceBoxWrapper>
             <ServiceBoxWrapper>
               <ServiceBox
                 icon="preview"
-                title="Preview the page"
-                subtitle="Preview page to make sure all is okay before download"
+                title="Preview the Page"
+                subtitle="Preview page to make sure all is okay before download."
               />
             </ServiceBoxWrapper>
             <ServiceBoxWrapper>
               <ServiceBox 
               icon="code"
-              title="Preview the code"
-              subtitle="Preview the generated HTML and CSS auto generated code" />
+              title="View the code"
+              subtitle="View the auto generated HTML and CSS code." />
             </ServiceBoxWrapper>
           </ServiceBoxRow>
         </div>
@@ -53,16 +53,16 @@ export default function Services() {
           <div className="container">
             <Advertising className="flexSpaceCenter">
               <AddLeft>
-                <h4 className="font15 semiBold">You can contribute</h4>
+                <h4 className="font15 semiBold">You can contribute!</h4>
                 <h2 className="font40 extraBold">Open Source Project</h2>
                 <p className="font12">
-                Develop a low-code / No-code platform tool that builds simple web page
+                Develop a low-code / no-code platform tool that builds simple web page
                 using pre-defined widgets in the beginning as a POC and can be extended and continued later as 
-                a complete low-code / No-code platform to build full web or mobile apps
+                a complete low-code / no-code platform to build full web or mobile apps.
                 </p>
                 <ButtonsRow className="flexNullCenter" style={{ margin: "30px 0"}}>
                   <div style={{ width: "190px" }}>
-                    <a href="https://github.com/itworx/CodedSummer2022_LCNC_T6_Frontend" ><Button className="animate pointer radius8">Github repo </Button></a>
+                    <a href="https://github.com/itworx/CodedSummer2022_LCNC_T6_Frontend" ><Button className="animate pointer radius8">Github Repository </Button></a>
                   </div>
                 </ButtonsRow>
               </AddLeft>

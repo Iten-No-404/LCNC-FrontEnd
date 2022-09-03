@@ -29,7 +29,7 @@ import { logOut } from "../../states/user-slice/user-slice";
             {props.project && (
             <h2 className="justify-content-end">
               <OverlayTrigger placement='right' overlay={<Tooltip >Logged in with: {props.userEmail}</Tooltip>}>
-                <span className="justify-content-end mr-2" >Welcome, {props.userName}!</span>
+                <span className="justify-content-end mr-2" style={{ color: 'white'}} >Welcome, {props.userName}!</span>
               </OverlayTrigger>
                 <Button variant='dark' className="justify-content-end" style={{ display: 'inline-block'}} onClick={ () => dispatch(logOut(true)) }> Logout</Button>
             </h2>

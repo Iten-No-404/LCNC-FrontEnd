@@ -24,7 +24,6 @@ import { selectUserAuthToken } from '../../states/user-slice/user-slice';
 
 function WorkSpace() {
   const { id } = useParams();
-  // console.log('Project Id= ',id);
   const authToken = useSelector(selectUserAuthToken);
   const [board, setBoard] = useState([]);
   const [project, setProject] = useState({});
