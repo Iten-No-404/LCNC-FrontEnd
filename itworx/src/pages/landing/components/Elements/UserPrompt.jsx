@@ -102,7 +102,7 @@ function UserPrompt({userPromptContoller}) {
                         <Form.Control value={password} onChange={(e) => { /*dispatch(setWidthval(e.target.value));*/ setPassword(e.target.value) }} type="password" placeholder="*********"/>
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>Re Enter Password</Form.Label>
+                        <Form.Label>Confirm Password</Form.Label>
                         <Form.Control value={reEnterPassword} onChange={(e) => { /*dispatch(setWidthval(e.target.value));*/ setreEnterPassword(e.target.value) }} type="password" placeholder="*********"/>
                     </Form.Group>
                     {password !== reEnterPassword && <h4 style={{ color: 'red', paddingTop: "5px"}} >Passwords don't match!!!</h4>}

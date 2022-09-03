@@ -23,7 +23,7 @@ export default function Services() {
               <ServiceBox
                 icon="add"
                 title="Add widegts to project"
-                subtitle="widgets such as Navbar, Footer, header, div, span, and image can be added, nested, and reorder"
+                subtitle="Widgets such as Navbar, Footer, header, div, span, and image can be added, nested, and reorder"
               />
             </ServiceBoxWrapper>
             <ServiceBoxWrapper>
