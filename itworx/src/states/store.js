@@ -8,14 +8,17 @@ import userReducer from './user-slice/user-slice';
 import generatedCodeReducer from './generated-code-slice/generated-code-slice';
 
 const store = configureStore({
+    /**
+     * configure the store with all needed slices
+     */
     reducer: {
         user: userReducer,
         widgetCSS: widgetCSSReducer,
         widgetList: widgetListReducer,
-        board:boardReducer,
-        defaultCSS:defaultCSSReducer,
-        blocksList:blocksListReducer,
-        generatedCode:generatedCodeReducer,
+        board: boardReducer,
+        defaultCSS: defaultCSSReducer,
+        blocksList: blocksListReducer,
+        generatedCode: generatedCodeReducer,
     },
 });
 

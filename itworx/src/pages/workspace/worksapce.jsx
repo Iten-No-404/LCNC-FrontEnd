@@ -22,6 +22,10 @@ import updateProject from './save-board-service'
 import  { useNavigate } from 'react-router-dom'
 import { selectUserAuthToken } from '../../states/user-slice/user-slice';
 
+/**
+ * workspace page where the user can edit the project by add new widget (Drag and Drop from the blocks List)
+ * or edit the in widgets proparties
+ */
 function WorkSpace() {
   const { id } = useParams();
   const authToken = useSelector(selectUserAuthToken);
