@@ -9,6 +9,7 @@ import React from "react";
 import '../../App.css';
 import LogoIcon from "../../pages/landing/assets/svg/Logo";
 import { PropTypes } from "prop-types";
+import  { useNavigate } from 'react-router-dom'
 import { logOut } from "../../states/user-slice/user-slice";
 
 /**
@@ -16,22 +17,49 @@ import { logOut } from "../../states/user-slice/user-slice";
  */
   function Navigationbar(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const toRoot = () =>{
+    if((props.saved))
+      navigate("/");
+    else if (!(props.saved) && window.confirm("Make sure you have saved the work or cancel to save")) {
+      navigate("/");
+    } else {
+      return;
+    }
+  }
   return (
       <Navbar bg="dark" variant="dark">
         <Container>
-        <Link className="pointer flexNullCenter" to="/" smooth={true}>
+          { props.project ? (<div className="pointer flexNullCenter" onClick={ () => {
+              var domain = window.location.host.split('.');
+              domain.shift();
+              window.location = window.location.protocol + "//" + domain.join('.');
+          }}>
+            <LogoIcon />
+            <h1 style={{ marginLeft: "15px", width: "200px", color: "#0D6EFD" }} className="font20 extraBold">
+              LCNC Design Tool
+            </h1>
+          </div>) : (
+            <a className="pointer flexNullCenter" onClick={toRoot} smooth={true}>
             <LogoIcon />
             <h1 style={{ marginLeft: "15px", width: "200px" }} className="font20 extraBold">
               LCNC Design Tool
             </h1>
-          </Link>
+          </a>
+          )}
           <Container className="justify-content-end">
-            {props.project && (
+            {props.project ? (
             <h2 className="justify-content-end">
               <OverlayTrigger placement='right' overlay={<Tooltip >Logged in with: {props.userEmail}</Tooltip>}>
                 <span className="justify-content-end mr-2" style={{ color: 'white'}} >Welcome, {props.userName}!</span>
               </OverlayTrigger>
                 <Button variant='dark' className="justify-content-end" style={{ display: 'inline-block'}} onClick={ () => dispatch(logOut(true)) }> Logout</Button>
+            </h2>
+            ) : (
+              <h2 className="justify-content-end">
+              <OverlayTrigger placement='right' overlay={<Tooltip >Logged in with: {props.userEmail}</Tooltip>}>
+                <span className="justify-content-end mr-2" style={{ color: 'white'}} >{props.projectTitle}</span>
+              </OverlayTrigger>
             </h2>
             )
             }

@@ -31,7 +31,7 @@ export default function TopNavbar({userPromptContoller}) {
 
   return (
     <>
-      <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} userPromptContoller={userPromptContoller}/>
       {sidebarOpen && <Backdrop toggleSidebar={toggleSidebar} />}
       <Wrapper className="flexCenter animate whiteBg" style={y > 100 ? { height: "60px" } : { height: "80px" }}>
         <NavInner className="container flexSpaceCenter">
@@ -75,7 +75,7 @@ export default function TopNavbar({userPromptContoller}) {
               </div>
             </li>
             <li className="semiBold font15 pointer flexCenter">
-              <div className="radius8 lightBg" style={{ padding: "10px 15px" }} onClick={() =>  dispatch(logOut(false)) }>
+              <div className="radius8 lightBg" style={{ padding: "10px 15px" }} onClick={() =>  { dispatch(logOut(false)); window.location = window.location.protocol + "//app." + window.location.host + "/logout"; } }>
                 Log Out
               </div>
             </li>

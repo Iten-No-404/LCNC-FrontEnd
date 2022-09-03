@@ -57,7 +57,13 @@ function WorkSpace() {
   const handleOpenpreview = () =>{
     const generatedCode=generateOneCode(HTMLcode,CSScode);
     dispatch(setGeneratedCode(generatedCode));
-    navigate("/project/"+id+"/preview");
+    if(project.widgets === JSON.stringify(board))
+      navigate("/project/"+id+"/preview");
+    else if (window.confirm("Make sure you have saved the work or cancel to save")) {
+      navigate("/project/"+id+"/preview");
+    } else {
+      return;
+    }
   }
 
   const saveBoard = () => {
@@ -67,10 +73,11 @@ function WorkSpace() {
     });
   }
 
+  
   // save the board data
   useEffect(() => {
     if(!isLoadingBoard)
-      updateProject({data: project, token: authToken});
+    updateProject({data: project, token: authToken});
   }, [project.widgets]);
 
   // fetch the board data
@@ -118,7 +125,7 @@ function WorkSpace() {
   return !isLoadingBoard && !isLoadingDefaultCSS && !isLoadingBlocksList && (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />
+        <Navigationbar saved={project.widgets === JSON.stringify(board)} projectTitle={project.title} handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />
         <Container className="mt-4">
           <Row>
             <Col xs={9} >

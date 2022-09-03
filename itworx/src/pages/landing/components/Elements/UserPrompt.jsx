@@ -5,11 +5,13 @@ import Tab from 'react-bootstrap/esm/Tab';
 import Tabs from 'react-bootstrap/esm/Tabs';
 import Form from 'react-bootstrap/esm/Form';
 import Modal from 'react-bootstrap/Modal';
-import { logInThunk, signUpThunk, selectUserAuthToken } from '../../../../states/user-slice/user-slice';
+import { logInThunk, signUpThunk, selectUserAuthToken, selectUserStatus, selectUserStatusMessage } from '../../../../states/user-slice/user-slice';
 
 
 function UserPrompt({userPromptContoller}) {
     const dispatch = useDispatch();
+    const userStatus = useSelector(selectUserStatus);
+    const userStatusMessage = useSelector(selectUserStatusMessage);
     const authToken = useSelector(selectUserAuthToken);
     const { userPromptOpen, handlePromptClose, handlePromptOpen, promptType, setPromptTypeLogin, setPromptTypeSignUp  } = userPromptContoller;
     const [entered, setEntered] = useState(false);
@@ -21,7 +23,8 @@ function UserPrompt({userPromptContoller}) {
     const [reEnterPassword, setreEnterPassword] = useState('');
 
     useEffect(() => {
-        if(autoEnter && !entered && authToken)
+        console.log(authToken, userStatus);
+        if(autoEnter && !entered && authToken && userStatus === "fulfilled")
         {
             setEntered(true);
             // if(process.env.NODE_ENV === "development")
@@ -86,6 +89,7 @@ function UserPrompt({userPromptContoller}) {
                         <Form.Label>Password</Form.Label>
                         <Form.Control value={password} onChange={(e) => { /*dispatch(setWidthval(e.target.value));*/ setPassword(e.target.value) }} type="password" placeholder="*********"/>
                     </Form.Group>
+                    {userStatus === "failed" && <h4 style={{ color: 'red', paddingTop: "5px"}} >{userStatusMessage}</h4>}
                     <Button variant="primary" style={{marginTop: '10px'}} type="button" onClick={() => handleLogIn()}>Log In</Button>
                 </Tab>
                 <Tab eventKey="SignUp" title="Sign Up" style={{ padding: '5%', margin: "5%"}}>
@@ -109,7 +113,8 @@ function UserPrompt({userPromptContoller}) {
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control value={reEnterPassword} onChange={(e) => { /*dispatch(setWidthval(e.target.value));*/ setreEnterPassword(e.target.value) }} type="password" placeholder="*********"/>
                     </Form.Group>
-                    {password !== reEnterPassword && <h4 style={{ color: 'red', paddingTop: "5px"}} >Passwords don't match!!!</h4>}
+                    {userStatus === "failed" && <h4 style={{ color: 'red', paddingTop: "5px"}} >{userStatusMessage}</h4>}
+                    {password !== reEnterPassword && (password || reEnterPassword) && <h4 style={{ color: 'red', paddingTop: "5px"}} >Passwords don't match!!!</h4>}
                     <Button variant="primary" style={{marginTop: '5px'}} type="button" onClick={() => handleSignUp()}>Sign Up</Button>
                 </Tab>
               </Tabs>

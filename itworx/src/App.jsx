@@ -8,6 +8,7 @@ import { selectUser, selectUserAuthToken, selectUserStatus, getAuthToken, getLog
 import Preview from './pages/preview/Preview';
 import Projects from './pages/projects/projects';
 import RedirectPage from './pages/redirectPage/RedirectPage';
+import Spinner from 'react-bootstrap/Spinner';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,8 +35,7 @@ function App() {
       }
       else
       {
-        // If we get more than 3 parts, then we have a subdomain
-        // INFO: This could be 4, if you have a co.uk TLD or something like that.
+        // If we get 4 or more parts, then we have a subdomain
         if (parts.length >= 4) {
           setIsOnAppSub(true);
         }
@@ -59,7 +59,14 @@ function App() {
       {
         var domain = window.location.host.split('.');
         domain.shift();
-        window.location = window.location.protocol + "//" + domain.join('.') + './logout';
+        window.location = window.location.protocol + "//" + domain.join('.') + '/logout';
+      }
+      else if(isOnAppSub && window.location.pathname === '/logout')
+      {
+        dispatch(logOut(false));
+        var domain = window.location.host.split('.');
+        domain.shift();
+        window.location = window.location.protocol + "//" + domain.join('.');
       }
       else if(window.location.pathname === '/logout')
       {
@@ -90,7 +97,7 @@ function App() {
           {isLoggedIn && isOnAppSub && <Route exact path="/project/:id/preview" element={<Preview />}></Route>}
           {isLoggedIn && !isOnAppSub && <Route exact path="/logout" element={<div className="m-5" style={{ textAlign: 'center'}}>Logging you out!</div>}></Route>}
           {!isLoading && !isOnAppSub && <Route path="/" element={<Landing />} />}
-          <Route path="/" element={<div className="m-5" style={{ textAlign: 'center'}}>Now loading!!!</div>}/>
+          <Route path="/" element={<div className="m-5" style={{ textAlign: 'center'}}><Spinner animation="border" /></div>}/>
       </Routes>
       </div>
     </Router>
