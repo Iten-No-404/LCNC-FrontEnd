@@ -8,7 +8,7 @@ import Preview from './pages/preview/Preview';
 import Projects from './pages/projects/projects';
 import HomePage from './pages/homepage';
 import RedirectPage from './pages/redirectPage/RedirectPage';
-// import Spinner from 'react-bootstrap/Spinner';
+import Spinner from 'react-bootstrap/Spinner';
 
 function App() {
     const dispatch = useDispatch();
@@ -19,20 +19,22 @@ function App() {
     const [gotAuthToken, setGotAuthToken] = useState(false);
     const [isGettingUserInfo, setIsGettingUserInfo] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    console.log(user);
     console.log("isLoading:", isLoading);
     useEffect(() => {
+        console.log(authToken);
         if (!isLoggedIn) {
             dispatch(getAuthToken());
             setGotAuthToken(true);
         }
     }, [])
     useEffect(() => {
+        console.log(authToken);
         if (authToken !== "") {
             dispatch(getLoggedInUserThunk(authToken));
             setIsGettingUserInfo(true);
         }
         else {
-            setIsLoading(false);
             if (process.env.REACT_APP_SPLIT === "true") {
                 if (window.location.pathname === '/logout') {
                     dispatch(logOut(false));
@@ -47,6 +49,7 @@ function App() {
                     window.location = window.location.protocol + "//" + domain.join('.');
                 }
             }
+            setIsLoading(false);
         }
     }, [gotAuthToken])
     useEffect(() => {
@@ -65,11 +68,12 @@ function App() {
         <Router>
             <div className="App">
                 <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/redirect/:token" element={<RedirectPage isOnAppSub={true} />}></Route>
+                    <Route path="/redirect/:uuid" element={<RedirectPage />}></Route>
+                    {/* {isLoading && <Route exact path="/" element={<div className="m-5" style={{ textAlign: 'center'}}><Spinner animation="border" /></div>}/>} */}
                     {isLoggedIn && <Route exact path="/" element={<Projects />}></Route>}
                     {isLoggedIn && <Route exact path="/project/:id" element={<WorkSpace />} />}
                     {isLoggedIn && <Route exact path="/project/:id/preview" element={<Preview />}></Route>}
+                    <Route path="/" element={<HomePage />} />
                 </Routes>
             </div>
         </Router>

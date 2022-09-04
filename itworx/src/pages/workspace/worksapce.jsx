@@ -20,7 +20,7 @@ import { setDefaultCSS } from '../../states/default-css-slice/default-css-slice'
 import {setGeneratedCode} from '../../states/generated-code-slice/generated-code-slice';
 import updateProject from './save-board-service'
 import  { useNavigate } from 'react-router-dom'
-import { selectUserAuthToken } from '../../states/user-slice/user-slice';
+import { selectUser, selectUserAuthToken } from '../../states/user-slice/user-slice';
 
 /**
  * workspace page where the user can edit the project by add new widget (Drag and Drop from the blocks List)
@@ -29,6 +29,7 @@ import { selectUserAuthToken } from '../../states/user-slice/user-slice';
 function WorkSpace() {
   const { id } = useParams();
   const authToken = useSelector(selectUserAuthToken);
+  const user = useSelector(selectUser);
   const [board, setBoard] = useState([]);
   const [project, setProject] = useState({});
   const [modalShowhtml, setModalShowhtml] = React.useState(false);
@@ -125,7 +126,7 @@ function WorkSpace() {
   return !isLoadingBoard && !isLoadingDefaultCSS && !isLoadingBlocksList && (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Navigationbar saved={project.widgets === JSON.stringify(board)} projectTitle={project.title} handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />
+        <Navigationbar saved={project.widgets === JSON.stringify(board)} userEmail={user.email} projectTitle={project.title} handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />
         <Container className="mt-4">
           <Row>
             <Col xs={9} >

@@ -46,9 +46,9 @@
     "webpack-cli": "^4.10.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start env-cmd -f .env.development",
     "start-sub": "react-app-rewired start",
-    "start:development": "PORT=3001 react-app-rewired start env-cmd -f .env.development",
+    "start:development": "react-app-rewired start env-cmd -f .env.development",
     "start:production": "react-app-rewired start env-cmd -f .env.production",
     "build:production": "react-scripts build env-cmd -f .env.production",
     "build": "react-scripts build",

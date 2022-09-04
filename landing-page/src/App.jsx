@@ -23,6 +23,7 @@ function App() {
   }
   }, [])
   useEffect(() => {
+    console.log(authToken);
     if(authToken !== ""){
       dispatch(getLoggedInUserThunk(authToken));
       setIsGettingUserInfo(true);
