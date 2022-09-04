@@ -15,6 +15,16 @@ export const getUserThunk = createAsyncThunk(
     }).then((res) => res.json()),
   );
 
+  export const getUserToken = createAsyncThunk(
+    'getUserToken',
+    async (uuid) => fetch(`${process.env.REACT_APP_BASE_URL}/user/getToken/${uuid}`, {
+      method: 'GET',
+      headers: {
+        ...headers
+      },
+    }).then((res) => res.json()),
+  );
+
 export const getLoggedInUserThunk = createAsyncThunk(
     'getLoggedInUser',
     async (token) => fetch(`${process.env.REACT_APP_BASE_URL}/User/GetLoggedInUser`, {
@@ -31,11 +41,10 @@ export const getLoggedInUserThunk = createAsyncThunk(
     async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Login`, {
       method: 'POST',
       headers: {
-        ...headers,
-        "accept": "text/plain"
+        ...headers
       },
       body: JSON.stringify(query),
-    }).then((res) => res.text()),
+    }).then((res) => res.json()),
   );
 
   export const signUpThunk = createAsyncThunk(
@@ -43,11 +52,10 @@ export const getLoggedInUserThunk = createAsyncThunk(
     async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Signup`, {
       method: 'POST',
       headers: {
-        ...headers,
-        "accept": "text/plain"
+        ...headers
       },
       body: JSON.stringify(query),
-    }).then((res) => res.text()),
+    }).then((res) => res.json()),
   );
 
   export const updateUserThunk = createAsyncThunk(
@@ -77,6 +85,7 @@ const user = createSlice({
     name: 'user',
     initialState: {
         authToken: "",
+        uuid: "",
         user: {
             fullName: "",
             email: "",
@@ -145,6 +154,7 @@ const user = createSlice({
                 modifiedTime: "0000-00-00T00:00:00"
             };
             s.authToken = '';
+            s.uuid = '';
             localStorage.clear();
             if(action.payload)
             {
@@ -184,11 +194,20 @@ const user = createSlice({
           const authToken = localStorage.getItem('authToken');
           if (authToken) {
             s.authToken = authToken;
-            localStorage.clear();
+            // localStorage.clear();
             localStorage.setItem('authToken', s.authToken);
           }
           else {
             s.authToken = '';
+          }
+          const uuid = localStorage.getItem('uuid');
+          if (uuid) {
+            s.uuid = uuid;
+            // localStorage.clear();
+            localStorage.setItem('uuid', s.uuid);
+          }
+          else {
+            s.uuid = '';
           }
         }
       },
@@ -207,12 +226,28 @@ const user = createSlice({
           const s = state; 
           s.status = 'rejected';
         },
+        [getUserToken.pending]: (state, { payload }) => {
+          console.log('getUserToken in Progress');
+        },
+        [getUserToken.fulfilled]: (state, { payload }) => {
+          console.log('getUserToken Payload:',payload);
+          const s = state;
+            s.authToken = payload.token;
+            s.uuid = payload.uuid;
+            localStorage.setItem('authToken', s.authToken);
+            console.log(payload, s.authToken);
+            // s.status = 'fulfilled';
+        },
+        [getUserToken.rejected]: () => {
+          console.log('getUserToken Failed!!!!');
+        },
         [getLoggedInUserThunk.pending]: (state, { payload }) => {
           console.log('User Authentication in Progress');
         },
         [getLoggedInUserThunk.fulfilled]: (state, { payload }) => {
           console.log('User Authentication Payload:',payload);
           state.user = payload;
+          // state.uuid = 
         },
         [getLoggedInUserThunk.rejected]: () => {
           console.log('User Authentication in Failed!!!!');
@@ -225,16 +260,17 @@ const user = createSlice({
         [logInThunk.fulfilled]: (state, { payload }) => {
           console.log('Login Payload:',payload);
           const s = state; 
-          if(payload.length > 100)
-          {
-            s.authToken = payload;
-            localStorage.setItem('authToken', payload);
+          try {
+            const resJSON = JSON.parse(payload);
+            s.authToken = resJSON.token;
+            s.uuid = resJSON.uuid;
+            localStorage.setItem('authToken', s.authToken);
+            localStorage.setItem('uuid', s.uuid);
             s.status = 'fulfilled';
-          }
-          else{
+          } catch (e) {
             s.status = 'failed';
             s.statusMessage = payload;
-          }
+           }
         },
         [logInThunk.rejected]: (state) => {
           console.log('Login in Failed!!!!');
@@ -249,22 +285,18 @@ const user = createSlice({
         [signUpThunk.fulfilled]: (state, { payload }) => {
           console.log('SignUp Payload:',payload);
           const s = state;
-          if(payload.length > 100 && payload.slice(0,7) !== '{"type"')
-          {
-            s.authToken = payload;
-            localStorage.setItem('authToken', payload);
+          try {
+            const resJSON = JSON.parse(payload);
+            s.authToken = resJSON.token;
+            s.uuid = resJSON.uuid;
+            localStorage.setItem('authToken', s.authToken);
+            localStorage.setItem('uuid', s.uuid);
             s.status = 'fulfilled';
-          }
-          else{
+
+          } catch (e) {
             s.status = 'failed';
-            if(payload.length > 100)
-              {
-                // const res = JSON.parse(payload);
-                s.statusMessage = "Please enter real values.";
-              }
-            else
-              s.statusMessage = payload;
-          }
+            s.statusMessage = payload;
+           }
         },
         [signUpThunk.rejected]: (state) => {
           console.log('SignUp in Failed!!!!');
@@ -308,6 +340,7 @@ const user = createSlice({
 
 export const selectUser = (state) => state.user.user;
 export const selectUserAuthToken = (state) => state.user.authToken;
+export const selectUserUUID = (state) => state.user.uuid;
 export const selectUserStatus = (state) => state.user.status;
 export const selectUserStatusMessage = (state) => state.user.statusMessage;
 export const { setUser, setAuthToken, logOut, setStatusToIdle, getAuthToken } = user.actions;

@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom'
 import  { useNavigate } from 'react-router-dom'
-import { selectUser, setAuthToken, getLoggedInUserThunk } from "../../states/user-slice/user-slice";
+import { selectUser, setAuthToken, getLoggedInUserThunk, getUserToken, selectUserAuthToken } from "../../states/user-slice/user-slice";
 
-function RedirectPage({ isOnAppSub }) {
-    const { token } = useParams();
+function RedirectPage() {
+    const { uuid } = useParams();
+    const authToken = useSelector(selectUserAuthToken);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(selectUser);
@@ -16,15 +17,22 @@ function RedirectPage({ isOnAppSub }) {
 
     useEffect(() => {
         async function fetchUserData() {
-          if(isOnAppSub && token !== "" && token !== undefined)
+          if( uuid !== "" && uuid !== undefined)
           {
-                dispatch(setAuthToken(token));
-                dispatch(getLoggedInUserThunk(token));
+                dispatch(getUserToken(uuid));
                 handleClose();
           }
         }
         fetchUserData();
       }, []);
+
+    useEffect(() => {
+      if(authToken)
+      {
+        dispatch(getLoggedInUserThunk(authToken));
+        dispatch(setAuthToken(authToken));
+      }
+      }, [authToken]);
 
     useEffect(() => {
         if(user.isActive)
