@@ -255,14 +255,14 @@ const WorkSpaceHandler = (board, setBoard) => {
                 break;
         }
     };
-    const generateCodeZip = (htmlcode, csscode) => {
+    const generateCodeZip = (htmlcode, csscode, title) => {
         var zip = new JSZip();
 
         zip.file("index.html", htmlcode.toString());
         zip.file("style.css", csscode.toString());
 
         zip.generateAsync({ type: "blob" }).then(function (content) {
-            saveAs(content, "project.zip");
+            saveAs(content, `${title}.zip`);
         });
     };
 
