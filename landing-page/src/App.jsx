@@ -17,7 +17,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   console.log("isLoading:" , isLoading);
   useEffect(() => {
-  if(!isLoggedIn){
+  if(!isLoggedIn && window.location.pathname !== '/logout'){
     dispatch(getAuthToken());
     setGotAuthToken(true);
   }
@@ -57,7 +57,8 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {isLoggedIn && <Route exact path="/logout" element={<div className="m-5" style={{ textAlign: 'center'}}>Logging you out!</div>}></Route>}
+          {!isLoggedIn && <Route exact path="/logout" element={<div className="m-5" style={{ textAlign: 'center'}}>Logging you out!</div>}></Route>}
+          <Route exact path="/logout" element={<div className="m-5" style={{ textAlign: 'center'}}>Logging you out!</div>}></Route>
           {!isLoading && <Route path="/" element={<Landing />} />}
           <Route path="/" element={<div className="m-5" style={{ textAlign: 'center'}}><Spinner animation="border" /></div>}/>
       </Routes>

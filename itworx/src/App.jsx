@@ -23,7 +23,7 @@ function App() {
     console.log("isLoading:", isLoading);
     useEffect(() => {
         console.log(authToken);
-        if (!isLoggedIn) {
+        if (!isLoggedIn && window.location.pathname !== '/logout') {
             dispatch(getAuthToken());
             setGotAuthToken(true);
         }
@@ -68,7 +68,8 @@ function App() {
         <Router>
             <div className="App">
                 <Routes>
-                    <Route path="/redirect/:uuid" element={<RedirectPage />}></Route>
+                    <Route exact path="/redirect/:uuid" element={<RedirectPage />}></Route>
+                    {!isLoggedIn && <Route exact path="/logout" element={<div className="m-5" style={{ textAlign: 'center'}}>Logging you out!</div>}></Route>}
                     {/* {isLoading && <Route exact path="/" element={<div className="m-5" style={{ textAlign: 'center'}}><Spinner animation="border" /></div>}/>} */}
                     {isLoggedIn && <Route exact path="/" element={<Projects />}></Route>}
                     {isLoggedIn && <Route exact path="/project/:id" element={<WorkSpace />} />}
