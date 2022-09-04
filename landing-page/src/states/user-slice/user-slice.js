@@ -10,7 +10,7 @@ export const getUserThunk = createAsyncThunk(
     async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/${query}`, {
       method: 'GET',
       headers: {
-        ...headers
+        ...headers,
       },
     }).then((res) => res.json()),
   );
@@ -40,9 +40,8 @@ export const getLoggedInUserThunk = createAsyncThunk(
     'login',
     async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Login`, {
       method: 'POST',
-      // mode: 'no-cors',
       headers: {
-        'Content-Type': 'text/plain'
+        ...headers
       },
       body: JSON.stringify(query),
     }).then((res) => res.text()),
@@ -52,9 +51,8 @@ export const getLoggedInUserThunk = createAsyncThunk(
     'signUp',
     async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Signup`, {
       method: 'POST',
-      // mode: 'no-cors',
       headers: {
-        'Content-Type': 'text/plain'
+        ...headers
       },
       body: JSON.stringify(query),
     }).then((res) => res.text()),
@@ -162,7 +160,7 @@ const user = createSlice({
             {
               if(process.env.REACT_APP_SPLIT === "true")
               {
-                window.location = process.env.REACT_APP_LANDING_URL + '/logout';
+                window.location = process.env.REACT_APP_APP_URL + '/logout';
               }
               else{
                 var domain = window.location.host.split('.');
@@ -235,7 +233,7 @@ const user = createSlice({
             s.authToken = payload.token;
             s.uuid = payload.uuid;
             localStorage.setItem('authToken', s.authToken);
-            // s.status = 'fulfilled';
+            s.status = 'fulfilled';
         },
         [getUserToken.rejected]: () => {
           console.log('getUserToken Failed!!!!');

@@ -42,7 +42,6 @@ function Projects() {
       widgets: "[]"
     }, token: authToken
   })
-    console.log(res);
     // window.replace('/project/'+res.id);
     navigate('/project/'+res.id);
     }

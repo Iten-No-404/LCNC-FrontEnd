@@ -5,12 +5,13 @@ import { Link } from "react-scroll";
 // Assets
 import CloseIcon from "../../assets/svg/CloseIcon";
 import LogoIcon from "../../assets/svg/Logo";
-import { logOut, selectUser, selectUserAuthToken } from '../../../../states/user-slice/user-slice';
+import { logOut, selectUser, selectUserAuthToken, selectUserUUID } from '../../../../states/user-slice/user-slice';
 
 export default function Sidebar({ sidebarOpen, toggleSidebar, userPromptContoller }) {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const authToken = useSelector(selectUserAuthToken);
+  const uuid = useSelector(selectUserUUID);
   const { userPromptOpen, handlePromptClose, handlePromptOpen, promptType, setPromptTypeLogin, setPromptTypeSignUp  } = userPromptContoller;
   return (
     <Wrapper className="animate darkBg" sidebarOpen={sidebarOpen}>
@@ -80,7 +81,12 @@ export default function Sidebar({ sidebarOpen, toggleSidebar, userPromptContolle
       {user.isActive ?
             <>
         <li className="semiBold font15 pointer">
-          <div style={{ padding: "10px 30px 10px 0" }} className="whiteColor" onClick={() =>  { window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${authToken}`;} }>
+          <div style={{ padding: "10px 30px 10px 0" }} className="whiteColor" onClick={() =>  { 
+            if(process.env.REACT_APP_SPLIT === "true")
+              window.location = process.env.REACT_APP_APP_URL + `/redirect/${uuid}`;
+            else
+              window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${uuid}`;
+        } }>
             My Projects
           </div>
         </li>

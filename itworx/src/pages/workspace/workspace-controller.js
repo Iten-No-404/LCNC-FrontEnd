@@ -255,7 +255,7 @@ const WorkSpaceHandler = (board, setBoard) => {
                 break;
         }
     };
-    const generateCodeZip = (htmlcode, csscode,title) => {
+    const generateCodeZip = (htmlcode, csscode, title) => {
         var zip = new JSZip();
 
         zip.file("index.html", htmlcode.toString());

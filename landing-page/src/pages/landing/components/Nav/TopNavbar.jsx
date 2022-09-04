@@ -10,7 +10,7 @@ import Backdrop from "../Elements/Backdrop";
 // Assets
 import LogoIcon from "../../assets/svg/Logo";
 import BurgerIcon from "../../assets/svg/BurgerIcon";
-import { logOut, selectUser, selectUserAuthToken } from '../../../../states/user-slice/user-slice';
+import { logOut, selectUser, selectUserAuthToken, selectUserUUID } from '../../../../states/user-slice/user-slice';
 
 export default function TopNavbar({userPromptContoller}) {
   const [y, setY] = useState(window.scrollY);
@@ -18,6 +18,7 @@ export default function TopNavbar({userPromptContoller}) {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const authToken = useSelector(selectUserAuthToken);
+  const uuid = useSelector(selectUserUUID);
 
   const { userPromptOpen, handlePromptClose, handlePromptOpen, promptType, setPromptTypeLogin, setPromptTypeSignUp  } = userPromptContoller;
 
@@ -70,12 +71,23 @@ export default function TopNavbar({userPromptContoller}) {
               </OverlayTrigger>
             </li>
             <li className="semiBold font15 pointer flexCenter">
-              <div className="radius8" style={{ padding: "10px 15px" }} onClick={() =>  { window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${authToken}`;} }>
+              <div className="radius8" style={{ padding: "10px 15px" }} onClick={() =>  { 
+                if(process.env.REACT_APP_SPLIT === "true")
+                  window.location = process.env.REACT_APP_APP_URL + `/redirect/${uuid}`;
+                else
+                  window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${uuid}`;
+                } }>
                 My Projects
               </div>
             </li>
             <li className="semiBold font15 pointer flexCenter">
-              <div className="radius8 lightBg" style={{ padding: "10px 15px" }} onClick={() =>  { dispatch(logOut(false)); window.location = window.location.protocol + "//app." + window.location.host + "/logout"; } }>
+              <div className="radius8 lightBg" style={{ padding: "10px 15px" }} onClick={() =>  { 
+                dispatch(logOut(false));
+                if(process.env.REACT_APP_SPLIT === "true")
+                  window.location = process.env.REACT_APP_APP_URL + "/logout";
+                else
+                  window.location = window.location.protocol + "//app." + window.location.host + "/logout";
+                 } }>
                 Log Out
               </div>
             </li>

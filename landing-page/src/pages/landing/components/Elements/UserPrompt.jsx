@@ -5,7 +5,7 @@ import Tab from 'react-bootstrap/esm/Tab';
 import Tabs from 'react-bootstrap/esm/Tabs';
 import Form from 'react-bootstrap/esm/Form';
 import Modal from 'react-bootstrap/Modal';
-import { logInThunk, signUpThunk, selectUserAuthToken, selectUserStatus, selectUserStatusMessage } from '../../../../states/user-slice/user-slice';
+import { logInThunk, signUpThunk, selectUserAuthToken, selectUserStatus, selectUserStatusMessage, selectUserUUID } from '../../../../states/user-slice/user-slice';
 
 
 function UserPrompt({userPromptContoller}) {
@@ -13,6 +13,7 @@ function UserPrompt({userPromptContoller}) {
     const userStatus = useSelector(selectUserStatus);
     const userStatusMessage = useSelector(selectUserStatusMessage);
     const authToken = useSelector(selectUserAuthToken);
+    const uuid = useSelector(selectUserUUID);
     const { userPromptOpen, handlePromptClose, handlePromptOpen, promptType, setPromptTypeLogin, setPromptTypeSignUp  } = userPromptContoller;
     const [entered, setEntered] = useState(false);
     const [autoEnter, setAutoEntered] = useState(false);
@@ -23,12 +24,14 @@ function UserPrompt({userPromptContoller}) {
     const [reEnterPassword, setreEnterPassword] = useState('');
 
     useEffect(() => {
-        console.log(authToken, userStatus);
         if(autoEnter && !entered && authToken && userStatus === "fulfilled")
         {
             setEntered(true);
             // if(process.env.NODE_ENV === "development")
-            window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${authToken}`;
+            if(process.env.REACT_APP_SPLIT === "true")
+                window.location = process.env.REACT_APP_APP_URL + `/redirect/${uuid}`;
+            else
+                window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${uuid}`;
         }
     }, [authToken]);
 
@@ -68,7 +71,7 @@ function UserPrompt({userPromptContoller}) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {promptType === 'Login'? 'Log In to your account!': 'Create a new account!'}
+          {promptType === 'Login'? 'Log In to your account!' : 'Create a new account!'}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
