@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom'
 import  { useNavigate } from 'react-router-dom'
-import { selectUser, getLoggedInUserThunk } from "../../states/user-slice/user-slice";
+import { selectUser, setAuthToken, getLoggedInUserThunk } from "../../states/user-slice/user-slice";
 
 function RedirectPage({ isOnAppSub }) {
     const { token } = useParams();
@@ -18,6 +18,7 @@ function RedirectPage({ isOnAppSub }) {
         async function fetchUserData() {
           if(isOnAppSub && token !== "" && token !== undefined)
           {
+                dispatch(setAuthToken(token));
                 dispatch(getLoggedInUserThunk(token));
                 handleClose();
           }

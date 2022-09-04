@@ -1,5 +1,6 @@
 import Col from 'react-bootstrap/Col';
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux'; 
 import { useParams } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -17,14 +18,17 @@ import getDefaultCSS from './default-css-service';
 import { setBlocksList } from '../../states/blocks-list-slice/blocks-list-slice';
 import { setDefaultCSS } from '../../states/default-css-slice/default-css-slice';
 import {setGeneratedCode} from '../../states/generated-code-slice/generated-code-slice';
-import { useDispatch } from 'react-redux';
 import updateProject from './save-board-service'
 import  { useNavigate } from 'react-router-dom'
+import { selectUserAuthToken } from '../../states/user-slice/user-slice';
+
+/**
+ * workspace page where the user can edit the project by add new widget (Drag and Drop from the blocks List)
+ * or edit the in widgets proparties
+ */
 function WorkSpace() {
-
-  //Change this later:
   const { id } = useParams();
-
+  const authToken = useSelector(selectUserAuthToken);
   const [board, setBoard] = useState([]);
   const [project, setProject] = useState({});
   const [modalShowhtml, setModalShowhtml] = React.useState(false);
@@ -36,7 +40,7 @@ function WorkSpace() {
 
   const { handleOnDragEnd, recursiveAddCSS, generateCodeZip, generateOneCode, recursiveDisSelect } = workSpaceHandler(board, setBoard);
 
-  const HTMLcode = generateCode(board);
+  const HTMLcode = generateCode(board,project?.title);
   const CSScode = generateCSS(board);
 
   const handleClosehtml = () => setModalShowhtml(false)
@@ -53,7 +57,13 @@ function WorkSpace() {
   const handleOpenpreview = () =>{
     const generatedCode=generateOneCode(HTMLcode,CSScode);
     dispatch(setGeneratedCode(generatedCode));
-    navigate("/project/"+id+"/preview");
+    if(project.widgets === JSON.stringify(board))
+      navigate("/project/"+id+"/preview");
+    else if (window.confirm("Make sure you have saved the work or cancel to save")) {
+      navigate("/project/"+id+"/preview");
+    } else {
+      return;
+    }
   }
 
   const saveBoard = () => {
@@ -63,18 +73,18 @@ function WorkSpace() {
     });
   }
 
+  
   // save the board data
   useEffect(() => {
     if(!isLoadingBoard)
-      updateProject(project);
+    updateProject({data: project, token: authToken});
   }, [project.widgets]);
 
   // fetch the board data
   useEffect(() => {
     async function fetchData() {
-      const response = await getBoard(id);
+      const response = await getBoard({id:id, token: authToken});
       setBoard(JSON.parse(response.widgets));
-      console.log('Received BoardList',JSON.parse(response.widgets));
       setProject(response);
       setIsLoadingBoard(false);
     }
@@ -94,7 +104,7 @@ function WorkSpace() {
   // fetch the default css
   useEffect(() => {
     async function fetchData() {
-      const response = await getDefaultCSS();
+      const response = await getDefaultCSS(authToken);
       dispatch(setDefaultCSS(response));
       setIsLoadingDefaultCSS(false);
     }
@@ -104,7 +114,7 @@ function WorkSpace() {
   // fetch the blocks list
   useEffect(() => {
     async function fetchData() {
-      const response = await getBlocksList();
+      const response = await getBlocksList(authToken);
       dispatch(setBlocksList(response));
       setIsLoadingBlocksList(false);
     }
@@ -112,17 +122,17 @@ function WorkSpace() {
   }, []);
   
 
-  return !isLoadingBoard && !isLoadingDefaultCSS && (
+  return !isLoadingBoard && !isLoadingDefaultCSS && !isLoadingBlocksList && (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Navigationbar handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />
+        <Navigationbar saved={project.widgets === JSON.stringify(board)} projectTitle={project.title} handleOpenhtml={handleOpenhtml} handleOpencss={handleOpencss} saveBoard={saveBoard} generateZip={generateZip} handleOpenpreview={handleOpenpreview} />
         <Container className="mt-4">
           <Row>
             <Col xs={9} >
               <Tree data={board} ClassN="Board" />
             </Col>
             <Col xs={3} >
-              <Ctabs board={board} setBoard={setBoard} />
+              <Ctabs board={board} setBoard={setBoard} projectId={id} />
             </Col>
           </Row>
           <ModalCard

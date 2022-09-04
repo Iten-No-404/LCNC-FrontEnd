@@ -13,7 +13,7 @@ import { PropTypes } from "prop-types";
 /**
  * render the style proberties depend on the selected widget and manage the user to change CSS for that widget
  */
-const StyledBlock = ({ board, setBoard }) => {
+const StyledBlock = ({ board, setBoard, projectId }) => {
   const CSS = useSelector(selectWidgetCSS);
   const [content, setContent] = useState("");
   const [fontsize, setFontsize] = useState("");
@@ -23,6 +23,7 @@ const StyledBlock = ({ board, setBoard }) => {
   const [padding, setPadding] = useState("");
   const [boarderredius,setBoarderredius] = useState("");
   const [selectedblock, setSelectedblock] = useState(null);
+  const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const dispatch = useDispatch();
   const {
     handleUploadImage,
@@ -58,27 +59,28 @@ const StyledBlock = ({ board, setBoard }) => {
       setBoarderredius(CSS.border.radius);
       setPadding(CSS.padding);
       setMargin(CSS.margin);
+      setActiveFontFamily(CSS.font.family)
     }
   }, [CSS.id]);
 
 
-  if (selectedblock?.type === "navbar")
-    return(
-      <>
-        <div>Pick Background Color</div>
-        <ColorPickerTool colorType='backgroundColor' />
-      </>
-    );
+  // if (selectedblock?.type === "navbar")
+  //   return(
+  //     <>
+  //       <div>Pick Background Color</div>
+  //       <ColorPickerTool colorType='backgroundColor' />
+  //     </>
+  //   );
 
   return (
     <>
       {selectedblock?.type === 'image' ? (
         <>
           <input
-          class="form-control"
+          className="form-control"
           type="file"
           name="myImage"
-          onChange={(e) => handleUploadImage(e)} />
+          onChange={(e) => handleUploadImage(e, selectedblock.id, projectId)} />
           <div className="d-flex flex-row">
               <Form.Group className="mb-3" controlId="width">
                 <Form.Label>Width %</Form.Label>
@@ -107,8 +109,8 @@ const StyledBlock = ({ board, setBoard }) => {
           <ColorPickerTool colorType='backgroundColor' />
          </>   
         ) :
-        (selectedblock &&
-          <Form>
+        (selectedblock ?
+          (<Form>
             <Form.Group className="mb-3" controlId="textEditor">
               <Form.Control value={content} onChange={(e) => { dispatch(setTextContent(e.target.value)); setContent(e.target.value) }} type="text" placeholder="Enter Your Text" />
             </Form.Group>
@@ -143,7 +145,7 @@ const StyledBlock = ({ board, setBoard }) => {
               </Form.Group>
             </div>
             <Form.Group controlId="typographyStyles">
-              <FontPickerTool />
+              <FontPickerTool  activeFontFamily={activeFontFamily} setActiveFontFamily={setActiveFontFamily} />
               <Tabs
                 defaultActiveKey="font"
                 id="uncontrolled-tab-example"
@@ -157,7 +159,7 @@ const StyledBlock = ({ board, setBoard }) => {
                 </Tab>
               </Tabs>
             </Form.Group>
-          </Form>)
+          </Form>):(<div>Please select block from the Layers Tab to be styled</div>))
       }
     </>
   );
@@ -174,8 +176,10 @@ StyledBlock.propTypes = {
      type:  PropTypes.string,
      text: PropTypes.string,
      selected: PropTypes.bool,
-     code1: PropTypes.string,
-     code2:  PropTypes.string,
+     widgetCodeSnippet: PropTypes.shape({
+      code1: PropTypes.string,
+      code2:  PropTypes.string,
+     }),
      CSS: PropTypes.object,
      children: PropTypes.array
    })

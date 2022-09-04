@@ -1,9 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux'; 
-import { useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -11,21 +8,61 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import React from "react";
 import '../../App.css';
 import LogoIcon from "../../pages/landing/assets/svg/Logo";
+import { PropTypes } from "prop-types";
+import  { useNavigate } from 'react-router-dom'
+import { logOut } from "../../states/user-slice/user-slice";
 
+/**
+ * General Navbar for the APP 
+ */
   function Navigationbar(props) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const toRoot = () =>{
+    if((props.saved))
+      navigate("/");
+    else if (!(props.saved) && window.confirm("Make sure you have saved the work or cancel to save")) {
+      navigate("/");
+    } else {
+      return;
+    }
+  }
   return (
       <Navbar bg="dark" variant="dark">
         <Container>
-        <Link className="pointer flexNullCenter" to="/" smooth={true}>
+          { props.project ? (<div className="pointer flexNullCenter" onClick={ () => {
+              var domain = window.location.host.split('.');
+              domain.shift();
+              window.location = window.location.protocol + "//" + domain.join('.');
+          }}>
+            <LogoIcon />
+            <h1 style={{ marginLeft: "15px", width: "200px", color: "#0D6EFD" }} className="font20 extraBold">
+              LCNC Design Tool
+            </h1>
+          </div>) : (
+            <a className="pointer flexNullCenter" onClick={toRoot} smooth={true}>
             <LogoIcon />
             <h1 style={{ marginLeft: "15px", width: "200px" }} className="font20 extraBold">
               LCNC Design Tool
             </h1>
-          </Link>
+          </a>
+          )}
           <Container className="justify-content-end">
-          <h2 className="justify-content-end myDIV">
-
-          </h2>
+            {props.project ? (
+            <h2 className="justify-content-end">
+              <OverlayTrigger placement='right' overlay={<Tooltip >Logged in with: {props.userEmail}</Tooltip>}>
+                <span className="justify-content-end mr-2" style={{ color: 'white'}} >Welcome, {props.userName}!</span>
+              </OverlayTrigger>
+                <Button variant='dark' className="justify-content-end" style={{ display: 'inline-block'}} onClick={ () => dispatch(logOut(true)) }> Logout</Button>
+            </h2>
+            ) : (
+              <h2 className="justify-content-end">
+              <OverlayTrigger placement='right' overlay={<Tooltip >Logged in with: {props.userEmail}</Tooltip>}>
+                <span className="justify-content-end mr-2" style={{ color: 'white'}} >{props.projectTitle}</span>
+              </OverlayTrigger>
+            </h2>
+            )
+            }
           </Container>
           
 
@@ -79,3 +116,21 @@ import LogoIcon from "../../pages/landing/assets/svg/Logo";
 }
 
 export default Navigationbar;
+
+
+Navigationbar.propTypes = {
+  /**  to determen show add project icon or add (preview , HTML, CSS, save and Download ) icons */
+  project: PropTypes.bool,
+  /** to add nwe project */
+  handleNewproject: PropTypes.func,
+  /** to open preview page */
+  handleOpenpreview: PropTypes.func,
+  /** to save the board in the database */
+  saveBoard: PropTypes.func,
+  /** to genrate folder with code and download as zip folder */
+  generateZip: PropTypes.func,
+  /** to open HTML modal */
+  handleOpenhtml: PropTypes.func,
+  /** to Open CSS modal */
+  handleOpencss: PropTypes.func,
+}

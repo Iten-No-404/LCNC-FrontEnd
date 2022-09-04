@@ -5,28 +5,32 @@ import Tab from 'react-bootstrap/esm/Tab';
 import Tabs from 'react-bootstrap/esm/Tabs';
 import Form from 'react-bootstrap/esm/Form';
 import Modal from 'react-bootstrap/Modal';
-import { logInThunk, signUpThunk, selectUserAuthToken } from '../../../../states/user-slice/user-slice';
+import { logInThunk, signUpThunk, selectUserAuthToken, selectUserStatus, selectUserStatusMessage } from '../../../../states/user-slice/user-slice';
 
 
 function UserPrompt({userPromptContoller}) {
     const dispatch = useDispatch();
-    const userAuthToken = useSelector(selectUserAuthToken);
+    const userStatus = useSelector(selectUserStatus);
+    const userStatusMessage = useSelector(selectUserStatusMessage);
+    const authToken = useSelector(selectUserAuthToken);
     const { userPromptOpen, handlePromptClose, handlePromptOpen, promptType, setPromptTypeLogin, setPromptTypeSignUp  } = userPromptContoller;
     const [entered, setEntered] = useState(false);
+    const [autoEnter, setAutoEntered] = useState(false);
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNo, setPhoneNo] = useState('');
     const [password, setPassword] = useState('');
     const [reEnterPassword, setreEnterPassword] = useState('');
-    console.log(userPromptOpen, promptType);
 
     useEffect(() => {
-        if(!entered && userAuthToken)
+        console.log(authToken, userStatus);
+        if(autoEnter && !entered && authToken && userStatus === "fulfilled")
         {
             setEntered(true);
-            window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${userAuthToken}`;
+            // if(process.env.NODE_ENV === "development")
+            window.location = window.location.protocol + "//app." + window.location.host + `/redirect/${authToken}`;
         }
-    }, [userAuthToken]);
+    }, [authToken]);
 
 
     const handleLogIn = () => {
@@ -36,19 +40,21 @@ function UserPrompt({userPromptContoller}) {
             isEmailconfirmed: true,
             isActive: true
         }));
+        setAutoEntered(true);
     }
-
+    
     const handleSignUp = () => {
         if(password !== reEnterPassword)
             return;
-        dispatch(signUpThunk({
-            fullName: fullName,
+            dispatch(signUpThunk({
+                fullName: fullName,
             email: email,
             phoneNo: phoneNo,
             password: password,
             isEmailconfirmed: true,
             isActive: true
         }));
+        setAutoEntered(true);
     }
 
   return (
@@ -83,6 +89,7 @@ function UserPrompt({userPromptContoller}) {
                         <Form.Label>Password</Form.Label>
                         <Form.Control value={password} onChange={(e) => { /*dispatch(setWidthval(e.target.value));*/ setPassword(e.target.value) }} type="password" placeholder="*********"/>
                     </Form.Group>
+                    {userStatus === "failed" && <h4 style={{ color: 'red', paddingTop: "5px"}} >{userStatusMessage}</h4>}
                     <Button variant="primary" style={{marginTop: '10px'}} type="button" onClick={() => handleLogIn()}>Log In</Button>
                 </Tab>
                 <Tab eventKey="SignUp" title="Sign Up" style={{ padding: '5%', margin: "5%"}}>
@@ -103,10 +110,11 @@ function UserPrompt({userPromptContoller}) {
                         <Form.Control value={password} onChange={(e) => { /*dispatch(setWidthval(e.target.value));*/ setPassword(e.target.value) }} type="password" placeholder="*********"/>
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>Re Enter Password</Form.Label>
+                        <Form.Label>Confirm Password</Form.Label>
                         <Form.Control value={reEnterPassword} onChange={(e) => { /*dispatch(setWidthval(e.target.value));*/ setreEnterPassword(e.target.value) }} type="password" placeholder="*********"/>
                     </Form.Group>
-                    {password !== reEnterPassword && <h4 style={{ color: 'red', paddingTop: "5px"}} >Passwords don't match!!!</h4>}
+                    {userStatus === "failed" && <h4 style={{ color: 'red', paddingTop: "5px"}} >{userStatusMessage}</h4>}
+                    {password !== reEnterPassword && (password || reEnterPassword) && <h4 style={{ color: 'red', paddingTop: "5px"}} >Passwords don't match!!!</h4>}
                     <Button variant="primary" style={{marginTop: '5px'}} type="button" onClick={() => handleSignUp()}>Sign Up</Button>
                 </Tab>
               </Tabs>

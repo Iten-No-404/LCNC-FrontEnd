@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import uploadImage from './upload-image-service';
 import { selectWidgetCSS } from '../../states//widget-css-slice//widget-css-slice';
 import { setWidget } from '../../states//widget-list-slice//widget-list-slice';
+import getImage from './get-image-service';
 
 const StyleBlockHandler = (setBoard) => {
 
@@ -32,17 +33,29 @@ const StyleBlockHandler = (setBoard) => {
 		}
 	}
 
-	const handleUploadImage = async (e) => {
+	const convertDataURIToBinary = (dataURI) => {
+		var BASE64_MARKER = ';base64,';
+		var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+		var base64 = dataURI.substring(base64Index);
+		var raw = window.atob(base64);
+		var rawLength = raw.length;
+		var array = new Uint8Array(new ArrayBuffer(rawLength));
+	
+		for(var i = 0; i < rawLength; i++) {
+			array[i] = raw.charCodeAt(i);
+		}
+		return array;
+	}
 
+	const handleUploadImage = async (e, selectedBlockId, projectId) => {
+		const imageNameArr = e.target.files[0].name.split('.');
 		const formData = new FormData();
-		formData.append("ImageName", e.target.files[0].name);
+		formData.append("ImageName", selectedBlockId + '.' + imageNameArr[imageNameArr.length-1]);
+		formData.append("ImagePath", projectId+'/');
 		formData.append("Image", e.target.files[0]);
 		const res = await uploadImage(formData);
-		console.log(res);
-
 		setBoard((prevBoard) => {
-			return recursiveAddimage(prevBoard, res);
-			// return recursiveAddimage(prevBoard, res.data);
+			return recursiveAddimage(prevBoard, 'http://'+res.imagePath);
 		})
 	};
 

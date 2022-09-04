@@ -47,7 +47,6 @@ const WorkSpaceHandler = (board, setBoard) => {
     //////////////////// Fix this ////////////////////////////
     // Used to add the CSS of the Widget of the retrieved board from the API.
     const recursiveAddCSS = (myBoard) => {
-        console.log("Add this:", myBoard);
         if (myBoard && myBoard.length > 0) {
             myBoard.forEach((block) => {
                 dispatch(
@@ -168,25 +167,41 @@ const WorkSpaceHandler = (board, setBoard) => {
         return destClone;
     };
 
-	const recursiveDisSelect = (myBoard) => {
-		if (myBoard && myBoard.length > 0) {
-			let newBoard = [];
-			myBoard.forEach(block => {
-					const val = recursiveDisSelect(block.children);
-					if (val.length > 0) {
-						const newBlock = { ...block, selected: false, children: val };
-						newBoard.push(newBlock);
-					} else {
-						const newBlock = { ...block, selected: false };
-						newBoard.push(newBlock);
-				}
-			}
-			);
-			return newBoard;
-		} else {
-			return [];
-		}
-	}
+    const recursiveDisSelect = (myBoard) => {
+        if (myBoard && myBoard.length > 0) {
+            let newBoard = [];
+            myBoard.forEach((block) => {
+                const val = recursiveDisSelect(block.children);
+                if (val.length > 0) {
+                    const newBlock = { ...block, selected: false, children: val };
+                    newBoard.push(newBlock);
+                } else {
+                    const newBlock = { ...block, selected: false };
+                    newBoard.push(newBlock);
+                }
+            });
+            return newBoard;
+        } else {
+            return [];
+        }
+    };
+
+    const recursiveGetBlockType = (myBoard, id) => {
+        if (myBoard && myBoard.length > 0) {
+            for (let i = 0; i < myBoard.length; i++) {
+                const block = myBoard[i];
+                if (block.id === id) {
+                    return block.type;
+                } else {
+                    const type = recursiveGetBlockType(block.children, id);
+                    if (type) return type;
+                }
+            }
+            return "";
+        } else {
+            return "";
+        }
+    };
 
     const handleOnDragEnd = (result) => {
         const { destination, source, draggableId } = result;
@@ -194,9 +209,19 @@ const WorkSpaceHandler = (board, setBoard) => {
         if (result.combine) {
             // when we are adding a new nested block to the board
             if (source.droppableId === "selectWidgetTab") {
-                setBoard(copyThenNest(blocksList, board, source, result.combine));
+                setBoard((prevBoard) => {
+                    if (recursiveGetBlockType(prevBoard, Number(result.combine.draggableId)) === "image") {
+                        alert("Can not add widet to image");
+                        return prevBoard;
+                    }
+                    return copyThenNest(blocksList, prevBoard, source, result.combine);
+                });
             } else {
                 setBoard((prevBoard) => {
+                    if (recursiveGetBlockType(prevBoard, Number(result.combine.draggableId)) === "image") {
+                        alert("Can not add widet to image");
+                        return prevBoard;
+                    }
                     return nest(prevBoard, draggableId, result.combine);
                 });
             }
@@ -221,7 +246,11 @@ const WorkSpaceHandler = (board, setBoard) => {
                 break;
             default:
                 setBoard((prevBoard) => {
-                    return nest(prevBoard, draggableId, destination);
+                    if (recursiveGetBlockType(prevBoard, Number(result.combine.draggableId)) === "image") {
+                        alert("Can not add widet to image");
+                        return prevBoard;
+                    }
+                    return nest(prevBoard, draggableId, result.combine);
                 });
                 break;
         }
