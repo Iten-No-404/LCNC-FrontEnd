@@ -19,17 +19,13 @@ function App() {
     const [gotAuthToken, setGotAuthToken] = useState(false);
     const [isGettingUserInfo, setIsGettingUserInfo] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    console.log(user);
-    console.log("isLoading:", isLoading);
     useEffect(() => {
-        console.log(authToken);
         if (!isLoggedIn && window.location.pathname !== '/logout') {
             dispatch(getAuthToken());
             setGotAuthToken(true);
         }
     }, [])
     useEffect(() => {
-        console.log(authToken);
         if (authToken !== "") {
             dispatch(getLoggedInUserThunk(authToken));
             setIsGettingUserInfo(true);

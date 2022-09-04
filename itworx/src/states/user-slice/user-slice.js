@@ -220,7 +220,6 @@ const user = createSlice({
         },
         [getUserThunk.fulfilled]: (state, { payload }) => {
           const s = state; 
-          console.log('Get User Payload:',payload);
           s.user = payload;
           s.status = 'fulfilled';
         },
@@ -232,12 +231,10 @@ const user = createSlice({
           console.log('getUserToken in Progress');
         },
         [getUserToken.fulfilled]: (state, { payload }) => {
-          console.log('getUserToken Payload:',payload);
           const s = state;
             s.authToken = payload.token;
             s.uuid = payload.uuid;
             localStorage.setItem('authToken', s.authToken);
-            console.log(payload, s.authToken);
             // s.status = 'fulfilled';
         },
         [getUserToken.rejected]: () => {
@@ -247,9 +244,7 @@ const user = createSlice({
           console.log('User Authentication in Progress');
         },
         [getLoggedInUserThunk.fulfilled]: (state, { payload }) => {
-          console.log('User Authentication Payload:',payload);
           state.user = payload;
-          // state.uuid = 
         },
         [getLoggedInUserThunk.rejected]: () => {
           console.log('User Authentication in Failed!!!!');
@@ -260,7 +255,6 @@ const user = createSlice({
           s.status = 'pending';
         },
         [logInThunk.fulfilled]: (state, { payload }) => {
-          console.log('Login Payload:',payload);
           const s = state; 
           try {
             const resJSON = JSON.parse(payload);
@@ -285,7 +279,6 @@ const user = createSlice({
           s.status = 'pending';
         },
         [signUpThunk.fulfilled]: (state, { payload }) => {
-          console.log('SignUp Payload:',payload);
           const s = state;
           try {
             const resJSON = JSON.parse(payload);
@@ -309,7 +302,6 @@ const user = createSlice({
           console.log('UpdateUser in Progress');
         },
         [updateUserThunk.fulfilled]: (state, { payload }) => {
-          console.log('UpdateUser Payload:',payload);
           state.user = payload;
         },
         [updateUserThunk.rejected]: () => {
@@ -319,7 +311,6 @@ const user = createSlice({
           console.log('DeleteUser in Progress');
         },
         [deleteUserThunk.fulfilled]: (state, { payload }) => {
-          console.log('DeleteUser Payload:',payload);
           state.user = {
             fullName: "",
             email: "",

@@ -24,7 +24,6 @@ function UserPrompt({userPromptContoller}) {
     const [reEnterPassword, setreEnterPassword] = useState('');
 
     useEffect(() => {
-        console.log(authToken, userStatus);
         if(autoEnter && !entered && authToken && userStatus === "fulfilled")
         {
             setEntered(true);
