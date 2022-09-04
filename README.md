@@ -3,13 +3,18 @@
 LCNC Design Tool is a low-code / no-code platform tool used to build simple web pages using pre-defined widgets in the beginning as a POC and can be extended and continued later as a complete low-code / no-code platform to build full web or mobile apps.
 
 Low-code / no-code tools help users create web pages using simple methods that don't require developer skills and knowledge of coding.
+## How to run
+- First, run `cd .\itworx\` or `cd .\landing-page\` depending on which one you'd like to run first.
+- Then, run `npm install`
+- Afterwards, make sure you have all the needed environment variables in the .env files. Check in [Used Techniques](#used-techniques) below for more details.
+- Finally run  `npm run start:development` or `start:production`.
 ## System Design
 - Easy and comfortable UI/UX.
 - Easily Scalable project.
 - Usage of Api link as environment variable instead of being hard coded.
 - Fast Performance.
 - Persitant state through use of local storage.
-- Easily Maintained code.
+- Easily Maintained code. 
 
 ## Architecture & File Structure
 │   App.css
