@@ -4,6 +4,12 @@ LCNC Design Tool is a low-code / no-code platform tool used to build simple web 
 
 Low-code / no-code tools help users create web pages using simple methods that don't require developer skills and knowledge of coding.
 ## System Design
+- Easy and comfortable UI/UX.
+- Easily Scalable project.
+- Usage of Api link as environment variable instead of being hard coded.
+- Fast Performance.
+- Persitant state through use of local storage.
+- Easily Maintained code.
 
 ## Architecture & File Structure
 │   App.css
