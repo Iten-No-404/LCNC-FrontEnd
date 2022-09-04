@@ -2,12 +2,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import uploadImage from './upload-image-service';
 import { selectWidgetCSS } from '../../states//widget-css-slice//widget-css-slice';
 import { setWidget } from '../../states//widget-list-slice//widget-list-slice';
+import { selectUserAuthToken } from '../../states/user-slice/user-slice';
 import getImage from './get-image-service';
 
 const StyleBlockHandler = (setBoard) => {
 
-	const CSS = useSelector(selectWidgetCSS);
 	const dispatch = useDispatch();
+	const CSS = useSelector(selectWidgetCSS);
+	const authToken = useSelector(selectUserAuthToken);
 
 	const recursiveAddimage = (myBoard, img) => {
 		if (myBoard && myBoard.length > 0) {
@@ -53,7 +55,7 @@ const StyleBlockHandler = (setBoard) => {
 		formData.append("ImageName", selectedBlockId + '.' + imageNameArr[imageNameArr.length-1]);
 		formData.append("ImagePath", projectId+'/');
 		formData.append("Image", e.target.files[0]);
-		const res = await uploadImage(formData);
+		const res = await uploadImage({query: formData, token: authToken});
 		setBoard((prevBoard) => {
 			return recursiveAddimage(prevBoard, 'http://'+res.imagePath);
 		})
