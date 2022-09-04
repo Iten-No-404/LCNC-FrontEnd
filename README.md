@@ -1,70 +1,207 @@
-# Getting Started with Create React App
+# LCNC Design Tool
+## Overview
+LCNC Design Tool is a low-code / no-code platform tool used to build simple web pages using pre-defined widgets in the beginning as a POC and can be extended and continued later as a complete low-code / no-code platform to build full web or mobile apps.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Low-code / no-code tools help users create web pages using simple methods that don't require developer skills and knowledge of coding.
+## System Design
 
-## Available Scripts
+## Architecture & File Structure
+│   App.css
+│   App.jsx
+│   index.css
+│   index.jsx
+│   
+├───apis
+│       globalapi.js
+│       
+├───components
+│   ├───block
+│   │       block-controller.js
+│   │       block.jsx
+│   │       
+│   ├───blocks
+│   │       general-code-block.jsx
+│   │       
+│   ├───code-block
+│   │       code-block.jsx
+│   │       
+│   ├───color-picker
+│   │       color-picker.jsx
+│   │       ColorPickerTool.md
+│   │       
+│   ├───font-picker
+│   │       font-picker.jsx
+│   │       
+│   ├───layers
+│   │       layers-controller..js
+│   │       layers.jsx
+│   │       
+│   ├───modal
+│   │       modal.jsx
+│   │       
+│   ├───navbar
+│   │       navbar.jsx
+│   │       
+│   ├───style-block
+│   │       style-block-controller.js
+│   │       style-block.jsx
+│   │       upload-image-service.js
+│   │       
+│   ├───tabs
+│   │       tabs.jsx
+│   │       
+│   ├───tree
+│   │       tree.jsx
+│   │       
+│   └───tree-node
+│           tree-node-controller.js
+│           tree-node.jsx
+│           
+├───helper
+│       BlocksList.js
+│       blocksType.js
+│       generate-css.js
+│       generate-html.js
+│       generate-id.js
+│       InitialCSS.js
+│       
+├───pages
+│   ├───landing
+│   │   │   Landing.jsx
+│   │   │   
+│   │   ├───assets
+│   │   │   ├───fonts
+│   │   │   │       Khula-ExtraBold.ttf
+│   │   │   │       Khula-Regular.ttf
+│   │   │   │       Khula-SemiBold.ttf
+│   │   │   │       
+│   │   │   ├───img
+│   │   │   │   │   contact-1.png
+│   │   │   │   │   contact-2.png
+│   │   │   │   │   contact-3.png
+│   │   │   │   │   header-img.png
+│   │   │   │   │   
+│   │   │   │   ├───add
+│   │   │   │   │       1.png
+│   │   │   │   │       2.png
+│   │   │   │   │       3.png
+│   │   │   │   │       4.png
+│   │   │   │   │       add2.png
+│   │   │   │   │       
+│   │   │   │   ├───clients
+│   │   │   │   │       logo01.svg
+│   │   │   │   │       logo02.svg
+│   │   │   │   │       logo03.svg
+│   │   │   │   │       logo04.svg
+│   │   │   │   │       logo05.svg
+│   │   │   │   │       logo06.svg
+│   │   │   │   │       
+│   │   │   │   └───projects
+│   │   │   │           1.png
+│   │   │   │           2.png
+│   │   │   │           3.png
+│   │   │   │           4.png
+│   │   │   │           5.png
+│   │   │   │           6.png
+│   │   │   │           
+│   │   │   └───svg
+│   │   │       │   BurgerIcon.jsx
+│   │   │       │   Checkmark.jsx
+│   │   │       │   CloseIcon.jsx
+│   │   │       │   Dots.jsx
+│   │   │       │   Logo.jsx
+│   │   │       │   Quotes.jsx
+│   │   │       │   
+│   │   │       └───Services
+│   │   │               BrowserIcon.jsx
+│   │   │               MonitorIcon.jsx
+│   │   │               PrinterIcon.jsx
+│   │   │               RollerIcon.jsx
+│   │   │               
+│   │   ├───components
+│   │   │   ├───Buttons
+│   │   │   │       FullButton.jsx
+│   │   │   │       
+│   │   │   ├───Elements
+│   │   │   │       Backdrop.jsx
+│   │   │   │       ClientSlider.jsx
+│   │   │   │       ServiceBox.jsx
+│   │   │   │       TestimonialBox.jsx
+│   │   │   │       UserPrompt.jsx
+│   │   │   │       
+│   │   │   ├───Nav
+│   │   │   │       Sidebar.jsx
+│   │   │   │       TopNavbar.jsx
+│   │   │   │       
+│   │   │   └───Sections
+│   │   │           Contact.jsx
+│   │   │           Footer.jsx
+│   │   │           Header.jsx
+│   │   │           Services.jsx
+│   │   │           
+│   │   └───style
+│   │           flexboxgrid.min.css
+│   │           index.css
+│   │           
+│   ├───preview
+│   │       Preview.jsx
+│   │       
+│   ├───projects
+│   │       add-project-service.js
+│   │       get-user-projects-service.js
+│   │       projects.jsx
+│   │       
+│   ├───redirectPage
+│   │       RedirectPage.jsx
+│   │       
+│   └───workspace
+│           blocks-list-service.js
+│           board-service.js
+│           default-css-service.js
+│           save-board-service.js
+│           worksapce.jsx
+│           workspace-controller.js
+│           
+└───states
+    │   store.js
+    │   
+    ├───blocks-list-slice
+    │       blocks-list-slice.js
+    │       
+    ├───board-slice
+    │       board-slice.js
+    │       
+    ├───default-css-slice
+    │       default-css-slice.js
+    │       
+    ├───generated-code-slice
+    │       generated-code-slice.js
+    │          
+    ├───user-slice
+    │       user-slice.js
+    │       
+    ├───widget-css-slice
+    │       widget-css-slice.js
+    │       
+    └───widget-list-slice
+            widget-list-slice.js
+            
 
-In the project directory, you can run:
+## Used Techniques
+- State Manegement using Redux and Redux ToolKit. 
+- Responsive UI Uusing BootStrap 5.
+- Usage of Environment variables as follow:
+    - REACT_APP_FONT_PICKER_API_KEY: Contains the API key used in the Font Picker.
+    - REACT_APP_BASE_URL: Used as the api link to the backend. (`https://abdullahadel-001-site1.etempurl.com/api in our case`).
+    - REACT_APP_APP_URL: Contains the domain of the main app or program. Used in the Landing Page React App only.
+    - REACT_APP_LANDING_URL: Contains the domain of the landing page. Used in the itorx React ApP only.
+    - REACT_APP_SPLIT: If its value is equal to *true* then, it will use the REACT_APP_APP_URL & REACT_APP_LANDING_URL domains when redirecting. Otherwise, it will use the domain name of the landing page as the main domain while the application will be on the *app* subdomain. 
+        * ex: REACT_APP_SPLIT!==true, if host on the landing page = https://itworx.com, then the host of the app page will be https://app.itworx.com
+- Also, note there should be two .env files in the root folder of each project called .env.development & .env.production for development and production respectively. 
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Deployment Guide
+- Run `npm run build:production`
+- Then take the build file and upload it on Netlify.
+-Deployed on 2 separate domains on Netlify:
+* https://lcnc-design-tool.netlify.app/ for the Landing Page.
+* https://lcnc-design-app.netlify.app/ for the App Page.
