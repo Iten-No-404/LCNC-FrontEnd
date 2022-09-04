@@ -198,7 +198,7 @@ Low-code / no-code tools help users create web pages using simple methods that d
     - REACT_APP_SPLIT: If its value is equal to *true* then, it will use the REACT_APP_APP_URL & REACT_APP_LANDING_URL domains when redirecting. Otherwise, it will use the domain name of the landing page as the main domain while the application will be on the *app* subdomain. 
         * ex: REACT_APP_SPLIT!==true, if host on the landing page = https://itworx.com, then the host of the app page will be https://app.itworx.com
 - Also, note there should be two .env files in the root folder of each project called .env.development & .env.production for development and production respectively. 
-
+- Usage of Local Storage to store Authentication Token to preserve log in state for as long as the token is still valid.
 ## Deployment Guide
 - Run `npm run build:production`
 - Then take the build file and upload it on Netlify.
