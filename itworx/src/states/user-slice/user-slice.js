@@ -10,7 +10,7 @@ export const getUserThunk = createAsyncThunk(
     async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/${query}`, {
       method: 'GET',
       headers: {
-        ...headers,
+        ...headers
       },
     }).then((res) => res.json()),
   );
@@ -40,22 +40,24 @@ export const getLoggedInUserThunk = createAsyncThunk(
     'login',
     async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Login`, {
       method: 'POST',
+      // mode: 'no-cors',
       headers: {
-        ...headers
+        'Content-Type': 'text/plain'
       },
       body: JSON.stringify(query),
-    }).then((res) => res.json()),
+    }).then((res) => res.text()),
   );
 
   export const signUpThunk = createAsyncThunk(
     'signUp',
     async (query) => fetch(`${process.env.REACT_APP_BASE_URL}/User/Signup`, {
       method: 'POST',
+      // mode: 'no-cors',
       headers: {
-        ...headers
+        'Content-Type': 'text/plain'
       },
       body: JSON.stringify(query),
-    }).then((res) => res.json()),
+    }).then((res) => res.text()),
   );
 
   export const updateUserThunk = createAsyncThunk(

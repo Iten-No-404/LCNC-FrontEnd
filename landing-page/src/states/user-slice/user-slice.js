@@ -44,7 +44,7 @@ export const getLoggedInUserThunk = createAsyncThunk(
         ...headers
       },
       body: JSON.stringify(query),
-    }).then((res) => res.json()),
+    }).then((res) => res.text()),
   );
 
   export const signUpThunk = createAsyncThunk(
@@ -55,7 +55,7 @@ export const getLoggedInUserThunk = createAsyncThunk(
         ...headers
       },
       body: JSON.stringify(query),
-    }).then((res) => res.json()),
+    }).then((res) => res.text()),
   );
 
   export const updateUserThunk = createAsyncThunk(
